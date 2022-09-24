@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "invites",
+  "info": {
+    "singularName": "invite",
+    "pluralName": "invites",
+    "displayName": "invite"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "invite": {
+      "type": "string"
+    }
+  }
+}

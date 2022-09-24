@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dungeon_masters",
+  "info": {
+    "singularName": "dungeon-master",
+    "pluralName": "dungeon-masters",
+    "displayName": "Dungeon Master",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "availabilities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::availability.availability",
+      "mappedBy": "dungeon_master"
+    }
+  }
+}
