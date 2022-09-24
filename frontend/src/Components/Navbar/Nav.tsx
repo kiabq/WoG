@@ -1,5 +1,5 @@
 // Libraries
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 
 // Styles
@@ -11,40 +11,48 @@ import { useAuth } from "../../hooks/useProvider";
 import useAccount from "../../hooks/useAccount";
 
 const Authed = () => {
-    let auth = useAuth();
-    let accountInfo = useAccount();
     const [style, setStyle] = useState<boolean>(false);
+    const refTest = useRef(null);
+    const auth = useAuth();
+    const accountInfo = useAccount();
 
     function logout() {
         auth.logout();
     }
 
-    function setDropdown() {
-        setStyle(!style);
+    function closeModal() {
+        setStyle(false);
     }
 
-    return (    
-        <div className={`${styles.nav__hamburger}`}>
-            <div className={`${styles.nav__account}`} onClick={() => setDropdown()}>
-                <div className={styles.nav__account_info}>
-                    <img src={accountInfo.avatar} className={styles.nav__account_pfp}/>
-                    <p>{accountInfo.user}</p>
-                </div>
-                <button className={`${globals.btn} ${styles.nav__dropdown_button}`}>
-                    <p className={`${styles.nav__dropdown_button_inner} ${style ? styles.animate : ''}`}>{'>'}</p>
-                </button>
-            </div>
-            <div className={`${styles.nav__dropdown} ${style ? styles.nav__dropdown_visible : '' }`}>
-                <Link to='/account'>
-                    <button className={`${globals.btn} ${styles.nav__dropdown_element}`}>
-                        Account
+    return (
+        <>
+            { style && <div className={styles.modal} onClick={() => closeModal()}/>}
+            
+            <div className={`${styles.nav__hamburger}`}>
+
+                <div className={`${styles.nav__account}`} onClick={() => {setStyle(!style)}}>
+                    <div className={styles.nav__account_info}>
+                        <img src={accountInfo.avatar} className={styles.nav__account_pfp}/>
+                        <p>{accountInfo.user}</p>
+                    </div>
+                    <button className={`${globals.btn} ${styles.nav__dropdown_button}`}>
+                        <p className={`${styles.nav__dropdown_button_inner} ${style ? styles.animate : ''}`}>{'>'}</p>
                     </button>
-                </Link>
-                <button className={`${globals.btn} ${styles}`} onClick={() => {logout()}}>
-                    Logout
-                </button>
+                </div>
+
+                <div className={`${styles.nav__dropdown} ${style ? styles.nav__dropdown_visible : '' }`}>
+                    <Link to='/account'>
+                        <button className={`${globals.btn} ${styles.nav__dropdown_element}`}>
+                            Account
+                        </button>
+                    </Link>
+                    <button className={`${globals.btn} ${styles.nav__dropdown_element}`} onClick={() => {logout()}}>
+                        Logout
+                    </button>
+                </div>
+
             </div>
-        </div>
+        </>
     )
 }   
 

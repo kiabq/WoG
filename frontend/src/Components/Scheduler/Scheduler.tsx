@@ -31,7 +31,7 @@ type mappedEl = {
 const Scheduler = () => {
     const [DM, setDM] = useState<Array<DM> | null>(null);
     const [selectedDM, setSelectedDM] = useState<number | null>(null);
-    let refBool = useRef(false);
+    const refBool = useRef(false);
 
     function handleChange(e: ChangeEvent<HTMLSelectElement>) {
         if (e.currentTarget.value === 'default') {
@@ -64,6 +64,7 @@ const Scheduler = () => {
                         : 
                         <option>Empty</option>}
                 </select>
+                
                 <p>PST</p>
 
                 <div className={styles.schedule_items}>

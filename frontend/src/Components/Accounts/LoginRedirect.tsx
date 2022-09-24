@@ -24,6 +24,7 @@ const LoginRedirect = () => {
       .then((res) => res?.json())
       .then(
         (res) => {
+          console.log(res)
           auth.login(res.jwt, res.user.username);
           navigate('/');
         },

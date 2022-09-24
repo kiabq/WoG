@@ -14,7 +14,7 @@ import { ConsumeAuth, useAuth } from "../../hooks/useProvider";
 
 const Home = () => {
     const navigate = useNavigate();
-    
+
     return (
         <div className={styles.main__content}>
             <Nav/>

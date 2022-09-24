@@ -82,5 +82,5 @@ export const PrivateRoute = () => {
     let auth = useAuth();
     auth.checkLogin();
 
-    return (auth ? <Outlet/> : <Navigate to='/login'/>);
+    return (auth ? <Outlet/> : <Navigate to='/'/>);
 }
