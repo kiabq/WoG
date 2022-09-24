@@ -1,0 +1,36 @@
+.schedule {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.schedule > div {
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    justify-self: center;
+}
+
+.schedule_items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.schedule__day {
+    background-color: #dce2e3;
+    border-radius: 5px;
+
+    width: 155px;
+    height: auto;
+    min-height: 175px;
+
+    margin: 0.2rem;
+    padding: 0.5rem;
+}
+
+.schedule__day > p {
+    text-align: center;
+}

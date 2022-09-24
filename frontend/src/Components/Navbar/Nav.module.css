@@ -1,0 +1,107 @@
+@import url('../../colors.css');
+
+/* Navbar */
+
+.nav {
+    background-color: var(--gBlack);
+    height: 50px;
+    position: static;
+}
+
+.nav__container {
+    color: white;
+    margin: 0 auto;
+
+    height: inherit;
+    max-width: 1200px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Nav Control(s) elements */
+
+.nav__controls {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.nav__hamburger {
+    background-color: var(--gLightGray);
+    border: 1px solid var(--gGray);
+    border-radius: 0.25rem;
+    min-width: 150px;
+}
+
+.nav__account {
+    display: flex;
+    flex-direction: row;
+    width: inherit;
+}
+
+.nav__account_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav__account_info > *, .nav__account_info::after, .nav__dropdown_button_inner {
+    margin: 0 0.25rem;
+}
+
+.nav__account_info::after {
+    content: '|';    
+}
+
+.nav__dropdown {
+    position: absolute;
+    visibility: hidden;
+
+    translate: 0 -100%;
+    transition: all 150ms ease-in;
+
+    max-width: 150px;
+    z-index: -1;
+}
+
+.nav__dropdown button {
+    background-color: var(--gLightGray);
+    width: 150px;
+    z-index: inherit;
+}
+
+.nav__dropdown_button {
+    background-color: var(--gLightGray);
+    padding: 0;
+}
+
+.nav__dropdown_button_inner {
+    transition:  150ms ease;
+}
+
+.nav__dropdown_visible {
+    visibility: visible;   
+
+    translate: 0;
+    transition: all 150ms ease-out;
+
+    z-index: 0;
+}
+
+.nav__account {
+    cursor: pointer;
+    padding: 0.25rem;
+    z-index: 100;
+}
+
+.nav__account_pfp {
+    border: 2px solid white;
+    border-radius: 100%;
+    height: 35px;
+}
+
+.animate {
+    transform: rotate(90deg);
+}

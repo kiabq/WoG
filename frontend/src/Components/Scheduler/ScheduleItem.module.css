@@ -1,0 +1,10 @@
+.schedule_item {
+    background-color: grey;
+    border-radius: 3px;
+
+    font-size: 14px;
+
+    color: white;
+    text-align: center;
+    margin: 0.2rem 0;
+}
