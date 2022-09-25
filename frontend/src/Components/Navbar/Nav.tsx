@@ -12,7 +12,6 @@ import useAccount from "../../hooks/useAccount";
 
 const Authed = () => {
     const [style, setStyle] = useState<boolean>(false);
-    const refTest = useRef(null);
     const auth = useAuth();
     const accountInfo = useAccount();
 
@@ -36,11 +35,11 @@ const Authed = () => {
                         <p>{accountInfo.user}</p>
                     </div>
                     <button className={`${globals.btn} ${styles.nav__dropdown_button}`}>
-                        <p className={`${styles.nav__dropdown_button_inner} ${style ? styles.animate : ''}`}>{'>'}</p>
+                        <p className={`${styles.nav__dropdown_button_inner} ${style && styles.animate}`}>{'>'}</p>
                     </button>
                 </div>
 
-                <div className={`${styles.nav__dropdown} ${style ? styles.nav__dropdown_visible : '' }`}>
+                <div className={`${styles.nav__dropdown} ${style && styles.nav__dropdown_visible}`}>
                     <Link to='/account'>
                         <button className={`${globals.btn} ${styles.nav__dropdown_element}`}>
                             Account
