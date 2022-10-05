@@ -14,7 +14,7 @@ const getInitialProviders = ({ purest }) => ({
       .request()
       .then(({ body }) => {
         // Combine username and discriminator because discord username is not unique
-        var username = `${body.username}#${body.discriminator}`;
+        let username = `${body.username}#${body.discriminator}`;
         return {
           username,
           email: body.email,
@@ -28,7 +28,7 @@ const getInitialProviders = ({ purest }) => ({
       .auth(access_token)
       .request()
       .then(({ body }) => {
-        // Combine username and discriminator because discord username is not unique
+        // Return object containing all guilds that user is participating in
         return {
           body
         };

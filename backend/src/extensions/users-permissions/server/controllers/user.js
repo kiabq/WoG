@@ -87,20 +87,22 @@ module.exports = {
       .get();
 
     const { id } = ctx.params;
-    const { email, username, password, providerId } = ctx.request.body;
+    const { email, username, password } = ctx.request.body;
 
     const user = await getService('user').fetch(id);
+
     if (!user) {
       throw new NotFoundError(`User not found`);
     }
 
     await validateUpdateUserBody(ctx.request.body);
-
+    
+    /* Possibly need to remove this, only provider being used IS Discord */
     if (user.provider === 'local' && _.has(ctx.request.body, 'password') && !password) {
       throw new ValidationError('password.notNull');
     }
 
-    if (user.provider != 'discord' && _.has(ctx.request.body, 'username')) {
+    if (user.provider !== 'discord' && _.has(ctx.request.body, 'username')) {
       const userWithSameUsername = await strapi
         .query('plugin::users-permissions.user')
         .findOne({ where: { username } });
@@ -119,7 +121,7 @@ module.exports = {
         throw new ApplicationError('Email already taken');
       }
       ctx.request.body.email = ctx.request.body.email.toLowerCase();
-    }    
+    }
 
     let updateData = {
       ...ctx.request.body,
@@ -187,6 +189,8 @@ module.exports = {
     const authUser = ctx.state.user;
     const { query } = ctx;
 
+    console.log('reached')
+
     if (!authUser) {
       return ctx.unauthorized();
     }
@@ -195,4 +199,17 @@ module.exports = {
 
     ctx.body = await sanitizeOutput(user, ctx);
   },
+
+  async updateMe(ctx) {
+    const authUser = ctx.state.user;
+    const { query } = ctx;
+
+    if (!authUser) {
+      return ctx.unauthorized();
+    }
+
+    const user = await getService('user').fetch(authUser.id, query);
+
+    ctx.body = await sanitizeOutput(user, ctx);
+  }
 };

@@ -1,5 +1,7 @@
 'use strict';
 
+// 'tis file is broken. TODO: Fix :V
+
 const register = require('@strapi/plugin-users-permissions/server/register');
 const bootstrap = require('./bootstrap');
 const contentTypes = require('@strapi/plugin-users-permissions/server/content-types');
