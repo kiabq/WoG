@@ -5,6 +5,9 @@ import axios from "axios";
 // Components
 import ScheduleItems from "./ScheduleItems";
 
+// Hooks
+import { useAuth } from "../../hooks/useProvider";
+
 // Styles
 import globals from '../../globals.module.css';
 import styles from './Scheduler.module.css';
@@ -31,7 +34,6 @@ type mappedEl = {
 const Scheduler = () => {
     const [DM, setDM] = useState<Array<DM> | null>(null);
     const [selectedDM, setSelectedDM] = useState<number | null>(null);
-    const refBool = useRef(false);
 
     function handleChange(e: ChangeEvent<HTMLSelectElement>) {
         if (e.currentTarget.value === 'default') {
@@ -42,14 +44,27 @@ const Scheduler = () => {
     }
 
     useEffect(() => {
-        if (!refBool.current) {
-            axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dungeon-masters?populate=%2A`)
-            .then((res) => {
+        const controller = new AbortController;
+        const signal = controller.signal;
+
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dungeon-masters?populate=%2A`, { signal: signal })
+        .then(
+            (res) => {
                 setDM(res.data.data);
-            })
-            .catch((err) => console.log(err));
+            }
+        )
+        .catch((err) => {
+            // Implement Error Handling
+            if (err.code === "ECONNABORTED") {
+                console.log("Error Aborted")
+            } else {
+                console.log(err)
+            }
+        })
+
+        return () => {
+            controller.abort();
         }
-        refBool.current = true;
     }, []);
 
     return (
@@ -62,14 +77,14 @@ const Scheduler = () => {
                             {el.attributes.name}
                         </option>) 
                         : 
-                        <option>Empty</option>}
+                        <option>No DMs</option>}
                 </select>
-                
-                <p>PST</p>
 
-                <div className={styles.schedule_items}>
-                    {(DM != null && selectedDM != null) ? <ScheduleItems info={DM[selectedDM]}/> : <p>Select DM</p>}
+                <div className={styles.schedule__items}>
+                    {(DM !== null && selectedDM != null) ? <ScheduleItems info={DM[selectedDM]}/> : <p>Select DM</p>}
                 </div>
+
+                <p>* All Timezones are in Pacific Standard Time</p>
             </div>
         </div>
     )
