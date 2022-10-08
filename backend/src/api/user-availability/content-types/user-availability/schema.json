@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_availabilities",
+  "info": {
+    "singularName": "user-availability",
+    "pluralName": "user-availabilities",
+    "displayName": "User Availability",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "day": {
+      "type": "component",
+      "repeatable": true,
+      "component": "day.day"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_availability"
+    }
+  }
+}
