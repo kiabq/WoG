@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_times_times",
+  "info": {
+    "displayName": "Available-Times",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "start_time": {
+      "type": "time"
+    },
+    "end_time": {
+      "type": "time"
+    }
+  }
+}
