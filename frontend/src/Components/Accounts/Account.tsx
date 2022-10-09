@@ -10,11 +10,16 @@ import { useAuth } from "../../hooks/useProvider";
 import useAccount from "../../hooks/useAccount";
 
 const Account = () => {
+    const [edit, setEdit] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const auth = useAuth();
 
-    const accountInfo = useAccount();
+    const accountInfo = useAccount(edit);
+
+    function toggleEdit() {
+        setEdit(!edit);
+    }
 
     if (auth.token && auth.user && accountInfo.error === undefined) {
         return (
@@ -32,7 +37,7 @@ const Account = () => {
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A explicabo, cupiditate ducimus cum ipsa qui.</p>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque possimus enim, minima corrupti nesciunt odit saepe reprehenderit asperiores voluptas optio? Nemo perspiciatis veniam nobis, odit sint enim hic ullam ipsam architecto mollitia! Aliquam officiis earum exercitationem porro tempora minus qui, quibusdam explicabo fugit perspiciatis architecto et, ducimus vitae at laudantium.</p>
                     </div>
-                    <AccountForms account={accountInfo}/>
+                    <AccountForms account={accountInfo} toggleEdit={toggleEdit} isEdit={edit}/>
                 </div>
             </div>
         )
