@@ -1,16 +1,17 @@
 // Libraries
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // Hooks
-import { useAuth } from "../../hooks/useProvider";
+import { useAuth } from "../hooks/useProvider";
 
 const LoginRedirect = () => {
-  const auth = useAuth();
+  const [error, setError] = useState(undefined);
+  const apiRef = useRef(true);
   const location = useLocation();
   const navigate = useNavigate();
-  const apiRef = useRef(true);
-  const [error, setError] = useState(undefined);
+  const auth = useAuth();
 
   useEffect(() => {
 
@@ -21,10 +22,11 @@ const LoginRedirect = () => {
           return res;
         }
       })
-      .then((res) => res?.json())
+      .then((res) => {
+        return res?.json()
+      })
       .then(
         (res) => {
-          console.log(res)
           auth.login(res.jwt, res.user.username);
           navigate('/');
         },
