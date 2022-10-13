@@ -6,14 +6,15 @@ import axios from 'axios';
 // Components
 import Home from './Components/Home/Home';
 import Account from './Components/Accounts/Account';
-import LoginRedirect from './Components/Accounts/LoginRedirect';
+import LoginRedirect from './routing/LoginRedirect';
 
 // Hooks
-import { ConsumeAuth, PublicRoute, PrivateRoute, ProvideAuth, useAuth } from './hooks/useProvider';
+import { PublicRoute, PrivateRoute, useAuth } from './hooks/useProvider';
+import { AccountContext, useAcct } from './hooks/useAccount';
 
 const App = () => {
   return (
-    <>
+    <AccountContext>
       <Router>
         <Routes>
           <Route path='/' element={<Home/>}/>
@@ -23,10 +24,10 @@ const App = () => {
           <Route element={<PrivateRoute/>}>
             <Route path='/account' element={<Account />}/>
           </Route>
-          {/* <Route path='*' element={<p>Not Found</p>} /> */}
+          <Route path='*' element={<p>Not Found</p>} />
         </Routes>
       </Router>
-    </>
+    </AccountContext>
   )
 }
 
