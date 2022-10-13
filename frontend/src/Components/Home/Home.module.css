@@ -22,12 +22,4 @@
     justify-content: center;
 }
 
-.footer {
-    display: flex;
-    justify-content: center;
-}
-
-.footer > p {
-    margin: 0 0.5rem;
-}
 

@@ -8,12 +8,12 @@ import styles from './Nav.module.css';
 
 // Hooks
 import { useAuth } from "../../hooks/useProvider";
-import useAccount from "../../hooks/useAccount";
+import { useAcct } from "../../hooks/useAccount";
 
 const Authed = () => {
     const [style, setStyle] = useState<boolean>(false);
     const auth = useAuth();
-    const accountInfo = useAccount();
+    const accountInfo = useAcct();
 
     function logout() {
         auth.logout();
@@ -39,17 +39,18 @@ const Authed = () => {
                     </button>
                 </div>
 
-                <div className={`${styles.nav__dropdown} ${style && styles.nav__dropdown_visible}`}>
-                    <Link to='/account'>
-                        <button className={`${globals.btn} ${styles.nav__dropdown_element}`}>
-                            Account
+                <div className={`${styles.nav__dropdown} ${styles.nav_test} ${style && styles.nav__dropdown_visible}`}>
+                    <div>
+                        <Link to='/account'>
+                            <button className={`${globals.btn} ${styles.nav__dropdown_element}`}>
+                                Account
+                            </button>
+                        </Link>
+                        <button className={`${globals.btn} ${styles.nav__dropdown_element}`} onClick={() => {logout()}}>
+                            Logout
                         </button>
-                    </Link>
-                    <button className={`${globals.btn} ${styles.nav__dropdown_element}`} onClick={() => {logout()}}>
-                        Logout
-                    </button>
+                    </div>
                 </div>
-
             </div>
         </>
     )
@@ -62,7 +63,7 @@ const NotAuthed = () => {
                 <button className={`${globals.btn} ${styles.nav__controls__btn}`}>Login with Discord</button>
             </a>
         </div>
-    )
+    ) 
 }
 
 const Nav = () => {
@@ -75,7 +76,7 @@ const Nav = () => {
                     <p>Logo</p>
                 </div>
                 <div className={styles.nav__controls}>
-                    {(auth.token && auth.user) && <Authed />}
+                    {(auth.token && auth.user) && <Authed/>}
                     {(!auth.token && !auth.user) && <NotAuthed />}
                 </div>
             </div>
