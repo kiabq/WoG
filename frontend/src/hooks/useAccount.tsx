@@ -1,30 +1,41 @@
 // Libraries
-import React, { useState, useEffect, useRef } from "react";
+import React, { ReactNode, useState, useEffect, useLayoutEffect, useContext, createContext, useRef } from "react";
 import axios from "axios";
 
 // Hooks
 import { useAuth } from "./useProvider";
 
-const useAccount = () => {
-    const [error, setError] = useState<string>();
-    const [user, setUser] = useState<string>();
-    const [email, setEmail] = useState<string>();
-    const [avatar, setAvatar] = useState<string>();
-    const [availability, setAvailability] = useState<Array<object> | null>();
+// Types
+import { AccountType } from "../Components/Accounts/types";
+
+const AccountCtx = createContext<any>(null);
+
+const INITIAL_STATE = {
+    error: undefined,
+    user: undefined,
+    email: undefined,
+    avatar: undefined,
+    availability: undefined
+}
+
+export const AccountContext = ({ children }: { children: ReactNode }) => {    
+    const [data, setData] = useState<AccountType>(INITIAL_STATE);
+    
+    const [error, setError] = useState<String>();
     const auth = useAuth();
 
     useEffect(() => {
-        // Used to abort in case of failed API call and/or effect cleanup.
+        setError(undefined);
+
         const controller = new AbortController;
         const signal = controller.signal;
-        setError(undefined);
 
         let url = `${process.env.REACT_APP_BACKEND_URL}/api/users/me?populate[0]=*&populate[1]=user_availability.day`;
 
         let config = {
             signal: signal,
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${auth.token}`
             }
         }
 
@@ -36,32 +47,40 @@ const useAccount = () => {
         })
         .then(
             (res) => {
-                setUser(res?.data.username);
-                setEmail(res?.data.email);
-                setAvatar(`https://cdn.discordapp.com/avatars/${res?.data.providerId}/${res?.data.avatar}.png`);
-                setAvailability(res?.data.user_availability?.day);
+                // TODO: Reformat response to a more readable format.
+                setData({
+                    error: undefined,
+                    user: res?.data.username, 
+                    email: res?.data.email, 
+                    avatar: `https://cdn.discordapp.com/avatars/${res?.data.providerId}/${res?.data.avatar}.png`,
+                    availability: { 
+                        id: res?.data.user_availability.id, days: res?.data.user_availability?.day 
+                    }
+                })
             }
         )
         .catch((err) => {
-            if (err.code === "ECONNABORTED") {
-                console.log("Error Aborted")
+            if (err.code === "ERR_BAD_REQUEST") {
+                auth.logout();
+            } else if (err.code === "ECONNABORTED" || "ERR_CANCELED") {
+                // Error Handling Logic
             } else {
-                console.log(err);
+                // Error Handling Logic
             }
         })
 
-        return () => {
+        return (() => {
             controller.abort();
-        }
-    }, []);
+        })
+    }, [auth]);
 
-    return {  
-        error,
-        user,
-        email,
-        avatar,
-        availability
-    }
+    return (
+        <AccountCtx.Provider value={data}>
+            {children}
+        </AccountCtx.Provider>
+    )
 }
 
-export default useAccount;
+export const useAcct = () => {
+    return useContext(AccountCtx);
+}
