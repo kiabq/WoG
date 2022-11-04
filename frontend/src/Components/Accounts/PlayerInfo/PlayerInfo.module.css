@@ -1,0 +1,22 @@
+.playerinfo {
+    width: 200px;
+
+}
+ 
+.playerinfo__form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.playerinfo__form__inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .playerinfo__form__inputs > div {
+    display: flex;
+    flex-direction: row;
+} */
+
+
