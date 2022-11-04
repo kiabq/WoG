@@ -1,0 +1,134 @@
+/* Availability Main Div */
+.av {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Availability Options */
+
+.av__opts {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem;
+}
+
+.av__day {
+    display: inherit;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    height: 150px;
+    padding: 2px;
+}
+
+.av__day:nth-child(n) {
+    border-right: solid lightgray 1px;
+}
+
+.av__day:last-child {
+    border: none;
+}
+
+.av__day__opt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    color: white;
+    background-color: grey;
+    margin: 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.av__day__opt__tim {
+    font-size: 12px;
+    text-align: left;
+}
+
+.av__sel {
+    background-color: salmon;
+}
+
+/* Buttons */
+
+.av__dis {
+}
+
+.av__edi {
+    border: 1px solid black;
+    border-radius: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* REFACTORING NEEDED!!! */
+.test {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    vertical-align: middle;
+    user-select: all;
+    text-decoration: dashed;
+    border: 1px solid black;
+}
+
+.test:checked {
+    border-radius: 50%;
+    background-color: red;
+}
+
+.tempLabelClass {
+    position: absolute;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 1;
+}
+
+ul {
+    display: flex;
+}
+
+ul > li, ul > li > div {
+    display: flex;
+    flex-direction: column;
+}
+
+ul > li > div, ul > li {
+    display: flex;
+    position: inherit;
+    align-items: center;
+    justify-content: center;
+}
+
+form > div {
+    display: flex;
+    flex-direction: row;
+}
+
+form > div > div {
+    display: flex;
+    flex-direction: column;
+}
+
+form > div > div > ul {
+    display: flex;
+    flex-direction: column;
+}
+
+form > div > div > ul > li {
+    display: flex;
+    flex-direction: row;
+}
+
+form > div > div > div {
+    display: flex;
+    flex-direction: column;
+}
+

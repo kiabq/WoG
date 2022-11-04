@@ -2,58 +2,43 @@
 import React, { useEffect, useState } from "react";
 
 // Components
-import AccountAvailabilityForm from "./AccountAvailabilityForm";
-import AccountAvailability from "./AccountAvailability";
+import AccountAvailabilityForm from "./AvailabilityForm/AccountAvailabilityForm";
+import AccountAvailability from "./AvailabilityForm/AccountAvailability";
+import PlayerInfoForm from "./PlayerInfo/PlayerInfoForm";
+import PlayerInfo from "./PlayerInfo/PlayerInfo";
 
 // Styles
-import styles from './AccountForms.module.css';
+import styles from './Account.module.css';
+import globals from '../../globals.module.css';
+
+// Hooks
+import { useAcct } from "../../hooks/useAccount";
 
 // Types
-import { ViewPropTypes, dayObj, hasKey } from './types';
+import { Edit } from './types';
 
-// Helper function used to determine if a provided key is indeed an index 
-// of the provided object.
-// https://dev.to/mapleleaf/indexing-objects-in-typescript-1cgi
+const AccountForms = () => {
+    const [isEdit, setEdit] = useState<Edit>(Edit.none);
+    const { accountInfo } = useAcct();
 
-const AccountForms = ({ account, isEdit, toggleEdit}: ViewPropTypes) => {
-    const [checked, setChecked] = useState<dayObj>()
-    
-    useEffect(() => {
-        let obj: dayObj = { 
-            sunday: false, 
-            monday: false, 
-            tuesday: false, 
-            wednesday: false, 
-            thursday: false, 
-            friday: false, 
-            saturday: false 
-        }
+    const makeEdit = (editType: Edit) => {
+        setEdit(editType);
+    }
 
-        // Add Error Handling
-        if (account.availability) {
-            for (let i = 0; i < account.availability.days.length; i++) {
-                let day: string = account.availability.days[i].day;
-                if (hasKey(obj, day)) {
-                    obj[day] = true;
-                }
-            }
-    
-            setChecked(obj);
-        }
-    }, [account]);
-    
     return (
-        <div>
-            <button onClick={() => toggleEdit()}>Edit</button>
-            {isEdit && <AccountAvailabilityForm 
-                account={account} 
-                toggleEdit={toggleEdit}
-                checked={checked}
-            />}
-            {!isEdit && <AccountAvailability 
-                checked={checked}
-            />}
+    <>
+        <div className={`${styles.account__info} ${globals.pd4}`}>
+            <p>{accountInfo.user}</p>
+            <img src={accountInfo.avatar} className={`${styles.account__info__avatar}`}/>
+            { isEdit === 1 ? <PlayerInfoForm toggleEdit={makeEdit}/> : <PlayerInfo toggleEdit={makeEdit}/> }
         </div>
+        <div className={`${styles.account__forms} ${globals.pd4}`}>
+            <div className={styles.account__consumable}>
+                { isEdit === 2 ? <AccountAvailabilityForm toggleEdit={makeEdit}/> : <AccountAvailability toggleEdit={makeEdit}/> }
+                <h1>Optional Questions</h1>
+            </div>
+        </div>
+    </>
     )
 }
 

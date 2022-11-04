@@ -3,47 +3,42 @@ import React, { useState, useEffect, useRef } from "react";
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
 
 // Components
+import Nav from "../Navbar/Nav";
 import AccountForms from "./AccountForms";
+
+// Styles
+import styles from './Account.module.css';
+import globals from '../../globals.module.css';
 
 // Hooks
 import { useAuth } from "../../hooks/useProvider";
-import useAccount from "../../hooks/useAccount";
+import { useAcct } from "../../hooks/useAccount";
+
+// declare namespace Intl {
+//     type Key = 'calendar' | 'collation' | 'currency' | 'numberingSystem' | 'timeZone' | 'unit';
+  
+//     function supportedValuesOf(input: Key): string[];
+// }
+
+// console.log(Intl.supportedValuesOf('timeZone'));
 
 const Account = () => {
-    const [edit, setEdit] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
+    const { accountInfo } = useAcct();
     const auth = useAuth();
 
-    const accountInfo = useAccount(edit);
-
-    function toggleEdit() {
-        setEdit(!edit);
-    }
-
-    if (auth.token && auth.user && accountInfo.error === undefined) {
+    
+    if (auth?.token && auth?.user && accountInfo.error === undefined) {
         return (
-            <div>
-                <div>
-                    <p>Account for: {accountInfo.user}</p>
-                    <p>Email: {accountInfo.email}</p>
-                    <img src={accountInfo.avatar} />
-                    <a href='https://discord.gg/75MuBBptxB'>Join Discord</a>
+            <>
+                <Nav/>
+                <div className={`${styles.account} ${globals.pd6t}`}>
+                    <AccountForms/>
                 </div>
-
-                <h2>Account Info</h2>
-                <div>
-                    <div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A explicabo, cupiditate ducimus cum ipsa qui.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque possimus enim, minima corrupti nesciunt odit saepe reprehenderit asperiores voluptas optio? Nemo perspiciatis veniam nobis, odit sint enim hic ullam ipsam architecto mollitia! Aliquam officiis earum exercitationem porro tempora minus qui, quibusdam explicabo fugit perspiciatis architecto et, ducimus vitae at laudantium.</p>
-                    </div>
-                    <AccountForms account={accountInfo} toggleEdit={toggleEdit} isEdit={edit}/>
-                </div>
-            </div>
+            </>
         )
     } else {
         return (
-            <Navigate to='/' />
+            <Navigate to='/'/>
         )
     }
 }
