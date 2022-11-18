@@ -48,7 +48,7 @@ function splitString(string: string): number {
 }
 
 const ScheduleItems = ({info}: PropTypes) => {
-    const convertArrToObj = (arr: Array<any>, key: string) => {
+    function convertArrToObj (arr: Array<any>, key: string) {
         const dayArr = {
             sunday: [],
             monday: [],
@@ -61,9 +61,9 @@ const ScheduleItems = ({info}: PropTypes) => {
 
         return arr.reduce((obj, item) => {
             let start_str = spliceString(item.start_time, 5, item.start_time.length, '');
-            let end_str = spliceString(item.end_time, 5, item.end_time.length, '');
+            // let end_str = spliceString(item.end_time, 5, item.end_time.length, '');
 
-            var arr: Array<mappedEl> = [];
+            let arr: Array<mappedEl> = [];
 
             switch(item.day) {
                 case 'sunday':
@@ -113,14 +113,14 @@ const ScheduleItems = ({info}: PropTypes) => {
         return el.attributes;
     });
 
-    const fMap: fMappedEl = convertArrToObj(map, 'day');
+    const fMap: fMappedEl = convertArrToObj(map, "day");
     const renderKeys = [fMap.sunday, fMap.monday, fMap.tuesday, fMap.wednesday, fMap.thursday, fMap.friday, fMap.saturday];
 
     return (
         <>
-            { renderKeys.map((key: any) => {
+            {renderKeys.map((key: any /* Change this type */, index: number) => {
                 return (
-                    <div className={styles.schedule__day}>
+                    <div className={styles.schedule__day} key={index} /* Change this key */>
                         <ScheduleItem items={key}/>
                     </div>
                 );

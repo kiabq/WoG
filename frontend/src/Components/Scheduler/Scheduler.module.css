@@ -1,19 +1,20 @@
 .schedule {
+    align-items: center;
     box-sizing: border-box;
+    background-color: lightseagreen;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 1.5rem;
+    padding: 2rem;
+    overflow: scroll;
+    min-width: 50%;
 }
 
-.schedule > div {
-    justify-content: center;
-    align-items: center;
-    justify-items: center;
-    justify-self: center;
+.schedule__header {
+    width: 50%;
+    text-align: right;
 }
 
-.schedule_items {
+.schedule__items {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -23,9 +24,9 @@
     background-color: #dce2e3;
     border-radius: 5px;
 
-    width: 155px;
+    width: 140px;
     height: auto;
-    min-height: 175px;
+    min-height: 165px;
 
     margin: 0.2rem;
     padding: 0.5rem;
@@ -33,4 +34,19 @@
 
 .schedule__day > p {
     text-align: center;
+}
+
+/* Schedule Timezone */
+
+/* TEMP */
+.schedule__timezone {
+    background-color: black;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: white;
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 3px;
+    text-align: center;
+    width: 30px;
 }

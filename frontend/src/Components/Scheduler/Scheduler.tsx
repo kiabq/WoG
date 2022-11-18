@@ -9,8 +9,8 @@ import ScheduleItems from "./ScheduleItems";
 import { useAuth } from "../../hooks/useProvider";
 
 // Styles
-import globals from '../../globals.module.css';
-import styles from './Scheduler.module.css';
+import globals from "../../globals.module.css";
+import styles from "./Scheduler.module.css";
 
 interface DM {
     id: number,
@@ -36,7 +36,7 @@ const Scheduler = () => {
     const [selectedDM, setSelectedDM] = useState<number | null>(null);
 
     function handleChange(e: ChangeEvent<HTMLSelectElement>) {
-        if (e.currentTarget.value === 'default') {
+        if (e.currentTarget.value === "default") {
             setSelectedDM(null);
         } else {
             setSelectedDM(e.currentTarget.selectedIndex - 1);
@@ -69,9 +69,9 @@ const Scheduler = () => {
 
     return (
         <div className={styles.schedule}>
-            <div>
-                <select name='DM' id='DM' onChange={(e) => handleChange(e)}>
-                    <option value='default'>Select DM</option>
+                <h2 id="schedule" className={`${styles.schedule__header} rb_bld_h4`}>Game Times</h2>
+                <select name="DM" id="DM" onChange={(e) => handleChange(e)}>
+                    <option value="default">Select DM</option>
                     {DM && DM ? DM.map((el) => 
                         <option key={el.id} value={el.attributes.name}>
                             {el.attributes.name}
@@ -85,7 +85,6 @@ const Scheduler = () => {
                 </div>
 
                 <p>* All Timezones are in Pacific Standard Time</p>
-            </div>
         </div>
     )
 }
