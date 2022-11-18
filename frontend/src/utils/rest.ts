@@ -4,6 +4,14 @@ import axios, { AxiosResponse } from "axios"
 // Hooks
 import { useAcct } from "../hooks/useAccount"
 
+/* USER AVAILABILITY */
+
+/**
+ * @param {Object} formData Object Argument (Data to be sent in the request)
+ * @param {string} token JWT Authentication token
+ * @returns {Promise} Represents the promise that will be called to initiate the request
+ */
+
 // Function used to make POST req. to create availability data.
 // A relation between the availability data and the user account will also be created.
 export function createAvailability(formData: Array<Object>, token: string) {
@@ -43,6 +51,7 @@ export function createAvailability(formData: Array<Object>, token: string) {
 }
 
 // Function that will update the availability information if it already exists
+
 export function updateAvailability(formData: Array<Object>, token: string) {
     const config = {
         Authorization: `Bearer ${token}`
@@ -69,16 +78,34 @@ export function updateAvailability(formData: Array<Object>, token: string) {
     );
 }
 
-export function updateUserInformation(formData: Object, token: string) {
+/* USER INFORMATION */
+
+/**
+ * @param {Object} formData Object Argument (Data to be sent in the request)
+ * @param {string} token JWT Authentication token
+ * @param {number} category Used to determine what category to update in the request
+ * @returns {Promise} Represents the promise that will be called to initiate the request
+ */
+
+export function updateUserInformation(formData: Object, token: string, category: number) {
+    function getCategoryType() {
+        switch (category) {
+            case 1:
+                return "user_info";
+            case 2: 
+                return "optionalQuestions";
+            default:
+                throw new Error("Something went wrong!");
+        }
+    }
+
     const config = {
         Authorization: `Bearer ${token}`
     }
 
-    console.log(formData)
-
     function update() {
         return axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/users/me/update`, 
-            { user_info: formData },
+            { [`${getCategoryType()}`]: formData },
             { headers: config }
         )
     }
