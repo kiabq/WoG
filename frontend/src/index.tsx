@@ -9,7 +9,6 @@ import App from './App';
 import './index.css';
 
 // Hooks
-import { AccountContext } from './hooks/useAccount';
 import { AuthContext } from './hooks/useProvider';
 
 const root = ReactDOM.createRoot(
