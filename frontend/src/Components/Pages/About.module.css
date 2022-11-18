@@ -1,0 +1,17 @@
+.about {
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: aquamarine;
+}
+
+.about > div {
+    width: 50%;
+}
+
+.about > div > h2 {
+    text-align: left;
+    margin: 20px 0;
+}

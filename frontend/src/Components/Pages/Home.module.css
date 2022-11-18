@@ -1,0 +1,45 @@
+.main__container__content {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.main__container__bg {
+    /* background-image: url("../../../public/images/home_background.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center; */
+    background-color: lightgreen;
+
+    color: black;
+    
+    height: 600px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__container__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.main__container__button {
+    text-align: center;
+    /* padding: 10px;
+    margin: 5px; */
+    width: 115px;
+    padding: 0.25em 0.75em;
+}
+
+.main__container__button__schedule {
+    background-color: var(--gLightGray);
+}
+
+.main__container__button__signin {
+    background-color: var(--oBlue);
+}
+
