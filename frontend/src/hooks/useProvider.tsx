@@ -1,6 +1,8 @@
 // Libraries
 import React, { ReactNode, useState, useLayoutEffect, useEffect, createContext, useContext } from "react";
 import { Navigate, Outlet, Route, useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer/Footer";
+import Nav from "../Components/Navbar/Nav";
 
 interface ContextType {
     token: string | null,
@@ -13,13 +15,13 @@ interface ContextType {
 const AuthCtx = createContext<ContextType | null>(null)
 
 function localStorageSetter(token: string, user: string) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', user);
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", user);
 }
 
 function localStorageCleanup() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 }
 
 export const AuthContext = ({ children }: { children: ReactNode }) => {
@@ -37,8 +39,8 @@ export const useAuth = () => {
 }
 
 export const useProvideAuth = () => {
-    const [token, setToken] = useState(localStorage.getItem('token'));
-    const [user, setUser] = useState(localStorage.getItem('user'));
+    const [token, setToken] = useState(localStorage.getItem("token"));
+    const [user, setUser] = useState(localStorage.getItem("user"));
 
     const login = (t: string, u: string) => {
         // t: Auth token
@@ -57,8 +59,8 @@ export const useProvideAuth = () => {
     // Add a way to check token:
     // if user is logged in for more than 15d to 30d, token may expire, this needs to be checked.
     const checkLogin = () => {
-        let checkT = localStorage.getItem('token');
-        let checkU = localStorage.getItem('user');
+        let checkT = localStorage.getItem("token");
+        let checkU = localStorage.getItem("user");
 
         if (checkT !== token || checkU !== user) {
             logout();
@@ -77,15 +79,27 @@ export const useProvideAuth = () => {
     };
 }
 
-export const PublicRoute = () => {
-    const auth = useAuth();
+// Routes
 
-    return (auth?.user && auth?.token ? <Navigate to='/'/> : <Outlet/>);
+const RouteComponent = () => {
+    return (
+        <div className="site-wrapper">
+            <Nav/>
+            <div className="content-wrapper">
+                <Outlet/>
+            </div>
+            <Footer/>
+        </div>
+    );
+}
+
+export const PublicRoute = () => {
+    return <RouteComponent/>
 }
 
 export const PrivateRoute = () => {
     const auth = useAuth();
     auth?.checkLogin();
 
-    return (auth ? <Outlet/> : <Navigate to='/'/>);
+    return (auth ? <RouteComponent/> : <Navigate to='/'/>);
 }

@@ -14,7 +14,7 @@ const useAvailability = () => {
     const { accountInfo } = useAcct();
 
     const [checked, setChecked] = useState<Map<string, userData>>(new Map());
-    const dayOptions = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const dayOptions = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
     function getAvailableDays(day: string) {
         const availibilityInfo = checked.get(day);
