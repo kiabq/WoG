@@ -5,25 +5,48 @@ type AccountType = {
     email: string | undefined,
     avatar: string | undefined,
     availability: any, // Add appropriate type
-    name: string | undefined,
-    dob: string | undefined,
-    invoiceEmail: string | undefined,
-    pronoun?: string | undefined
+    user_info: UserInfo | undefined,
+    optional: OptionalQuestions,
 }
 
-type FormIterateType = {
-    [key: string]: { value: Function } | HTMLInputElement
+type OptionalQuestions = {
+    experience: number,
+    combat: number,
+    simulation: number,
+    exploration: number,
+    interactions: number,
+    resources: number,
+    character_development: number
+} | null
+
+type UserInfo = {
+    name: string,
+    dob: string,
+    invoiceEmail: string,
+    pronoun: string
+}
+
+// Form Types
+
+type IndexType<T> = {
+    [key: string]: T
 }
 
 // Edit Types
 type EditFnProp = {
-    toggleEdit: (val: Edit) => void
+    toggleEdit: (val: Edit) => void,
 }
 
 export const enum Edit {
     none = 0,
     player = 1,
-    availability = 2
+    availability = 2,
+    optional = 3
+}
+
+export const enum RequestCategory {
+    user_info = 1,
+    optionalQuestions = 2
 }
 
 // Helper function used to determine if a provided key is indeed an index 
@@ -35,6 +58,7 @@ export function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
 
 export type { 
     AccountType,
-    FormIterateType,
+    OptionalQuestions,
+    IndexType,
     EditFnProp
 };
