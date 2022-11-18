@@ -1,28 +1,55 @@
 // Libraries
 import React, { ReactNode, useState, useEffect, useLayoutEffect, useContext, createContext, useRef } from "react";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 // Hooks
 import { useAuth } from "./useProvider";
 
 // Types
-import { AccountType } from "../Components/Accounts/types";
+import { AccountType, hasKey } from "../Components/Accounts/types";
 
-const AccountCtx = createContext<any>(null);
+interface AccountContextInterface {
+    accountInfo: AccountType,
+    setAccountInfo: React.Dispatch<React.SetStateAction<AccountType>>,
+    triggerUpdate: () => void
+}
 
+// https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context/#extended-example
+const AccountCtx = createContext<AccountContextInterface>({} as AccountContextInterface);
+
+export const AccountContext = ({ children }: { children: ReactNode }) => {    
+    const acct = useFetchAcctHook();
+
+    return (
+        <AccountCtx.Provider value={acct}>
+            {children}
+        </AccountCtx.Provider>
+    )
+}
+
+export const useAcct = () => {
+    return useContext(AccountCtx);
+}
+ 
 const INITIAL_STATE = {
     error: undefined,
     user: undefined,
-    email: undefined,
+    email: undefined, // Related to Dicord Account.
     avatar: undefined,
-    availability: undefined
+    availability: undefined,
+    user_info: undefined,
+    optional: null,
 }
 
-export const AccountContext = ({ children }: { children: ReactNode }) => {    
-    const [data, setData] = useState<AccountType>(INITIAL_STATE);
-    
-    const [error, setError] = useState<String>();
+export const useFetchAcctHook = () => {
+    const [accountInfo, setAccountInfo] = useState<AccountType>(INITIAL_STATE);
+    const [update, setUpdate] = useState<boolean>(false);
+    const [error, setError] = useState(undefined);
     const auth = useAuth();
+
+    const triggerUpdate = () => {
+        setUpdate(!update);
+    }
 
     useEffect(() => {
         setError(undefined);
@@ -30,38 +57,49 @@ export const AccountContext = ({ children }: { children: ReactNode }) => {
         const controller = new AbortController;
         const signal = controller.signal;
 
-        let url = `${process.env.REACT_APP_BACKEND_URL}/api/users/me?populate[0]=*&populate[1]=user_availability.day`;
+        // Get user profile (move to ENV variable).
+        const url = `${process.env.REACT_APP_BACKEND_URL}/api/users/me`;
 
-        let config = {
+        const config = {
             signal: signal,
             headers: {
-                'Authorization': `Bearer ${auth.token}`
+                "Authorization": `Bearer ${auth?.token}`
             }
         }
 
         axios.get(url, config)
         .then((res) => {
-            if (res.statusText === 'OK') {
+            if (res.statusText === "OK") {
                 return res;
             }
         })
         .then(
             (res) => {
-                // TODO: Reformat response to a more readable format.
-                setData({
+                const availablilityInfo = res?.data.user_availability;
+                const userInfo = res?.data.user_info;
+                const optionalUserInfo = res?.data.optionalQuestions;
+
+                setAccountInfo({
                     error: undefined,
                     user: res?.data.username, 
                     email: res?.data.email, 
                     avatar: `https://cdn.discordapp.com/avatars/${res?.data.providerId}/${res?.data.avatar}.png`,
                     availability: { 
-                        id: res?.data.user_availability.id, days: res?.data.user_availability?.day 
-                    }
-                })
+                        id: availablilityInfo?.id, days: availablilityInfo?.day
+                    },
+                    user_info: {
+                        name: userInfo?.name,
+                        invoiceEmail: userInfo?.invoiceEmail,
+                        dob: userInfo?.dob,
+                        pronoun: userInfo?.pronoun
+                    },
+                    optional: optionalUserInfo || null,
+                });
             }
         )
         .catch((err) => {
-            if (err.code === "ERR_BAD_REQUEST") {
-                auth.logout();
+            if (err.code === "ERR_BAD_REQUEST" || err.status === 401) {
+                auth?.logout();
             } else if (err.code === "ECONNABORTED" || "ERR_CANCELED") {
                 // Error Handling Logic
             } else {
@@ -71,16 +109,20 @@ export const AccountContext = ({ children }: { children: ReactNode }) => {
 
         return (() => {
             controller.abort();
-        })
-    }, [auth]);
+        });
+    }, [auth, update]);
 
-    return (
-        <AccountCtx.Provider value={data}>
-            {children}
-        </AccountCtx.Provider>
-    )
+    return ({
+        accountInfo,
+        setAccountInfo,
+        triggerUpdate
+    })
 }
 
-export const useAcct = () => {
-    return useContext(AccountCtx);
+export function triggerAccountUpdate(res: AxiosResponse<any, any> | void, account: AccountContextInterface) {
+    // Narrow response type
+    if (res && res.status === 200) {
+        account.triggerUpdate();
+        console.log("Reached")
+    }
 }
