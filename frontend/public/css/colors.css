@@ -1,10 +1,11 @@
 :root {
-    --gBlack: #090909;
+    --gBlack: #2d2730;
     --gGray: #5e5e5e;
     --gLightGray: #7e7e7e;
     --gWhite: #ffffff;
+    --gWhite2: #ededed;
     --erRed: #FE5F55;
     --wYell: #FFE45E;
-    --oBlue: #5AA9E6;
+    --oBlue: #5CA3EB;
 }
 
