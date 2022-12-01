@@ -1,5 +1,8 @@
 // Libraries
-import React, { ReactElement, useRef } from "react";
+import React, { ReactElement, useRef, ReactNode } from "react";
+
+// Styles
+import st from "./OptionalPlayerInfo.module.css";
 
 // Types
 import { Edit, OptionalQuestions } from "../types";
@@ -50,27 +53,38 @@ const RadioBox = ({ children, value, optional, editType }: Props) => {
 
     if (typeof children.props.children === "string") {
         return (
-            <div>
+            <div className={`${st.radio__form__element}`}>
                 <p>{children.props.children}</p>
-                {fillRef(5, ref, value, optional, editType).map((element: ReactElement) => {
-                    return (
-                        <>
-                            {element}
-                        </>
-                    )
-                })}
+                <div className={st.temp}>
+                    <span className="ub_lgt">Not Interested</span>
+                    <div className={st.radio__form__input}>
+                        {fillRef(5, ref, value, optional, editType).map((element: ReactElement) => {
+                            return (
+                                <>
+                                    {element}
+                                </>
+                            )
+                        })}
+                    </div>
+                    <span className="ub_lgt">Interested</span>
+                </div>
             </div>
         )
     } else if (Array.isArray(children.props.children)) {
-        let length = children.props.children.length;
+        const length = children.props.children.length;
         
         return (
-            <div>
+            <div className={st.radio__form__element}>
                 {fillRef(length, ref, value, optional, editType).map((element: ReactElement, index: number) => {
                     return (
-                        <div>
-                            <p>{children.props.children[index]}</p>
+                        <div style={{
+                            display: "flex", 
+                            flexDirection: "row", 
+                            paddingTop: "10px", 
+                            paddingBottom: "10px"
+                            }}>
                             {element}
+                            <p>{children.props.children[index]}</p>
                         </div>
                     )
                 })}
