@@ -1,12 +1,12 @@
 // Libraries
-import React, { ReactNode, useState, useEffect, useLayoutEffect, useContext, createContext, useRef } from "react";
+import React, { ReactNode, useState, useEffect, useContext, createContext } from "react";
 import axios, { AxiosResponse } from "axios";
 
 // Hooks
 import { useAuth } from "./useProvider";
 
 // Types
-import { AccountType, hasKey } from "../Components/Accounts/types";
+import { AccountType } from "../Components/Accounts/types";
 
 interface AccountContextInterface {
     accountInfo: AccountType,
@@ -90,7 +90,7 @@ export const useFetchAcctHook = () => {
                     user_info: {
                         name: userInfo?.name,
                         invoiceEmail: userInfo?.invoiceEmail,
-                        dob: userInfo?.dob,
+                        age: userInfo?.age,
                         pronoun: userInfo?.pronoun
                     },
                     optional: optionalUserInfo || null,

@@ -1,6 +1,8 @@
 // Libraries
-import React, { ReactNode, useState, useLayoutEffect, useEffect, createContext, useContext } from "react";
-import { Navigate, Outlet, Route, useNavigate } from "react-router-dom";
+import { ReactNode, useState, createContext, useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom";
+
+// Components
 import Footer from "../Components/Footer/Footer";
 import Nav from "../Components/Navbar/Nav";
 
@@ -101,5 +103,5 @@ export const PrivateRoute = () => {
     const auth = useAuth();
     auth?.checkLogin();
 
-    return (auth ? <RouteComponent/> : <Navigate to='/'/>);
+    return (auth?.token ? <RouteComponent/> : <Navigate to="/"/>);
 }

@@ -21,7 +21,7 @@ type OptionalQuestions = {
 
 type UserInfo = {
     name: string,
-    dob: string,
+    age: number,
     invoiceEmail: string,
     pronoun: string
 }

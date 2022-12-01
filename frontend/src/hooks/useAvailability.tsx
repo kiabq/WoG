@@ -1,6 +1,5 @@
 // Libraries
-import React, { useState, useEffect, useReducer, useRef, useLayoutEffect } from "react";
-import { ReactNode } from "react";
+import { useState, useEffect } from "react";
 
 // Hooks
 import { useAcct } from "./useAccount";
@@ -28,7 +27,7 @@ const useAvailability = () => {
         const availibilityInfo = checked.get(day);
 
         if (availibilityInfo?.times !== undefined) {
-            return availibilityInfo?.times;
+            return availibilityInfo.times;
         } else {
             return [];
         }
@@ -37,10 +36,12 @@ const useAvailability = () => {
     function updateChecked(day: string) {
         const prevMap = new Map(checked);
         const availibilityInfo = checked.get(day);
+        
         prevMap?.set(day, {
             times: availibilityInfo?.times!, 
             checked: !availibilityInfo?.checked
         });
+
         setChecked(prevMap);
     }
 
