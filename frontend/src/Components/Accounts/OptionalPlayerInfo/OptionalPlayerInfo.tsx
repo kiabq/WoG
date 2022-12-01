@@ -1,5 +1,5 @@
 // Libraries
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Components
 import RadioBox from "./RadioBox";
@@ -98,20 +98,18 @@ const OptionalPlayerInfo = ({ toggleEdit, editType }: Props) => {
                 )
             })}
 
-            {editType === Edit.optional &&
-                <>
-                    <button>
+            {editType === Edit.optional ?
+                <div className={st.radio__form__controls}>
+                    <button className="btn btn-padding submit">
                         Submit
                     </button>
 
-                    <button type="button" onClick={() => {toggleEdit(Edit.none)}}>
+                    <button type="button" onClick={() => {toggleEdit(Edit.none)}} className="btn btn-padding cancel">
                         Cancel
                     </button>
-                </>
-            }
-
-            {editType === Edit.none && 
-                <button type="button" onClick={() => {toggleEdit(Edit.optional)}}>
+                </div> 
+                : 
+                <button type="button" onClick={() => {toggleEdit(Edit.optional)}} className="btn btn-padding edit">
                     Edit
                 </button>
             }

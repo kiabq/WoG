@@ -1,5 +1,11 @@
 /* Availability Main Div */
-.av {
+
+.availability__container {
+    width: 850px;
+    height: 200px;
+}
+
+.availability {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,82 +59,42 @@
 
 /* Buttons */
 
-.av__dis {
-}
-
 .av__edi {
-    border: 1px solid black;
-    border-radius: 3px;
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* REFACTORING NEEDED!!! */
-.test {
-    display: inline-block;
+/* Form */
+
+.av__form__list {
+    display: flex;
+    flex-direction: row;
+}
+
+.av__form__list__element {
     position: relative;
+    display: flex;
+}
+
+.av__form__list__element__checkbox{
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    vertical-align: middle;
     user-select: all;
-    text-decoration: dashed;
     border: 1px solid black;
 }
 
-.test:checked {
+.av__form__list__element__checkbox:checked {
     border-radius: 50%;
     background-color: red;
 }
 
-.tempLabelClass {
+.av__form__list__element__label {
+    float: left;
     position: absolute;
     pointer-events: none;
     user-select: none;
     -webkit-user-select: none;
     z-index: 1;
 }
-
-ul {
-    display: flex;
-}
-
-ul > li, ul > li > div {
-    display: flex;
-    flex-direction: column;
-}
-
-ul > li > div, ul > li {
-    display: flex;
-    position: inherit;
-    align-items: center;
-    justify-content: center;
-}
-
-form > div {
-    display: flex;
-    flex-direction: row;
-}
-
-form > div > div {
-    display: flex;
-    flex-direction: column;
-}
-
-form > div > div > ul {
-    display: flex;
-    flex-direction: column;
-}
-
-form > div > div > ul > li {
-    display: flex;
-    flex-direction: row;
-}
-
-form > div > div > div {
-    display: flex;
-    flex-direction: column;
-}
-
