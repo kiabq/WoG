@@ -1,5 +1,5 @@
 // Libraries
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Utils
 import { convertTime } from "../../../utils/convertTime";
@@ -14,7 +14,7 @@ type tempT = {
 
 const AddTimeNode = ({ times } : tempT) => {
     const [count, setCount] = useState<number>(times.length || 1);
-    const [temp, setTemp] = useState(times)
+    const [temp, setTemp] = useState(times);
 
     function incrementState() {
         if (count < 3) {
@@ -46,10 +46,10 @@ const AddTimeNode = ({ times } : tempT) => {
             {renderElements().map((index) => {
                 let node = 
                     <>
-                        <input type={'time'} 
+                        <input type="time" 
                             defaultValue={convertTime(temp[index]?.start_time, true)} 
                             required={true}/>
-                        <input type={'time'} 
+                        <input type="time" 
                             defaultValue={convertTime(temp[index]?.end_time, true)} 
                             required={true}/>
                     </>
@@ -58,11 +58,11 @@ const AddTimeNode = ({ times } : tempT) => {
             })}
 
             {count < 3 && 
-                <button type={'button'} onClick={() => incrementState()}>
+                <button type="button" onClick={() => incrementState()}>
                     <span className="material-icons">&#xe145;</span>
                 </button>}
             {count > 1 && 
-                <button type={'button'} onClick={() => decrementState()}>
+                <button type="button" onClick={() => decrementState()}>
                     <span className="material-icons">&#xe15b;</span>
                 </button>}
         </>

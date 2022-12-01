@@ -1,12 +1,5 @@
-// Libraries
-import React, { useEffect, useState, ReactNode } from "react";
-
-// Components
-import { EditButton } from "../../Buttons/Buttons";
-
 // Styles
 import styles from "./AccountAvailability.module.css";
-import globals from "../../../globals.module.css";
 
 // Hooks
 import useAvailability from "../../../hooks/useAvailability";
@@ -24,7 +17,7 @@ const AccountAvailability = ({ toggleEdit }: EditFnProp) => {
 
     if (accountInfo.availability !== undefined) {
         return (
-            <div className={styles.av}>
+            <div className={`${styles.availability__container} ${styles.availability}`}>
                 <div className={styles.av__opts}>
                     {dayOptions.map((day) =>
                         <div className={`${styles.av__day}`}>  
@@ -39,10 +32,10 @@ const AccountAvailability = ({ toggleEdit }: EditFnProp) => {
                         </div>
                     )}
                 </div>
-                <div className={styles.av__dis}>
-                    <button onClick={() => toggleEdit(Edit.availability)} className={`${styles.av__edi}`}>
+                <div>
+                    <button onClick={() => toggleEdit(Edit.availability)} className={`btn btn-padding edit ${styles.av__edi}`}>
                         <span>Edit Availability</span>
-                        <span className="material-icons">&#xf88d;</span>
+                        {/* <span className="material-icons">&#xf88d;</span> */}
                     </button>
                 </div>
             </div>

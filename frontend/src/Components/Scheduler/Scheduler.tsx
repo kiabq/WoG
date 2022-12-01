@@ -1,15 +1,11 @@
 // Libraries
-import React, { useEffect, useState, useRef, ChangeEvent } from "react"
+import { useEffect, useState, ChangeEvent } from "react"
 import axios from "axios";
 
 // Components
 import ScheduleItems from "./ScheduleItems";
 
-// Hooks
-import { useAuth } from "../../hooks/useProvider";
-
 // Styles
-import globals from "../../globals.module.css";
 import styles from "./Scheduler.module.css";
 
 interface DM {

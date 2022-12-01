@@ -1,7 +1,6 @@
 // Libraries
-import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Hooks
 import { useAuth } from "../hooks/useProvider";

@@ -1,11 +1,8 @@
-// Libraries
-import React, { useEffect, useState } from "react";
-
 // Components
 import AddTimeNode from "./AddTimeNode";
 
 // Styles
-import styles from './AccountAvailability.module.css';
+import st from "./AccountAvailability.module.css";
 
 // Hooks
 import useAvailability from "../../../hooks/useAvailability";
@@ -16,18 +13,18 @@ const AccountAvailabilitySelect = () => {
     
     if (checked !== undefined) {
         return (
-            <div>
+            <div className={st.av__form__list}>
                 {dayOptions.map((day) =>
                     <div key={day}>
-                        <div>
-                            <input type={'checkbox'} 
-                                name={'day-checkbox'}
+                        <div className={st.av__form__list__element}>
+                            <input type="checkbox"
+                                name="day-checkbox"
                                 value={day}
-                                className={styles.test}
+                                className={st.av__form__list__element__checkbox}
                                 onClick={() => updateChecked(day)}
                                 defaultChecked={getAvailableDays(day)}
                             />                                              
-                            <label className={styles.tempLabelClass} htmlFor={'day-checkbox'}>
+                            <label className={st.av__form__list__element__label} htmlFor="day-checkbox">
                                 {day[0].toUpperCase() + day[1]}
                             </label>
                         </div>

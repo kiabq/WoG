@@ -1,7 +1,6 @@
 .schedule {
     align-items: center;
     box-sizing: border-box;
-    background-color: lightseagreen;
     display: flex;
     flex-direction: column;
     padding: 2rem;
@@ -10,8 +9,7 @@
 }
 
 .schedule__header {
-    width: 50%;
-    text-align: right;
+    text-align: center;
 }
 
 .schedule__items {

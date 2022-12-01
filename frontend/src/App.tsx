@@ -1,7 +1,5 @@
 // Libraries
-import React, { useCallback, useState, useEffect, createContext, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate, useParams, Navigate} from "react-router-dom";
-import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Components
 import Home from './Components/Pages/HomePage';
@@ -9,8 +7,8 @@ import Account from './Components/Accounts/Account';
 import LoginRedirect from './routing/LoginRedirect';
 
 // Hooks
-import { PublicRoute, PrivateRoute, useAuth } from './hooks/useProvider';
-import { AccountContext, useAcct } from './hooks/useAccount';
+import { PublicRoute, PrivateRoute } from './hooks/useProvider';
+import { AccountContext } from './hooks/useAccount';
 
 
 const App = () => {

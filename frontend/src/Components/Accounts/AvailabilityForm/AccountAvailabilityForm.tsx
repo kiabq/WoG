@@ -1,19 +1,18 @@
 // Libraries
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 // Components
 import AccountAvailabilitySelect from "./AccountAvailabilitySelect";
 
 // Styles
-import styles from "./AccountForms.module.css";
-import globals from "../../../globals.module.css"
+import styles from "./AccountAvailability.module.css";
 
 // Hooks
 import { useAuth } from "../../../hooks/useProvider";
 import { useAcct, triggerAccountUpdate } from "../../../hooks/useAccount";
 
 // Types
-import { Edit, EditFnProp, FormIterateType } from "../types";
+import { Edit, EditFnProp } from "../types";
 
 // Utils
 import { updateAvailability, createAvailability } from "../../../utils/rest";
@@ -26,20 +25,20 @@ const AccountAvailabilityForm = ({ toggleEdit }: EditFnProp) => {
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {   
         e.preventDefault();
 
-        const eventForm: HTMLFormElement | FormIterateType = e.currentTarget;
+        const eventForm: HTMLFormElement = e.currentTarget;
         let availableDayData: Array<object> = [];
         
-        if (auth !== null && auth.checkLogin()) {
+        if (auth !== null) {
             if (eventForm !== null) {
                 let arr = [];
                 let dayArr = [];
                 let tempArr = [];
 
                 for(let i = 0; i < eventForm.length; i++) {
-                    let userSelectedDay = eventForm[i];
+                    let userSelectedDay = eventForm[i] as HTMLInputElement;
 
-                    if (userSelectedDay.type === 'time') {
-                        tempArr.push(i)
+                    if (userSelectedDay.type === "time") { 
+                        tempArr.push(i);
                     } else {
                         if (tempArr.length > 0) {
                             arr.push(tempArr);
@@ -62,14 +61,17 @@ const AccountAvailabilityForm = ({ toggleEdit }: EditFnProp) => {
                     }
 
                     for (let v = 0; v < sliced.length; v++) {
-                        let start_time = eventForm[sliced[v][0]];
-                        let end_time = eventForm[sliced[v][1]];
+                        let start_time = eventForm[sliced[v][0]] as HTMLInputElement;
+                        let end_time = eventForm[sliced[v][1]] as HTMLInputElement;
 
-                        availableTimes.push({"start_time": `${start_time.value}:00.000`, "end_time": `${end_time.value}:00.000`});
+                        availableTimes.push({
+                            "start_time": `${start_time.value}:00.000`, 
+                            "end_time": `${end_time.value}:00.000`
+                        });
                     }
 
                     availableDayData.push({ 
-                        "day" : userSelectedDay.value,
+                        "day" : (userSelectedDay as HTMLInputElement).value,
                         "times": availableTimes
                     });
                 }
@@ -99,11 +101,17 @@ const AccountAvailabilityForm = ({ toggleEdit }: EditFnProp) => {
 
     return (
     <>
-        <form onSubmit={(e) => handleSubmit(e)}>      
+        <form onSubmit={(e) => handleSubmit(e)} className={`${styles.availability__container} ${styles.availability}`}>      
             <AccountAvailabilitySelect/>
-
-            <input type='submit' value='Submit' className={`${globals.submit}`}/>
-            <button type='button' onClick={() => toggleEdit(Edit.none)} className={`${globals.cancel}`}>Cancel</button>
+            
+            <div>
+                <input type="submit" value="Submit" className="btn btn-padding submit"/>
+                <button type="button" 
+                    onClick={() => toggleEdit(Edit.none)} 
+                    className="btn btn-padding cancel">
+                        Cancel
+                </button>
+            </div>
         </form> 
     </>
     )
