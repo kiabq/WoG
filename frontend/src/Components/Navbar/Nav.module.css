@@ -1,10 +1,8 @@
-@import url('../../colors.css');
-
 /* Navbar */
 
 .nav {
     background-color: var(--gBlack);
-    height: 50px;
+    height: 60px;
     position: static;
 }
 
@@ -24,10 +22,10 @@
 
 .nav__controls {
     display: flex;
-    flex: 1;
+    flex-grow: 1;
     justify-content: flex-end;
 }
-
+ 
 .nav__hamburger {
     background-color: var(--gLightGray);
     border: 1px solid var(--gGray);
@@ -38,6 +36,7 @@
     display: flex;
     flex-direction: row;
     width: inherit;
+    /* max-width: 15rem; */
 }
 
 .nav__account_info {
@@ -50,20 +49,21 @@
     margin: 0 0.25rem;
 }
 
-.nav__account_info::after {
-    content: '|';    
-}
-
 .nav__dropdown {
+    background-color: red;
     position: absolute;
     display: none;
 }
 
+.nav__dropdown_visible {
+    display: block;
+    width: 100%;
+}
+
 .nav__dropdown_element {
     background-color: var(--gLightGray);
-
-    width: 150px;
-    z-index: inherit;
+    width: 100%;
+    text-align: left;
 }
 
 .nav__dropdown_button {
@@ -73,12 +73,6 @@
 
 .nav__dropdown_button_inner {
     transition:  150ms ease;
-}
-
-.nav__dropdown_visible {
-    display: block;
-    right: 0;
-    z-index: 0;
 }
 
 .nav__account {
@@ -92,16 +86,6 @@
     border-radius: 100%;
     height: 35px;
     width: 35px;
-}
-
-/* Nav Modal */
-
-.modal {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    right: 0;
 }
 
 /* Nav Media Queries */
@@ -134,10 +118,6 @@
     .nav__hamburger {
         position: relative;
         min-width: 150px;
-    }
-    
-    .nav__dropdown {
-        max-width: 150px;
     }
 
     .nav__dropdown_visible {
