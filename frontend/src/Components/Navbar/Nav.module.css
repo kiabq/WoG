@@ -93,7 +93,7 @@
 @media screen and (max-width: 960px) {
     .nav__dropdown {
         position: absolute;
-        background-color: red;
+        background-color: blue;
         height: 100%;
 
         top: 0;
@@ -102,6 +102,8 @@
 
     .nav__dropdown_visible {
         animation: slidein 350ms forwards;
+        width: 75%;
+        z-index: 9999;
     }
 
     .nav__dropdown_button {

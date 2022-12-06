@@ -48,6 +48,12 @@ function splitString(string: string): number {
 }
 
 const ScheduleItems = ({info}: PropTypes) => {
+    // This is not the best way to do this. In the future, 
+    // the data structure should be changed, as it would make this a lot easier. 
+    // This reducer function was written haphazardly and should change once the data
+    // structure is changed.
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
     function convertArrToObj (arr: Array<any>, key: string) {
         const dayArr = {
             sunday: [],
@@ -58,7 +64,7 @@ const ScheduleItems = ({info}: PropTypes) => {
             friday: [],
             saturday: [],
         };
-
+        
         return arr.reduce((obj, item) => {
             let start_str = spliceString(item.start_time, 5, item.start_time.length, '');
             // let end_str = spliceString(item.end_time, 5, item.end_time.length, '');
@@ -115,12 +121,13 @@ const ScheduleItems = ({info}: PropTypes) => {
 
     const fMap: fMappedEl = convertArrToObj(map, "day");
     const renderKeys = [fMap.sunday, fMap.monday, fMap.tuesday, fMap.wednesday, fMap.thursday, fMap.friday, fMap.saturday];
-
+    
     return (
         <>
             {renderKeys.map((key: any /* Change this type */, index: number) => {
                 return (
                     <div className={styles.schedule__day} key={index} /* Change this key */>
+                        <p className={styles.schedule__day__header}>{days[index]}</p>
                         <ScheduleItem items={key}/>
                     </div>
                 );

@@ -13,19 +13,18 @@ import { useMobile } from "../../hooks/useMobile";
 function useOutsideCheck(ref: any) {
     const [isOpen, setIsOpen] = useState(false);
 
+    // This breaks radio boxes on AccountAvailabilitySelect
     useEffect(() => {
         function handleModalChange(e: MouseEvent) {
             if (ref.current && !ref.current.contains(e.target)) {
-                e.preventDefault();
-                e.stopPropagation();
                 setIsOpen(false);
             }
         }
 
-        document.addEventListener("click", handleModalChange)
+        document.addEventListener("click", handleModalChange);
 
         return () => { 
-            document.removeEventListener("click", handleModalChange)
+            document.removeEventListener("click", handleModalChange);
         }
     }, [ref])
 

@@ -6,15 +6,12 @@
     max-width: 1100px;
 }
 
-.account > .account__info {
-    border-right: 1px solid black;
-}
-
 .account__info {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 200px;
+    border-right: 1px solid black;
 }
 
 .player__info__wrapper {
@@ -44,4 +41,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+@media (max-width: 500px) {
+    .account {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .account__info {
+        border: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 1000px) {
 }

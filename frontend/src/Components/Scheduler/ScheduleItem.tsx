@@ -18,7 +18,7 @@ type mappedEl = {
 
 const ScheduleItem = (props: { items: Array<mappedEl> | undefined}) => {
     return (
-        <>
+        <>  
             {props.items && props.items.map((item: mappedEl) => {
                 return (
                     <div className={styles.schedule__item} key={item.day + item.createdAt}>

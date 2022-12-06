@@ -6,14 +6,14 @@ const Footer = () => {
         <footer className={st.footer}>
             <div className={`${st.footer__content} pd6-top`}>
                 <div className={st.footer__info}>
-                    <section>
+                    <section className={st.footer__socials}>
                         <h2 className={`${st.footer__info__header}`}>Socials</h2>
-                        <p>Discord</p>
-                        <p>Twitch</p>
+                        <a href="./">Discord</a>
+                        <a href="./">Twitch</a>
                     </section>
-                    <section>
+                    <section className={st.footer__contact}>
                         <h2 className={`${st.footer__info__header}`}>Contact</h2>
-                        <p>Email me!</p>
+                        <a>Contact Me</a>
                     </section>
                 </div>
                 <p>&copy; Filler 2022</p>

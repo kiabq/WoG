@@ -30,6 +30,11 @@
     font-weight: 600;
 } 
 
+.footer__socials {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer > p {
     margin: 0 0.5rem;
 }
