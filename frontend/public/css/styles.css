@@ -6,6 +6,19 @@
 
 /* Containers */
 
+:root {
+    --gBlack: #2d2730;
+    --gGray: #5e5e5e;
+    --gLightGray: #7e7e7e;
+    --gWhite: #ffffff;
+    --gWhite2: #ededed;
+    --erRed: #FE5F55;
+    --wYell: #FFE45E;
+    --oBlue: #5CA3EB;
+
+    --radius-5: 5px;
+}
+
 #root {
     height: 100vh;
 }
@@ -22,8 +35,8 @@
 
 .content-wrapper {
     flex: 1 0 auto;
-    width: max-content;
     margin: 0 auto;
+    width: 100%;
 }
 
 /* flex items */
