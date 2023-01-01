@@ -1,0 +1,59 @@
+{
+  "collectionName": "components_info_optional_questions",
+  "info": {
+    "displayName": "Optional Questions",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "experience": {
+      "type": "integer",
+      "max": 4,
+      "min": 1,
+      "required": true,
+      "default": 0
+    },
+    "combat": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "required": true,
+      "default": 0
+    },
+    "simulation": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "required": true,
+      "default": 0
+    },
+    "exploration": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "required": true,
+      "default": 0
+    },
+    "interactions": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "required": true,
+      "default": 0
+    },
+    "resources": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "required": true,
+      "default": 0
+    },
+    "character_development": {
+      "type": "integer",
+      "max": 5,
+      "min": 1,
+      "required": true,
+      "default": 0
+    }
+  }
+}

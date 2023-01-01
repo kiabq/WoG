@@ -68,6 +68,23 @@
     },
     "providerId": {
       "type": "string"
+    },
+    "user_availability": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-availability.user-availability",
+      "inversedBy": "user"
+    },
+    "user_info": {
+      "type": "component",
+      "repeatable": false,
+      "component": "info.user-info"
+    },
+    "optionalQuestions": {
+      "type": "component",
+      "repeatable": false,
+      "component": "info.optional-questions",
+      "required": false
     }
   }
 }

@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_info_user_infos",
+  "info": {
+    "displayName": "User Info",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "invoiceEmail": {
+      "type": "email",
+      "required": true
+    },
+    "pronoun": {
+      "type": "enumeration",
+      "enum": [
+        "He/Him",
+        "She/Her",
+        "They/Them",
+        "Other",
+        "None"
+      ]
+    },
+    "age": {
+      "type": "integer",
+      "min": 18,
+      "max": 99,
+      "required": true
+    }
+  }
+}

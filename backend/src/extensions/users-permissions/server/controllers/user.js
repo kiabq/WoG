@@ -87,7 +87,7 @@ module.exports = {
       .get();
 
     const { id } = ctx.params;
-    const { email, username, password } = ctx.request.body;
+    const { email, username, providerId } = ctx.request.body;
 
     const user = await getService('user').fetch(id);
 
@@ -96,21 +96,6 @@ module.exports = {
     }
 
     await validateUpdateUserBody(ctx.request.body);
-    
-    /* Possibly need to remove this, only provider being used IS Discord */
-    if (user.provider === 'local' && _.has(ctx.request.body, 'password') && !password) {
-      throw new ValidationError('password.notNull');
-    }
-
-    if (user.provider !== 'discord' && _.has(ctx.request.body, 'username')) {
-      const userWithSameUsername = await strapi
-        .query('plugin::users-permissions.user')
-        .findOne({ where: { username } });
-
-      if (userWithSameUsername && userWithSameUsername.id != id) {
-        throw new ApplicationError('Username already taken');
-      }
-    }
 
     if (_.has(ctx.request.body, 'email') && advancedConfigs.unique_email) {
       const userWithSameEmail = await strapi
@@ -139,6 +124,8 @@ module.exports = {
    */
   async find(ctx) {
     const users = await getService('user').fetchAll(ctx.query);
+
+
 
     ctx.body = await Promise.all(users.map(user => sanitizeOutput(user, ctx)));
   },
@@ -187,29 +174,57 @@ module.exports = {
    */
   async me(ctx) {
     const authUser = ctx.state.user;
-    const { query } = ctx;
-
-    console.log('reached')
 
     if (!authUser) {
       return ctx.unauthorized();
     }
 
-    const user = await getService('user').fetch(authUser.id, query);
+    const user = await strapi.entityService.findOne('plugin::users-permissions.user', authUser.id, {
+      populate: { 
+        user_availability: {
+          populate: {
+            day: {
+              fields: ['day'],
+              populate: {
+                times: {
+                  fields: ['start_time', 'end_time']
+                }
+              }
+            }
+          }
+
+        },
+        user_info: true,
+        optionalQuestions: true
+      }
+    });
 
     ctx.body = await sanitizeOutput(user, ctx);
   },
 
+  /**
+   * Update a user record.
+   * @return {Object} 
+   */
   async updateMe(ctx) {
     const authUser = ctx.state.user;
-    const { query } = ctx;
 
-    if (!authUser) {
-      return ctx.unauthorized();
+    const user = await getService('user').fetch(authUser.id);
+
+    if (!user) {
+      throw new NotFoundError(`User not found`);
     }
 
-    const user = await getService('user').fetch(authUser.id, query);
+    await validateUpdateUserBody(ctx.request.body);
 
-    ctx.body = await sanitizeOutput(user, ctx);
+    let updateData = {
+      ...ctx.request.body,
+    };
+
+    const data = await getService('user').edit(authUser.id, updateData);
+    // const sanitizedData = await sanitizeOutput(data, ctx);
+
+    ctx.send(data);
   }
 };
+

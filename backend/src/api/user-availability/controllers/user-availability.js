@@ -12,20 +12,32 @@ const { validateUpdateUserBody } = require('@strapi/plugin-users-permissions/ser
 const { sanitize } = utils;
 const { ApplicationError, ValidationError, NotFoundError } = utils.errors;
 
-const sanitizeOutput = (user, ctx) => {
-  const schema = strapi.getModel('plugin::users-permissions.user');
-  const { auth } = ctx.state;
-
-  return sanitize.contentAPI.output(user, schema, { auth });
-};
-
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::user-availability.user-availability', ({strapi}) => ({    
     /**
-     * 
+     * Find user's availability
      * @return {Object} 
      */
+     async find(ctx) {
+        // some logic here
+        const { data, meta } = await super.find(ctx);
+        // some more logic
+
+        const response = await strapi.entityService.findMany('api::user-availability.user-availability', {
+            populate: { 
+                day: {
+                    populate: {
+                        times: true
+                    }
+                }
+            }
+        })
+      
+        return response;
+    },
+      
+
     async create(ctx) {
         // const authUser = ctx.state.user
         const { data } = ctx.request.body
@@ -34,7 +46,7 @@ module.exports = createCoreController('api::user-availability.user-availability'
             { data }
         )
 
-        return response;
+        ctx.send(response);
     },
 
     /**
@@ -60,10 +72,8 @@ module.exports = createCoreController('api::user-availability.user-availability'
 
         const updateData = await strapi.entityService.update('api::user-availability.user-availability', userInfo.user_availability.id, 
             { data }
-        );
+        )
 
-        const sanitizedData = await sanitizeOutput(updateData, ctx);
-
-        ctx.send(sanitizedData);
+        ctx.send(updateData);
     }
 }));

@@ -8,6 +8,12 @@
   "attributes": {
     "day": {
       "type": "string"
+    },
+    "times": {
+      "type": "component",
+      "repeatable": true,
+      "component": "times.times",
+      "max": 3
     }
   }
 }

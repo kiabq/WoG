@@ -49,7 +49,7 @@ module.exports = ({ strapi }) => {
 
   const connect = async (provider, query) => {
     const access_token = query.access_token || query.code || query.oauth_token;
-
+    
     if (!access_token) {
       throw new Error('No access_token.');
     }
