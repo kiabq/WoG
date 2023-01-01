@@ -9,7 +9,7 @@ import { useAuth } from "../../../hooks/useProvider";
 import { useAcct, triggerAccountUpdate } from "../../../hooks/useAccount";
 
 // Types
-import { Edit, EditFnProp, RequestCategory, IndexType } from "../types";
+import { Edit, EditFnProp, RequestCategory, IndexType } from "../../../utils/types";
 
 // Utils
 import { updateUserInformation } from "../../../utils/rest";

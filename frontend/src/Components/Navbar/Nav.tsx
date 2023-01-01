@@ -10,10 +10,9 @@ import { useAuth } from "../../hooks/useProvider";
 import { useAcct } from "../../hooks/useAccount";
 import { useMobile } from "../../hooks/useMobile";
 
-function useOutsideCheck(ref: any) {
+function useOutsideCheck(ref: React.MutableRefObject<any>) {
     const [isOpen, setIsOpen] = useState(false);
 
-    // This breaks radio boxes on AccountAvailabilitySelect
     useEffect(() => {
         function handleModalChange(e: MouseEvent) {
             if (ref.current && !ref.current.contains(e.target)) {
@@ -81,7 +80,6 @@ const NotAuthed = () => {
 
 const Nav = () => {
     const auth = useAuth();
-    const isMobile = useMobile();
 
     return (
         <header className={`${styles.nav}`}>

@@ -9,8 +9,8 @@ import useAvailability from "../../../hooks/useAvailability";
 
 const AccountAvailabilitySelect = () => {
     // Used to map list elements (each checkbox)}
-    const { checked, getAvailableDays, getAvailableTimes,updateChecked, dayOptions } = useAvailability();
-    
+    const { checked, getAvailableDays, getAvailableTimes, updateChecked, dayOptions } = useAvailability();
+
     if (checked !== undefined) {
         return (
             <div className={st.av__form__list}>

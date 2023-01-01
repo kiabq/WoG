@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from "axios";
 import { useAuth } from "./useProvider";
 
 // Types
-import { AccountType } from "../Components/Accounts/types";
+import { AccountType } from "../utils/types";
 
 interface AccountContextInterface {
     accountInfo: AccountType,
@@ -123,6 +123,5 @@ export function triggerAccountUpdate(res: AxiosResponse<any, any> | void, accoun
     // Narrow response type
     if (res && res.status === 200) {
         account.triggerUpdate();
-        console.log("Reached")
     }
 }

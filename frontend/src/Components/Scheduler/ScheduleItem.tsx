@@ -4,22 +4,20 @@ import React from "react";
 // Styles
 import styles from "./ScheduleItem.module.css";
 
+// Types
+import { mappedEl } from "../../utils/types";
+
 // Utils
 import { convertTime } from "../../utils/convertTime";
 
-type mappedEl = {
-    createdAt: Date,
-    updatedAt: Date,
-    publishedAt: Date,
-    start_time: string,
-    day: string,
-    end_time: string,
+interface PropTypes {
+    items: Array<mappedEl> | undefined
 }
 
-const ScheduleItem = (props: { items: Array<mappedEl> | undefined}) => {
+const ScheduleItem = ({ items }: PropTypes) => {
     return (
         <>  
-            {props.items && props.items.map((item: mappedEl) => {
+            {items && items.map((item: mappedEl) => {
                 return (
                     <div className={styles.schedule__item} key={item.day + item.createdAt}>
                         <p>{convertTime(item.start_time, false)} - {convertTime(item.end_time, false)}</p>

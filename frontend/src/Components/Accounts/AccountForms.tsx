@@ -15,7 +15,7 @@ import styles from './Account.module.css';
 import { useAcct } from "../../hooks/useAccount";
 
 // Types
-import { Edit } from './types';
+import { Edit } from '../../utils/types';
 
 const AccountForms = () => {
     const [editType, setEdit] = useState<Edit>(Edit.none);

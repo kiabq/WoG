@@ -8,6 +8,9 @@ import ScheduleItems from "./ScheduleItems";
 // Styles
 import styles from "./Scheduler.module.css";
 
+// Types
+import { mappedEl } from "../../utils/types";
+
 interface DM {
     id: number,
     attributes: {
@@ -16,15 +19,6 @@ interface DM {
         }
         name: string,
     }
-}
-
-type mappedEl = {
-    createdAt: Date,
-    updatedAt: Date,
-    publishedAt: Date,
-    start_time: string,
-    day: string,
-    end_time: string,
 }
 
 const Scheduler = () => {

@@ -1,58 +1,76 @@
 // Libraries
-import React from "react";
+import React, { ReactNode, useState } from "react";
 
 // Components
 import ScheduleItem from "./ScheduleItem";
 
 // Styles
-import styles from './Scheduler.module.css';
+import styles from "./Scheduler.module.css";
+
+// Hooks
+import useAvailability from "../../hooks/useAvailability";
+import { useMobile } from "../../hooks/useMobile";
+
+// Types
+import { fMappedEl, mappedEl } from "../../utils/types";
+
+// Utils
+import { spliceString, splitString } from "../../utils/string";
 
 interface PropTypes {
     info: {id: number, attributes: {availabilities: {data: Array<any>}}}
 }
 
-type fMappedEl = {
-    sunday: Array<object>,
-    monday: Array<object>,
-    tuesday: Array<object>,
-    wednesday: Array<object>,
-    thursday: Array<object>,
-    friday: Array<object>,
-    saturday: Array<object>,
+interface CarouselPropTypes {
+    items: Array<string>,
+    render: Array<any>,
 }
 
-type mappedEl = {
-    createdAt: Date,
-    updatedAt: Date,
-    publishedAt: Date,
-    start_time: string,
-    end_time: string,
-    day: string,
-}
+const Carousel = ({ items, render }: CarouselPropTypes) => {
+    const [index, setIndex] = useState(0);
+    const { dayOptions } = useAvailability();
 
-function spliceString(str: string, index: number, count: number, add: string) {
-    if (index < 0) {
-        index = str.length + index;
-        if (index < 0) {
-            index = 0;
+    function back() {
+        if (index > 0) {
+            setIndex(index - 1);
         }
     }
 
-    return str.slice(0, index) + (add || "") + str.slice(index + count);
+    function forwards() {
+        if (index < items.length - 1) {
+            setIndex(index + 1);
+        }
+    }
+
+    return (
+        <div className={styles.carouselItem}>
+            { index > 0  && 
+                <div onClick={() => back()}>
+                    Back
+                </div> 
+            }
+
+            <div className={styles.schedule__day}>
+                <p className={styles.schedule__day__header}>{dayOptions[index]}</p>
+                <ScheduleItem items={render[index]}/>
+            </div>
+
+            { index < (items.length - 1) && 
+                <div onClick={() => forwards()}>
+                    Forwards
+                </div> 
+            }
+        </div>
+    )
 }
 
-function splitString(string: string): number {
-    let temp = string.split(':');
-    
-    return (parseInt(temp[0] + temp[1]));
-}
-
-const ScheduleItems = ({info}: PropTypes) => {
+const ScheduleItems = ({ info }: PropTypes) => {
     // This is not the best way to do this. In the future, 
     // the data structure should be changed, as it would make this a lot easier. 
     // This reducer function was written haphazardly and should change once the data
     // structure is changed.
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const mobile = useMobile();
+    const { dayOptions } = useAvailability();
 
     function convertArrToObj (arr: Array<any>, key: string) {
         const dayArr = {
@@ -121,17 +139,23 @@ const ScheduleItems = ({info}: PropTypes) => {
 
     const fMap: fMappedEl = convertArrToObj(map, "day");
     const renderKeys = [fMap.sunday, fMap.monday, fMap.tuesday, fMap.wednesday, fMap.thursday, fMap.friday, fMap.saturday];
-    
+
     return (
-        <>
-            {renderKeys.map((key: any /* Change this type */, index: number) => {
-                return (
-                    <div className={styles.schedule__day} key={index} /* Change this key */>
-                        <p className={styles.schedule__day__header}>{days[index]}</p>
-                        <ScheduleItem items={key}/>
-                    </div>
-                );
-            })}
+        <>  
+            { mobile ? 
+                <Carousel items={dayOptions} render={renderKeys}/>
+                : 
+                <>
+                    {renderKeys.map((key: any /* Change this type */, index: number) => {
+                        return (
+                            <div className={styles.schedule__day} key={index} /* Change this key */>
+                                <p className={styles.schedule__day__header}>{dayOptions[index]}</p>
+                                <ScheduleItem items={key}/>
+                            </div>
+                        );
+                    })}
+                </>
+            }
         </>
     );
 }

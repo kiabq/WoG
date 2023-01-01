@@ -1,3 +1,6 @@
+// Libraries
+import { useState } from "react";
+
 // Styles
 import styles from "./AccountAvailability.module.css";
 
@@ -6,7 +9,7 @@ import useAvailability from "../../../hooks/useAvailability";
 import { useAcct } from "../../../hooks/useAccount";
 
 // Types
-import { Edit, EditFnProp } from "../types";
+import { Edit, EditFnProp } from "../../../utils/types";
 
 // Utils
 import { convertTime } from "../../../utils/convertTime";
@@ -35,7 +38,6 @@ const AccountAvailability = ({ toggleEdit }: EditFnProp) => {
                 <div>
                     <button onClick={() => toggleEdit(Edit.availability)} className={`btn btn-padding edit ${styles.av__edi}`}>
                         <span>Edit Availability</span>
-                        {/* <span className="material-icons">&#xf88d;</span> */}
                     </button>
                 </div>
             </div>

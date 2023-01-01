@@ -5,7 +5,7 @@ import React, { ReactElement, useRef, ReactNode } from "react";
 import st from "./OptionalPlayerInfo.module.css";
 
 // Types
-import { Edit, OptionalQuestions } from "../types";
+import { Edit, OptionalQuestions } from "../../../utils/types";
 
 interface Props {
     children: any,

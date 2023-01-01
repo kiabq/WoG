@@ -12,7 +12,7 @@ import { useAuth } from "../../../hooks/useProvider";
 import { useAcct, triggerAccountUpdate } from "../../../hooks/useAccount";
 
 // Types
-import { Edit, EditFnProp } from "../types";
+import { Edit, EditFnProp } from "../../../utils/types";
 
 // Utils
 import { updateAvailability, createAvailability } from "../../../utils/rest";

@@ -5,7 +5,7 @@ import styles from "./PlayerInfo.module.css";
 import { useAcct } from "../../../hooks/useAccount";
 
 // Types
-import { Edit, EditFnProp } from "../types";
+import { Edit, EditFnProp } from "../../../utils/types";
 
 const PlayerInfo = ({ toggleEdit }: EditFnProp) => {
     const { accountInfo } = useAcct();
