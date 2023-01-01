@@ -32,6 +32,27 @@ type IndexType<T> = {
     [key: string]: T
 }
 
+// Scheduler Types
+
+type fMappedEl = {
+    sunday: Array<object>,
+    monday: Array<object>,
+    tuesday: Array<object>,
+    wednesday: Array<object>,
+    thursday: Array<object>,
+    friday: Array<object>,
+    saturday: Array<object>,
+}
+
+type mappedEl = {
+    createdAt: Date,
+    updatedAt: Date,
+    publishedAt: Date,
+    start_time: string,
+    end_time: string,
+    day: string,
+}
+
 // Edit Types
 type EditFnProp = {
     toggleEdit: (val: Edit) => void,
@@ -49,16 +70,11 @@ export const enum RequestCategory {
     optionalQuestions = 2
 }
 
-// Helper function used to determine if a provided key is indeed an index 
-// of the provided object.
-// https://dev.to/mapleleaf/indexing-objects-in-typescript-1cgi
-export function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
-    return key in obj;
-}
-
 export type { 
     AccountType,
     OptionalQuestions,
     IndexType,
+    fMappedEl,
+    mappedEl,
     EditFnProp
 };
