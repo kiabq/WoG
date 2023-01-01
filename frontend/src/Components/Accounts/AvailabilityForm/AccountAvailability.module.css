@@ -2,7 +2,7 @@
 
 .availability__container {
     width: 850px;
-    height: 200px;
+    min-height: 200px;
 }
 
 .availability {
@@ -97,4 +97,24 @@
     user-select: none;
     -webkit-user-select: none;
     z-index: 1;
+}
+
+@media (max-width: 500px) {
+    .av__opts {
+        flex-direction: column;
+    }
+
+    .av__day:nth-child(n) {
+        border-right: none;
+        border-bottom: solid lightgray 1px;
+    }
+
+    .av__form__list {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .av__form__list__element {
+        justify-content: center;
+    }
 }

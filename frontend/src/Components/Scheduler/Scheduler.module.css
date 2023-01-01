@@ -32,7 +32,8 @@
 .schedule__day__header {
     border-radius: 3px 3px 0 0;
     background-color: var(--gBlack);
-    color: var(--gWhite)
+    color: var(--gWhite);
+    font-size: 1rem !important;
 }
 
 .schedule__day > p {
@@ -52,4 +53,11 @@
     padding: 3px;
     text-align: center;
     width: 30px;
+}
+
+@media (max-width: 1050px) {
+    .schedule__day {
+        width: 250px;
+        height: 300px;
+    }
 }

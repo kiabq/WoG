@@ -53,6 +53,11 @@
         border: none;
         width: 100%;
     }
+
+    .account__forms {
+        width: 100%;
+        padding: 0;
+    }
 }
 
 @media (max-width: 1000px) {
