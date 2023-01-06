@@ -57,9 +57,9 @@
 }
 
 @media (max-width: 500px) or (max-width: 1200px) {
-    .main__container__content {
+    /* .main__container__content {
         width: 90%;
-    }
+    } */
 
     .main__container__bg {
         height: 300px !important;

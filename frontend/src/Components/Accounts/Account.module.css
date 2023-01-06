@@ -44,13 +44,7 @@
 }
 
 @media (max-width: 500px) {
-    .account {
-        flex-direction: column;
-        align-items: center;
-    }
-
     .account__info {
-        border: none;
         width: 100%;
     }
 
@@ -60,5 +54,14 @@
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1050px) {
+    .account {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .account__info {
+        border: none;
+        width: 100%;
+    }
 }

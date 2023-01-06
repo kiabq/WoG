@@ -29,8 +29,10 @@ const AccountForms = () => {
         <>
             <div className={styles.account__info}>
                 <div className={styles.player__info__wrapper}>
-                    <p>{accountInfo.user}</p>
-                    <img src={accountInfo.avatar} className={`${styles.account__info__avatar} pd3-top`}/>
+                    <div>
+                        <p>{accountInfo.user}</p>
+                        <img src={accountInfo.avatar} className={`${styles.account__info__avatar} pd3-top`}/>
+                    </div>
                     { editType === 1 ? <PlayerInfoForm toggleEdit={makeEdit}/> : <PlayerInfo toggleEdit={makeEdit}/> }
                 </div>
             </div>

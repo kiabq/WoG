@@ -9,7 +9,7 @@
 
 .about__card__container {
     display: flex;
-    margin: auto;
+    /* margin: auto; */
 }
 
 .about__card {
@@ -21,8 +21,6 @@
     text-align: center;
     position: relative;
 }
-
-
 
 .about__card__head {
     background-color: var(--gBlack);
@@ -59,21 +57,24 @@
     padding: 0.5rem 0;
 }
 
-@media (max-width: 950px) {
+@media (max-width: 750px) {
     .about__card__container {
         flex-direction: column;
         align-items: center;
         height: max-content;
     }
+}
 
+@media (max-width: 950px) {
     .about__card {
-        margin: 30px auto;
+        width: 250px;
+        height: 350px
     }
 }
 
 @media (max-width: 1100px) {
     .about__card {
-        margin: 15px;
+        margin: 7px;
     }
 }
 
