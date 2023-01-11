@@ -21,12 +21,12 @@ interface PropTypes {
     info: {id: number, attributes: {availabilities: {data: Array<any>}}}
 }
 
-interface CarouselPropTypes {
+interface MobileSchedulePropTypes {
     items: Array<string>,
     render: Array<any>,
 }
 
-const Carousel = ({ items, render }: CarouselPropTypes) => {
+const MobileScheduleItems = ({ items, render }: MobileSchedulePropTypes) => {
     const [index, setIndex] = useState(0);
     const { dayOptions } = useAvailability();
 
@@ -43,9 +43,9 @@ const Carousel = ({ items, render }: CarouselPropTypes) => {
     }
 
     return (
-        <div className={styles.carouselItem}>
+        <div className={styles.schedule__item__mobile}>
             { index > 0  && 
-                <div onClick={() => back()}>
+                <div onClick={() => back()} className={styles.schedule__controls}>
                     Back
                 </div> 
             }
@@ -56,8 +56,8 @@ const Carousel = ({ items, render }: CarouselPropTypes) => {
             </div>
 
             { index < (items.length - 1) && 
-                <div onClick={() => forwards()}>
-                    Forwards
+                <div onClick={() => forwards()} className={styles.schedule__controls}>
+                    Next
                 </div> 
             }
         </div>
@@ -143,7 +143,7 @@ const ScheduleItems = ({ info }: PropTypes) => {
     return (
         <>  
             { mobile ? 
-                <Carousel items={dayOptions} render={renderKeys}/>
+                <MobileScheduleItems items={dayOptions} render={renderKeys}/>
                 : 
                 <>
                     {renderKeys.map((key: any /* Change this type */, index: number) => {

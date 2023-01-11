@@ -71,7 +71,7 @@ const Scheduler = () => {
                 </select>
 
                 <div className={styles.schedule__items}>
-                    {(DM !== null && selectedDM != null) ? <ScheduleItems info={DM[selectedDM]}/> : <p>Select DM</p>}
+                    {(DM !== null && selectedDM !== null) ? <ScheduleItems info={DM[selectedDM]}/> : <p>Select DM</p>}
                 </div>
 
                 <p>* All Timezones are in Pacific Standard Time</p>

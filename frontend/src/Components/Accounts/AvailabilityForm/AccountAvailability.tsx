@@ -27,7 +27,7 @@ const AccountAvailability = ({ toggleEdit }: EditFnProp) => {
                             <span key={day} className={`${styles.av__day__opt} ${getAvailableDays(day) ? `${styles.av__sel}` : ''}`}>
                                 {day[0].toUpperCase()}
                             </span>
-                            <div className={`${styles.av__day__opt__tim}`}>
+                            <div className={`${styles.av__font}`}>
                                 {getAvailableDays(day) ? getAvailableTimes(day).map((e) => 
                                     <p>{convertTime(e.start_time, false)} - {convertTime(e.end_time, false)}</p>
                                 ) : <p>No items</p>}

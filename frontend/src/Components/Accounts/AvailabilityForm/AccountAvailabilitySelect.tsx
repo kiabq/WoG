@@ -28,7 +28,7 @@ const AccountAvailabilitySelect = () => {
                                 {day[0].toUpperCase() + day[1]}
                             </label>
                         </div>
-                        <ul>
+                        <ul className={`${st.av__font} ${st.av__form__list__element__temp}`}>
                             {getAvailableDays(day) && <AddTimeNode times={getAvailableTimes(day)}/>}
                         </ul>
                     </div>

@@ -40,6 +40,20 @@
     text-align: center;
 }
 
+.schedule__day > p::first-letter {
+    text-transform: capitalize;
+}
+
+/* Schedule Mobile View */
+
+.schedule__item__mobile {
+    display: flex;
+}
+
+.schedule__controls {
+    background-color: red;
+}
+
 /* Schedule Timezone */
 
 /* TEMP */
