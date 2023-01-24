@@ -10,6 +10,7 @@ module.exports = ({ env }) => ({
       secret: env("ADMIN_JWT_SECRET")
     }
   },
+  proxy: true,
   app: {
     keys: env.array("APP_KEYS"),
   },
