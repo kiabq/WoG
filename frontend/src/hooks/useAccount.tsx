@@ -58,7 +58,7 @@ export const useFetchAcctHook = () => {
         const signal = controller.signal;
 
         // Get user profile (move to ENV variable).
-        const url = `${process.env.REACT_APP_BACKEND_URL}/api/users/me`;
+        const url = `${process.env.REACT_APP_BACKEND}/api/users/me`;
 
         const config = {
             signal: signal,
