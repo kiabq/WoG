@@ -71,7 +71,7 @@ const Authed = () => {
 const NotAuthed = () => {
     return (
         <div className={styles.nav__buttons}>
-            <a href={`${process.env.REACT_APP_BACKEND_URL}/api/connect/discord`}>
+            <a href={`${process.env.REACT_APP_BACKEND}/api/connect/discord`}>
                 <button className={``}>Sign-in with Discord</button>
             </a>
         </div>
