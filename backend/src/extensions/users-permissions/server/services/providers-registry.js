@@ -1,10 +1,8 @@
 'use strict';
 
 const { strict: assert } = require('assert');
-const jwt = require('jsonwebtoken');
 
 const getInitialProviders = ({ purest }) => ({
-
   async discord({ access_token }) {
     const discord = purest({ provider: 'discord' });
 
@@ -46,8 +44,6 @@ module.exports = () => {
 
   return {
     register(providerName, provider) {
-      console.log(providerName, provider)
-
       assert(typeof providerName === 'string', 'Provider name must be a string');
       assert(typeof provider === 'function', 'Provider callback must be a function');
 

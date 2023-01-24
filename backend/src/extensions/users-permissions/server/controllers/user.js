@@ -125,8 +125,6 @@ module.exports = {
   async find(ctx) {
     const users = await getService('user').fetchAll(ctx.query);
 
-
-
     ctx.body = await Promise.all(users.map(user => sanitizeOutput(user, ctx)));
   },
 
@@ -207,6 +205,8 @@ module.exports = {
    * @return {Object} 
    */
   async updateMe(ctx) {
+    console.log(ctx);
+
     const authUser = ctx.state.user;
 
     const user = await getService('user').fetch(authUser.id);

@@ -7,7 +7,6 @@
 // Public node modules.
 const _ = require('lodash');
 const urlJoin = require('url-join');
-const axios = require('axios');
 
 const { getAbsoluteServerUrl } = require('@strapi/utils');
 const { getService } = require('@strapi/plugin-users-permissions/server/utils');
@@ -20,6 +19,8 @@ module.exports = ({ strapi }) => {
    */
 
   const getProfile = async (provider, query) => {
+    console.log(query);
+
     const access_token = query.access_token || query.code || query.oauth_token;
 
     const providers = await strapi
@@ -33,6 +34,8 @@ module.exports = ({ strapi }) => {
       access_token,
       providers,
     });
+
+    console.log(user);
 
     return user;
   };
@@ -61,9 +64,6 @@ module.exports = ({ strapi }) => {
     const profile_user = profile[0];
     const providerId = profile_user.userId;
     const email = _.toLower(profile_user.email);
-
-    // User Guilds
-    const profile_guilds = profile[1];
 
     // Email and the ID from the Provider are required.
     if (!email) {
