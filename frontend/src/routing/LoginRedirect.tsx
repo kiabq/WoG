@@ -15,7 +15,7 @@ const LoginRedirect = () => {
   useEffect(() => {
 
     if (apiRef.current) {
-      fetch(`http://localhost:1337/api/auth/discord/callback${location.search}`)
+      fetch(`${process.env.REACT_APP_BACKEND}/api/auth/discord/callback${location.search}`)
       .then((res) => {
         if (res.status === 200) {
           return res;

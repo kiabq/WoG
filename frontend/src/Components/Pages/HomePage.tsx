@@ -28,7 +28,7 @@ const HomePage = () => {
                             </button>
                         </a>
                         {!auth?.token && 
-                            <a href={`${process.env.REACT_APP_BACKEND_URL}/api/connect/discord`}  className={`${st.main__container__button} ${st.main__container__button__signin}`}>
+                            <a href={`${process.env.REACT_APP_BACKEND}/api/connect/discord`}  className={`${st.main__container__button} ${st.main__container__button__signin}`}>
                                 <button className="btn">
                                     SIGN IN WITH DISCORD
                                 </button>
