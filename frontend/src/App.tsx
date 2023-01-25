@@ -1,5 +1,5 @@
 // Libraries
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 // Components
 import Home from './Components/Pages/HomePage';

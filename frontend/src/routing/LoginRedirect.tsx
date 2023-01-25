@@ -13,7 +13,6 @@ const LoginRedirect = () => {
   const auth = useAuth();
 
   useEffect(() => {
-
     if (apiRef.current) {
       fetch(`${process.env.REACT_APP_BACKEND}/api/auth/discord/callback${location.search}`)
       .then((res) => {
@@ -36,7 +35,6 @@ const LoginRedirect = () => {
 
       apiRef.current = false;
     }
-
   }, []);
 
   return (
