@@ -25,7 +25,7 @@ export function createAvailability(formData: Array<Object>, token: string) {
 
     // Create user availability on the backend.
     function create() {
-        return axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user-availabilities`, 
+        return axios.post(`${process.env.REACT_APP_BACKEND}/api/user-availabilities`, 
             availabilityBody, 
             { headers: config }
         )
@@ -34,7 +34,7 @@ export function createAvailability(formData: Array<Object>, token: string) {
     // Update users relation, setting the user availability relation field
     // to the id of the newly created user avaialibility.
     function update(res: any) {
-        return axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/users/me/update`, 
+        return axios.put(`${process.env.REACT_APP_BACKEND}/api/users/me/update`, 
             { user_availability: res.data.id },
             { headers: config }
         )
@@ -64,7 +64,7 @@ export function updateAvailability(formData: Array<Object>, token: string) {
     // Update user availability under current authorized user.
     // This is based off of whichever JWT token is sent from localStorage.
     function update() {
-        return axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/user-availability/me`, 
+        return axios.put(`${process.env.REACT_APP_BACKEND}/api/user-availability/me`, 
             { ...availabilityBody },
             { headers: config }
         )
@@ -102,7 +102,7 @@ export function updateUserInformation(formData: Object, token: string, category:
     }
 
     function update() {
-        return axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/users/me/update`, 
+        return axios.put(`${process.env.REACT_APP_BACKEND}/api/users/me/update`, 
             { [`${getCategoryType()}`]: formData },
             { headers: config }
         )

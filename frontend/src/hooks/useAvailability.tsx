@@ -1,5 +1,5 @@
 // Libraries
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 // Hooks
 import { useAcct } from "./useAccount";
