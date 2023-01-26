@@ -21,8 +21,8 @@ export function useMobile() {
     useEffect(() => {
         window.addEventListener("resize", handleResize);
 
-        return window.removeEventListener("reize", handleResize);
-    }, [window.innerWidth])
+        return window.removeEventListener("resize", handleResize);
+    }, [])
 
     return isMobile;
 }

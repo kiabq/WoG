@@ -1,8 +1,6 @@
 // Libraries
-import axios, { AxiosResponse } from "axios"
+import axios from "axios"
 
-// Hooks
-import { useAcct } from "../hooks/useAccount"
 
 /* USER AVAILABILITY */
 

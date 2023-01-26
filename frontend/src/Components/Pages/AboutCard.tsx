@@ -1,5 +1,5 @@
 // Libraries
-import { ReactElement, ReactHTML, ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
 // Styles
 import st from "./About.module.css";

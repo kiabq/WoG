@@ -12,7 +12,7 @@ const Account = () => {
     const { accountInfo } = useAcct();
     const auth = useAuth();
 
-    if (auth?.token && auth?.user && accountInfo.error === undefined) {
+    if (auth?.token && auth?.user && (accountInfo.error === undefined)) {
         return (
             <>
                 <div className={`${styles.account} pd6-top`}>

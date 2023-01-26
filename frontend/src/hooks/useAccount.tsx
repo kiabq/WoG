@@ -54,7 +54,7 @@ export const useFetchAcctHook = () => {
     useEffect(() => {
         setError(undefined);
 
-        const controller = new AbortController;
+        const controller = new AbortController();
         const signal = controller.signal;
 
         // Get user profile (move to ENV variable).

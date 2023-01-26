@@ -8,7 +8,6 @@ import styles from "./Nav.module.css";
 // Hooks
 import { useAuth } from "../../hooks/useProvider";
 import { useAcct } from "../../hooks/useAccount";
-import { useMobile } from "../../hooks/useMobile";
 
 function useOutsideCheck(ref: React.MutableRefObject<any>) {
     const [isOpen, setIsOpen] = useState(false);
@@ -45,7 +44,7 @@ const Authed = () => {
             <div className={`${styles.nav__hamburger}`} ref={wrapperRef}>
                 <div className={`${styles.nav__account}`} onClick={() => isNavOpen.setIsOpen(!isNavOpen.isOpen)}>
                     <div className={styles.nav__account_info}>
-                        <img src={accountInfo.avatar} className={styles.nav__account_pfp}/>
+                        <img src={accountInfo.avatar} className={styles.nav__account_pfp} alt="User's Discord Avatar"/>
                         <p>{accountInfo.user}</p>
                     </div>
                     <button className={`${styles.nav__dropdown_button}`}>

@@ -1,5 +1,5 @@
 // Libraries
-import React, { ReactElement, useRef, ReactNode } from "react";
+import React, { ReactElement, useRef } from "react";
 
 // Styles
 import st from "./OptionalPlayerInfo.module.css";

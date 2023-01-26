@@ -16,7 +16,7 @@ export function convertTime(timestr: string, miltime: boolean) {
     if (miltime === true) {
         return (`${fHours}:${fMinutes}`);
     } else {
-        if (typeof hours != 'number') {
+        if (typeof hours !== 'number') {
             if (parseInt(hours) === 0) {
                 hours = 12;
             }
@@ -24,7 +24,7 @@ export function convertTime(timestr: string, miltime: boolean) {
             hours = (hours + 11) % 12 + 1;
         }
 
-        if (fHours > 11 && fHours != 0) {
+        if (fHours > 11 && fHours !== 0) {
             meridian = 'PM';
         }
 

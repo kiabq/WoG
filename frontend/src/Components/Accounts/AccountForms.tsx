@@ -31,7 +31,7 @@ const AccountForms = () => {
                 <div className={styles.player__info__wrapper}>
                     <div>
                         <p>{accountInfo.user}</p>
-                        <img src={accountInfo.avatar} className={`${styles.account__info__avatar} pd3-top`}/>
+                        <img src={accountInfo.avatar} className={`${styles.account__info__avatar} pd3-top`} alt="User's Discord Avatar"/>
                     </div>
                     { editType === 1 ? <PlayerInfoForm toggleEdit={makeEdit}/> : <PlayerInfo toggleEdit={makeEdit}/> }
                 </div>

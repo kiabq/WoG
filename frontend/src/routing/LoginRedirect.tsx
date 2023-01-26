@@ -35,7 +35,7 @@ const LoginRedirect = () => {
 
       apiRef.current = false;
     }
-  }, []);
+  }, [auth, location.search, navigate]);
 
   return (
     <div>

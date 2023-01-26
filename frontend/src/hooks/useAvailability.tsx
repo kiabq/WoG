@@ -66,7 +66,7 @@ const useAvailability = () => {
         }
 
         setChecked(initMap);
-    }, [accountInfo])
+    }, [accountInfo, dayOptions])
 
     return {
         checked,

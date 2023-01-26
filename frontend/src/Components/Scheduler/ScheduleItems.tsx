@@ -1,5 +1,5 @@
 // Libraries
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 
 // Components
 import ScheduleItem from "./ScheduleItem";

@@ -1,6 +1,3 @@
-// Libraries
-import { useState } from "react";
-
 // Styles
 import styles from "./AccountAvailability.module.css";
 
