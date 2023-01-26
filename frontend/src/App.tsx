@@ -21,7 +21,7 @@ const router = createBrowserRouter(
       <Route element={<PublicRoute/>}>
         <Route path='/' element={<Home/>}/>
       </Route>
-      <Route path="/connect/discord/redirect" element={<LoginRedirect/>}/>
+      <Route path="/connect/:providerName/redirect" element={<LoginRedirect/>}/>
       <Route element={<PrivateRoute/>}>
         <Route path="/account" element={<Account/>}/>
       </Route>
