@@ -1,5 +1,10 @@
 // Libraries
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { 
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider
+} from "react-router-dom"
 
 // Components
 import Home from './Components/Pages/HomePage';
@@ -10,22 +15,25 @@ import LoginRedirect from './routing/LoginRedirect';
 import { PublicRoute, PrivateRoute } from './hooks/useProvider';
 import { AccountContext } from './hooks/useAccount';
 
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route element={<PublicRoute/>}>
+        <Route path='/' element={<Home/>}/>
+      </Route>
+      <Route path="/connect/discord/redirect" element={<LoginRedirect/>}/>
+      <Route element={<PrivateRoute/>}>
+        <Route path="/account" element={<Account/>}/>
+      </Route>
+      <Route path='*' element={<p>Not Found</p>}/>
+    </>
+  )
+)
 
 const App = () => {
   return (
     <AccountContext>
-      <Router>
-        <Routes>
-          <Route element={<PublicRoute/>}>
-            <Route path='/' element={<Home/>}/>
-          </Route>
-          <Route path="/connect/:providerName/redirect" element={<LoginRedirect/>}/>
-          <Route element={<PrivateRoute/>}>
-            <Route path="/account" element={<Account/>}/>
-          </Route>
-          <Route path='*' element={<p>Not Found</p>}/>
-        </Routes>
-      </Router>
+      <RouterProvider router={router}/>
     </AccountContext>
   )
 }

@@ -36,7 +36,6 @@ const Scheduler = () => {
     useEffect(() => {
         const controller = new AbortController;
         const signal = controller.signal;
-
         axios.get(`${process.env.REACT_APP_BACKEND}/api/dungeon-masters?populate=%2A`, { signal: signal })
         .then(
             (res) => {
