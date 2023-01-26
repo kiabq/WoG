@@ -1,5 +1,5 @@
 // Libraries
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 // Hooks
 import { useAcct } from "./useAccount";
@@ -13,7 +13,7 @@ const useAvailability = () => {
     const { accountInfo } = useAcct();
 
     const [checked, setChecked] = useState<Map<string, userData>>(new Map());
-    const dayOptions = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    const dayOptions = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
 
     function getAvailableDays(day: string) {
         const availibilityInfo = checked.get(day);
@@ -66,7 +66,7 @@ const useAvailability = () => {
         }
 
         setChecked(initMap);
-    }, [accountInfo, dayOptions])
+    }, [accountInfo])
 
     return {
         checked,
