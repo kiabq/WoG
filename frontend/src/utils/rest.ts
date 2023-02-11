@@ -25,7 +25,7 @@ export function createAvailability(formData: Array<Object>, token: string) {
 
     // Create user availability on the backend.
     function create() {
-        return axios.post(`${process.env.REACT_APP_BACKEND}/api/user-availabilities/me`, 
+        return axios.post(`${process.env.REACT_APP_BACKEND}/api/user-availabilities`, 
             availabilityBody, 
             { headers: config }
         )
