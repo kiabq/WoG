@@ -123,6 +123,10 @@ const ScheduleItems = ({ info }: PropTypes) => {
                     if (arr_numeral > cur_numeral && arr.indexOf(item) === -1) {
                         arr.splice(i, 0, item);
                     }
+
+                    if (arr_numeral < cur_numeral && arr.indexOf(item) === -1) {
+                        arr.splice(i + 1, 0, item);
+                    }
                 }
             }
 
@@ -138,6 +142,7 @@ const ScheduleItems = ({ info }: PropTypes) => {
     });
 
     const fMap: fMappedEl = convertArrToObj(map, "day");
+
     const renderKeys = [fMap.sunday, fMap.monday, fMap.tuesday, fMap.wednesday, fMap.thursday, fMap.friday, fMap.saturday];
 
     return (
