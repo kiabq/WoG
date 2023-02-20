@@ -22,6 +22,7 @@ interface Props extends EditFnProp {
 }
 
 const INITIAL_STATE = {
+    id: 0,
     experience: 0,
     combat: 0,
     simulation: 0,
@@ -42,6 +43,7 @@ const OptionalPlayerInfo = ({ toggleEdit, editType }: Props) => {
             setOptional(INITIAL_STATE);
         } else {
             setOptional(acct.accountInfo.optional);
+            console.log(acct.accountInfo.optional);
         }
     }, [acct.accountInfo.optional])
 

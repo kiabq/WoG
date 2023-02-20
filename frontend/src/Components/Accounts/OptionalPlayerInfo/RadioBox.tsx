@@ -21,7 +21,6 @@ function fillRef(amount: number, ref: React.MutableRefObject<HTMLInputElement[]>
         temp.push(
             <input type="radio"
                 value={i + 1}
-                // Temporary name, programmatically replaced on line 36.
                 name={`option${value}`}
                 ref={(element: HTMLInputElement) => (ref.current[i] = element)}
                 disabled={editType !== Edit.optional}
@@ -70,9 +69,11 @@ const RadioBox = ({ children, value, optional, editType }: Props) => {
                 </div>
             </div>
         )
-    } else if (Array.isArray(children.props.children)) {
+    }
+    
+    if (Array.isArray(children.props.children)) {
         const length = children.props.children.length;
-        
+
         return (
             <div className={st.radio__form__element}>
                 {fillRef(length, ref, value, optional, editType).map((element: ReactElement, index: number) => {
