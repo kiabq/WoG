@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import Cookies from "cookies";
 
 // Components
-import Redirect from "../../components/redirect";
+import Redirect from "../../components/Redirect";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const cookies = new Cookies(req, res);

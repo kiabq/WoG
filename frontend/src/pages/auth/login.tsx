@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { serialize } from "cookie";
 
 // Components
-import Redirect from "../../components/redirect";
+import Redirect from "../../components/Redirect";
 
 export const getServerSideProps: GetServerSideProps = async ({
     query: { access_token },
