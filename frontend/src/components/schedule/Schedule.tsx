@@ -13,9 +13,9 @@ export default function Schedule({ dm }: ScheduleProps) {
       <select name='dungeon-master' id='dms' className='text-center' onChange={(val) => {
         setSelectedDM(dm.filter(value => value.attributes.name === val.target.value));
       }}>
-        <option value=''>Select a DM</option>
+        <option value='' selected disabled hidden>Select a DM</option>
         {dm.map((val) => {
-          return <option value={val.attributes.name}>{val.attributes.name}</option>
+          return <option value={val.attributes.name} key={val.attributes.name}>{val.attributes.name}</option>
         })}
       </select>
       <div className="flex justify-center pt-6">{selectedDM[0] ?
