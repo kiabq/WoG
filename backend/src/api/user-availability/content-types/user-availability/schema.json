@@ -12,11 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "day": {
-      "type": "component",
-      "repeatable": true,
-      "component": "day.day"
-    },
     "user": {
       "type": "relation",
       "relation": "oneToOne",

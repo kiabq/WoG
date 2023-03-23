@@ -19,8 +19,6 @@ module.exports = ({ strapi }) => {
    */
 
   const getProfile = async (provider, query) => {
-    console.log(query);
-
     const access_token = query.access_token || query.code || query.oauth_token;
 
     const providers = await strapi
@@ -34,8 +32,6 @@ module.exports = ({ strapi }) => {
       access_token,
       providers,
     });
-
-    console.log(user);
 
     return user;
   };
@@ -125,8 +121,6 @@ module.exports = ({ strapi }) => {
 
   const buildRedirectUri = (provider = '') => {
     const apiPrefix = strapi.config.get('api.rest.prefix');
-
-    console.log("Reached:", provider);
 
     return urlJoin(getAbsoluteServerUrl(strapi.config), apiPrefix, 'connect', provider, 'callback');
   };

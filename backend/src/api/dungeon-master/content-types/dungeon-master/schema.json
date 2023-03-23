@@ -20,11 +20,40 @@
       "type": "email",
       "required": true
     },
-    "availabilities": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::availability.availability",
-      "mappedBy": "dungeon_master"
+    "sunday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "monday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "tuesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "wednesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "thursday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "friday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "saturday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
     }
   }
 }

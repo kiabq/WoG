@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_day_temps",
+  "info": {
+    "displayName": "temp",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "times": {
+      "type": "component",
+      "repeatable": true,
+      "component": "times.times"
+    }
+  }
+}

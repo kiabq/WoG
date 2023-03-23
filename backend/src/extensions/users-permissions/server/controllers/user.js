@@ -178,7 +178,7 @@ module.exports = {
     }
 
     const user = await strapi.entityService.findOne('plugin::users-permissions.user', authUser.id, {
-      populate: { 
+      populate: {
         user_availability: {
           populate: {
             day: {
@@ -190,7 +190,6 @@ module.exports = {
               }
             }
           }
-
         },
         user_info: true,
         optionalQuestions: true
@@ -205,8 +204,6 @@ module.exports = {
    * @return {Object} 
    */
   async updateMe(ctx) {
-    console.log(ctx);
-
     const authUser = ctx.state.user;
 
     const user = await getService('user').fetch(authUser.id);
@@ -217,12 +214,14 @@ module.exports = {
 
     await validateUpdateUserBody(ctx.request.body);
 
-    let updateData = {
+    const updateData = {
       ...ctx.request.body,
     };
 
-    const data = await getService('user').edit(authUser.id, updateData);
-    // const sanitizedData = await sanitizeOutput(data, ctx);
+    const data = await strapi.entityService.update('plugin::users-permissions.user', authUser.id, {
+      data: updateData,
+      populate: ['optionalQuestions', 'user_info'],
+    });
 
     ctx.send(data);
   }

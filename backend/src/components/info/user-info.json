@@ -10,10 +10,6 @@
       "type": "string",
       "required": true
     },
-    "invoiceEmail": {
-      "type": "email",
-      "required": true
-    },
     "pronoun": {
       "type": "enumeration",
       "enum": [
