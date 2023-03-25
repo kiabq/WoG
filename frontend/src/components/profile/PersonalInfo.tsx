@@ -26,8 +26,6 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
     const [pronoun, setPronoun] = useState<string>((personal && personal.pronoun) ?? '');
     const ref = useRef<HTMLSelectElement | null>(null);
 
-    console.log(pronoun);
-
     const loader = ({ src }: LoaderArgs) => {
         return `https://cdn.discordapp.com/avatars/${user.providerId}/${src}`
     }
@@ -73,7 +71,7 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                         required />
                 </div>
                 <div>
-                    <label htmlFor='age'>Name: </label>
+                    <label htmlFor='age'>Age: </label>
                     <input type='number'
                         className='w-full'
                         id='age'

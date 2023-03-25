@@ -23,7 +23,7 @@ export default function ProfileInfo({ user }: ProfileProps) {
         <PersonalInfo user={user} edit={personalEdit} setEdit={(edit: Edit) => setPersonalEdit(edit)}/>
         <OptionalInfo user={user} edit={optionalEdit} setEdit={(edit: Edit) => setOptionalEdit(edit)}/>
       </div>
-      <AvailabilityInfo />
+      <AvailabilityInfo user={user} edit={availabilityEdit} setEdit={(edit: Edit) => setAvailabilityEdit(edit)}/>
     </>
   );
 }
