@@ -36,99 +36,110 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
     ]
 
     return (
-        <form onSubmit={async (e: FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
+        <div className='flex flex-col'>
+            <h2 className='pb-3 mx-auto'>Questions</h2>
 
-            const form = e.currentTarget as HTMLFormElement;
-            let options: Options = {};
+            <form className='flex flex-col' onSubmit={async (e: FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
 
-            for (let i = 0; i < form.length; i++) {
-                const formInput = form[i] as HTMLInputElement;
+                const form = e.currentTarget as HTMLFormElement;
+                let options: Options = {};
 
-                formInput.checked && (options[formInput.name] = parseInt(formInput.value))
-            }
+                for (let i = 0; i < form.length; i++) {
+                    const formInput = form[i] as HTMLInputElement;
 
-            await axios.put('http://localhost:3000/api/user', {
-                'optionalQuestions': options
-            }).then((res) => {
-                if (res.status === 200) {
-                    setOptional(res.data);
-                }
-            });
-
-            setEdit(Edit.none);
-        }}>
-            {questions.map((element: string | Array<string>, index: number) => {
-                const ref = useRef<HTMLInputElement | null>(null);
-                const key = Object.keys(optional).slice(index + 1, index + 2)[0];
-                const value = Object.values(optional).slice(index + 1, index + 2)[0];
-
-                if (ref.current) {
-                    ref.current.checked = true;
+                    formInput.checked && (options[formInput.name] = parseInt(formInput.value))
                 }
 
-                if (Array.isArray(element)) {
+                await axios.put('http://localhost:3000/api/user', {
+                    'optionalQuestions': options
+                }).then((res) => {
+                    if (res.status === 200) {
+                        setOptional(res.data);
+                    }
+                });
+
+                setEdit(Edit.none);
+            }}>
+                {questions.map((element: string | Array<string>, index: number) => {
+                    const ref = useRef<HTMLInputElement | null>(null);
+                    const key = Object.keys(optional).slice(index + 1, index + 2)[0];
+                    const value = Object.values(optional).slice(index + 1, index + 2)[0];
+
+                    if (ref.current) {
+                        ref.current.checked = true;
+                    }
+
+                    if (Array.isArray(element)) {
+                        return (
+                            <section className='flex-col py-2' key={`${index}${key}`}>
+                                <p className='pb-2 font-medium text-center'>
+                                    How experienced do you feel at playing Dungeons & Dragons?
+                                </p>
+                                {[1, 2, 3, 4].map((mapped: number, index: number) => {
+                                    return (
+                                        <div className='flex' key={index}>
+                                            <input type='radio'
+                                                name={key}
+                                                value={mapped}
+                                                defaultChecked={mapped === value}
+                                                disabled={edit !== Edit.editing}
+                                                ref={mapped === value ? ref : null}
+                                            />
+                                            <p>{element[index]}</p>
+                                        </div>
+                                    )
+                                })}
+                            </section>
+                        )
+                    }
+
                     return (
-                        <section className="flex-col" key={`${index}${key}`}>
-                            {[1, 2, 3, 4].map((mapped: number, index: number) => {
-                                return (
-                                    <div className='flex' key={index}>
-                                        <input type='radio'
-                                            name={key}
-                                            value={mapped}
-                                            defaultChecked={mapped === value}
-                                            disabled={edit !== Edit.editing}
-                                            ref={mapped === value ? ref : null}
-                                        />
-                                        <p>{element[index]}</p>
-                                    </div>
-                                )
-                            })}
+                        <section className='flex flex-col items-center text-center py-2' key={`${index}${key}`}>
+                            <p className='w-4/5 pb-2 font-medium'>{element}</p>
+                            <div className='flex mx-auto text-sm'>
+                                <span>Not Interested</span>
+                                <div className='px-3'>
+                                    {[1, 2, 3, 4, 5].map((mapped: number, index: number) => {
+                                        return (
+                                            <input type='radio'
+                                                name={key}
+                                                value={mapped}
+                                                defaultChecked={mapped === value}
+                                                disabled={edit !== Edit.editing}
+                                                ref={mapped === value ? ref : null}
+                                                key={index}
+                                            />
+                                        )
+                                    })}
+                                </div>
+                                <span>Interested</span>
+                            </div>
                         </section>
                     )
+                })}
+
+                {edit === Edit.editing ?
+                    <div className='mx-auto'>
+                        <button type='submit' onClick={() => {
+                            setOptional(optional);
+                        }}>
+                            Submit
+                        </button>
+
+                        <button type="button" onClick={() => {
+                            setEdit(Edit.none)
+                            setOptional(optional)
+                        }} className="btn btn-padding cancel">
+                            Cancel
+                        </button>
+                    </div>
+                    :
+                    <button type="button" onClick={() => { setEdit(Edit.editing) }} className='mx-auto'>
+                        Edit
+                    </button>
                 }
-
-                return (
-                    <section key={`${index}${key}`}>
-                        <p>{element}</p>
-                        <span>Not Interested</span>
-                        {[1, 2, 3, 4, 5].map((mapped: number, index: number) => {
-                            return (
-                                <input type='radio'
-                                    name={key}
-                                    value={mapped}
-                                    defaultChecked={mapped === value}
-                                    disabled={edit !== Edit.editing}
-                                    ref={mapped === value ? ref : null}
-                                    key={index}
-                                />
-                            )
-                        })}
-                        <span>Interested</span>
-                    </section>
-                )
-            })}
-
-            {edit === Edit.editing ?
-                <div>
-                    <button className="btn btn-padding submit" type='submit' onClick={() => {
-                        setOptional(optional);
-                    }}>
-                        Submit
-                    </button>
-
-                    <button type="button" onClick={() => {
-                        setEdit(Edit.none)
-                        setOptional(optional)
-                    }} className="btn btn-padding cancel">
-                        Cancel
-                    </button>
-                </div>
-                :
-                <button type="button" onClick={() => { setEdit(Edit.editing) }} className="btn btn-padding edit">
-                    Edit
-                </button>
-            }
-        </form>
+            </form>
+        </div>
     )
 }

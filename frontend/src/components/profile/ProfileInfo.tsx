@@ -19,7 +19,7 @@ export default function ProfileInfo({ user }: ProfileProps) {
 
   return (
     <>
-      <div className='flex mb-16'>
+      <div className='flex flex-col mb-16 lg:flex-row'>
         <PersonalInfo user={user} edit={personalEdit} setEdit={(edit: Edit) => setPersonalEdit(edit)}/>
         <OptionalInfo user={user} edit={optionalEdit} setEdit={(edit: Edit) => setOptionalEdit(edit)}/>
       </div>
