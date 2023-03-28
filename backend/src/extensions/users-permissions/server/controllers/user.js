@@ -179,20 +179,15 @@ module.exports = {
 
     const user = await strapi.entityService.findOne('plugin::users-permissions.user', authUser.id, {
       populate: {
-        user_availability: {
-          populate: {
-            day: {
-              fields: ['day'],
-              populate: {
-                times: {
-                  fields: ['start_time', 'end_time']
-                }
-              }
-            }
-          }
-        },
         user_info: true,
-        optionalQuestions: true
+        optionalQuestions: true,
+        sunday: true,
+        monday: true,
+        tuesday: true,
+        wednesday: true,
+        thursday: true,
+        friday: true,
+        saturday: true
       }
     });
 
@@ -220,7 +215,7 @@ module.exports = {
 
     const data = await strapi.entityService.update('plugin::users-permissions.user', authUser.id, {
       data: updateData,
-      populate: ['optionalQuestions', 'user_info'],
+      populate: ['optionalQuestions', 'user_info', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
     });
 
     ctx.send(data);
