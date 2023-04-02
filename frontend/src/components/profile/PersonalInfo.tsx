@@ -1,8 +1,8 @@
-import { FormEvent, useRef, useState } from "react"
-import Image from "next/image"
-import axios from "axios"
+import { FormEvent, useRef, useState } from 'react';
+import Image from 'next/image';
+import axios from 'axios';
 
-import { Edit } from "@/utils/types"
+import { Edit } from '@/utils/types';
 
 type LoaderArgs = {
     src: string
@@ -76,8 +76,8 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                         className='w-full'
                         id='age'
                         value={age}
-                        min="18"
-                        max="80"
+                        min='18'
+                        max='80'
                         onChange={(e) => { setAge(e.currentTarget.value) }}
                         disabled={edit === Edit.none}
                         required />
@@ -103,21 +103,21 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
 
                 {edit === Edit.editing ?
                     <div>
-                        <button className="btn btn-padding submit" type='submit'>
+                        <button type='submit'>
                             Submit
                         </button>
 
-                        <button type="button" onClick={() => {
+                        <button type='button' onClick={() => {
                             setEdit(Edit.none)
                             setName((personal && personal.name) ?? '');
                             setAge((personal && personal.age) ?? '');
                             setPronoun((personal && personal.pronoun) ?? '');
-                        }} className="btn btn-padding cancel">
+                        }} className='btn btn-padding cancel'>
                             Cancel
                         </button>
                     </div>
                     :
-                    <button type="button" onClick={() => { setEdit(Edit.editing) }} className="btn btn-padding edit">
+                    <button type='button' onClick={() => { setEdit(Edit.editing) }}>
                         Edit
                     </button>
                 }

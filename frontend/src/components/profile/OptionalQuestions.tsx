@@ -1,7 +1,7 @@
-import { useState, useRef, FormEvent } from "react";
-import axios from "axios";
+import { useState, useRef, FormEvent } from 'react';
+import axios from 'axios';
 
-import { Edit, OptionalQuestions, } from "@/utils/types";
+import { Edit, OptionalQuestions, } from '@/utils/types';
 
 type Options = {
     [index: string]: number
@@ -22,17 +22,17 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
     const [optional, setOptional] = useState<OptionalQuestions>(user.optionalQuestions ?? INITIAL_STATE);
     const questions = [
         [
-            "I'm very new to D&D and I'll likely need help learning the game as I'm just getting started.",
-            "I've logged some time creating characters and playing through adventures and basically know the ropes.",
-            "I'm a D&D veteran who is experienced playing the game and know what I'm doing.",
-            "I know my way around the game both as a player and a GM, and have a thorough understanding of the rules."
+            'I\'m very new to D&D and I\'ll likely need help learning the game as I\'m just getting started.',
+            'I\'ve logged some time creating characters and playing through adventures and basically know the ropes.',
+            'I\'m a D&D veteran who is experienced playing the game and know what I\'m doing.',
+            'I know my way around the game both as a player and a GM, and have a thorough understanding of the rules.'
         ],
-        "How do you feel about using game time to engage in grid combat during the game?",
-        "How do you feel about using game time to explore immersive elements of the game?",
-        "How do you feel about using game time for exploration of areas, dungeons, and game worlds in general?",
-        "How do you feel about using game time to explore interactions between characters?",
-        "How do you feel about using game time for downtime activities and resource development?",
-        "How do you feel about using game time for character development of your own and other player characters?"
+        'How do you feel about using game time to engage in grid combat during the game?',
+        'How do you feel about using game time to explore immersive elements of the game?',
+        'How do you feel about using game time for exploration of areas, dungeons, and game worlds in general?',
+        'How do you feel about using game time to explore interactions between characters?',
+        'How do you feel about using game time for downtime activities and resource development?',
+        'How do you feel about using game time for character development of your own and other player characters?'
     ]
 
     return (
@@ -73,7 +73,7 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                     if (Array.isArray(element)) {
                         return (
                             <section className='flex-col py-2' key={`${index}${key}`}>
-                                <p className='pb-2 font-medium text-center'>
+                                <p className='pb-2 text-center text-left'>
                                     How experienced do you feel at playing Dungeons & Dragons?
                                 </p>
                                 {[1, 2, 3, 4].map((mapped: number, index: number) => {
@@ -95,8 +95,8 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                     }
 
                     return (
-                        <section className='flex flex-col items-center text-center py-2' key={`${index}${key}`}>
-                            <p className='w-4/5 pb-2 font-medium'>{element}</p>
+                        <section className='flex flex-col items-center text-left py-2' key={`${index}${key}`}>
+                            <p className='w-4/5 pb-2'>{element}</p>
                             <div className='flex mx-auto text-sm'>
                                 <span>Not Interested</span>
                                 <div className='px-3'>
@@ -127,15 +127,15 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                             Submit
                         </button>
 
-                        <button type="button" onClick={() => {
+                        <button type='button' onClick={() => {
                             setEdit(Edit.none)
                             setOptional(optional)
-                        }} className="btn btn-padding cancel">
+                        }}>
                             Cancel
                         </button>
                     </div>
                     :
-                    <button type="button" onClick={() => { setEdit(Edit.editing) }} className='mx-auto'>
+                    <button type='button' onClick={() => { setEdit(Edit.editing) }} className='mx-auto'>
                         Edit
                     </button>
                 }
