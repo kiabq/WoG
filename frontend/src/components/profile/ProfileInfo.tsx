@@ -1,12 +1,9 @@
-import Image from "next/image";
-import React, { SetStateAction, useMemo, useRef, useState } from "react";
-import RadioBox from "./RadioBox";
-import OptionalInfo from "./OptionalQuestions";
+import { useState } from 'react';
+import OptionalInfo from './OptionalQuestions';
 
-import { Edit, OptionalQuestions } from "@/utils/types";
-import axios from "axios";
-import PersonalInfo from "./PersonalInfo";
-import AvailabilityInfo from "./AvailabilityInfo";
+import { Edit } from '@/utils/types';
+import PersonalInfo from './PersonalInfo';
+import AvailabilityInfo from './AvailabilityInfo';
 
 type ProfileProps = {
   user: any,

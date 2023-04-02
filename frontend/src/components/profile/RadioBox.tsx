@@ -1,6 +1,6 @@
 // Libraries
-import React, { ReactElement, useMemo, useRef } from "react";
-import { Edit, OptionalQuestions } from "@/utils/types";
+import React, { ReactElement, useRef } from 'react';
+import { Edit, OptionalQuestions } from '@/utils/types';
 
 interface Props {
     children: any,
@@ -18,7 +18,7 @@ function fillRef(amount: number, ref: React.MutableRefObject<HTMLInputElement[]>
         const currentRef = ref.current[optionalValues[value] - 1];
 
         for (let i = 0; i < amount; i++) {
-            if (typeof ref.current[i] !== "undefined") {
+            if (typeof ref.current[i] !== 'undefined') {
                 ref.current[i].name = optionalKeys[value];
             }
         }
@@ -31,7 +31,7 @@ function fillRef(amount: number, ref: React.MutableRefObject<HTMLInputElement[]>
 
     for (let i = 0; i < amount; i++) {
         temp.push(
-            <input type="radio"
+            <input type='radio'
                 value={i + 1}
                 ref={(element: HTMLInputElement) => (ref.current[i] = element)}
                 disabled={editType !== Edit.optional}
@@ -45,12 +45,12 @@ function fillRef(amount: number, ref: React.MutableRefObject<HTMLInputElement[]>
 export default function RadioBox({ children, value, optional, editType }: Props) {
     const ref = useRef<Array<HTMLInputElement>>([]);
 
-    if (typeof children.props.children === "string") {
+    if (typeof children.props.children === 'string') {
         return (
             <section>
                 <h5>{children.props.children}</h5>
                 <div>
-                    <span className="ub_lgt">Not Interested</span>
+                    <span className='ub_lgt'>Not Interested</span>
                     <div>
                         {fillRef(5, ref, value, optional, editType).map((element: ReactElement) => {
                             return (
@@ -60,7 +60,7 @@ export default function RadioBox({ children, value, optional, editType }: Props)
                             )
                         })}
                     </div>
-                    <span className="ub_lgt">Interested</span>
+                    <span className='ub_lgt'>Interested</span>
                 </div>
             </section>
         )
@@ -75,10 +75,10 @@ export default function RadioBox({ children, value, optional, editType }: Props)
                 {fillRef(length, ref, value, optional, editType).map((element: ReactElement, index: number) => {
                     return (
                         <div style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            paddingTop: "10px",
-                            paddingBottom: "10px"
+                            display: 'flex',
+                            flexDirection: 'row',
+                            paddingTop: '10px',
+                            paddingBottom: '10px'
                         }}>
                             {element}
                             <p>{children.props.children[index]}</p>

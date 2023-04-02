@@ -10,6 +10,7 @@ type AccountType = {
 }
 
 type OptionalQuestions = {
+    id: number,
     experience: number,
     combat: number,
     simulation: number,
@@ -58,9 +59,7 @@ type EditFnProp = {
 
 export const enum Edit {
     none = 0,
-    player = 1,
-    availability = 2,
-    optional = 3
+    editing = 1,
 }
 
 export const enum RequestCategory {
