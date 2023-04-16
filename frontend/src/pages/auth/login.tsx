@@ -1,15 +1,17 @@
 // Libraries
-import { GetServerSideProps } from "next";
 import { serialize } from "cookie";
 
 // Components
 import Redirect from "../../components/Redirect";
 
+// Types
+import { GetServerSideProps } from "next";
+
 export const getServerSideProps: GetServerSideProps = async ({
     query: { access_token },
     res
 }) => {
-    await fetch(`http://localhost:1337/api/auth/discord/callback?access_token=${access_token}`)
+    const user = await fetch(`http://localhost:1337/api/auth/discord/callback?access_token=${access_token}`)
         .then((response) => {
             return response.json();
         })
@@ -27,12 +29,17 @@ export const getServerSideProps: GetServerSideProps = async ({
                 ]
                 )
             }
+
+            return response;
         })
+
     return {
-        props: {}
+        props: { user }
     }
 }
 
-export default function Logout() {
-    return <Redirect />
+export default function Logout(props: any) {
+    const { user } = props;
+
+    return <Redirect page={user.isNew ? '/profile' : '/'} />
 }

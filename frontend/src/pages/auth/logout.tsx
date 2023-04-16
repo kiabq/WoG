@@ -1,9 +1,11 @@
 // Libraries
-import { GetServerSideProps } from "next";
 import Cookies from "cookies";
 
 // Components
 import Redirect from "../../components/Redirect";
+
+// Types
+import type { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const cookies = new Cookies(req, res);
@@ -21,5 +23,5 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 }
 
 export default function Logout() {
-    return <Redirect />
+    return <Redirect page='/'/>
 }
