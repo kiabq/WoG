@@ -3,22 +3,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 
+// Context
+import { getContext } from '@/context/usercontext';
+
 // Fonts
 import localFont from 'next/font/local';
 import { useEffect } from 'react';
 const rubik = localFont({ src: '../../fonts/rubik-variable.ttf' })
 
-type HeaderProps = {
-  user: any,
-}
-
 type LoaderArgs = {
   src: string
 }
 
-export default function Header(props: HeaderProps) {
+export default function Header() {
   const [isOpened, setIsOpened] = useState(false);
-  const { user } = props;
+  const user = getContext();
 
   const loader = ({ src }: LoaderArgs) => {
     return `https://cdn.discordapp.com/avatars/${user.providerId}/${src}`
@@ -30,7 +29,7 @@ export default function Header(props: HeaderProps) {
         setIsOpened(false);
       }
     }
-    
+
     window.addEventListener('resize', handleResize);
 
     return (

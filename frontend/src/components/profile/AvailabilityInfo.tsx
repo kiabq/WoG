@@ -7,15 +7,21 @@ import { convertTime } from '@/utils/convertTime';
 
 // Types
 import { Edit } from '@/utils/types';
-import { IndexType } from '@/utils/types';
+import type { IUser } from '@/utils/types';
 
-export default function AvailabilityInfo({ user, edit, setEdit }: any) {
+interface IProps {
+    user: IUser,
+    edit: Edit,
+    setEdit: (edit: Edit) => void
+}
+
+export default function AvailabilityInfo({ user, edit, setEdit }: IProps) {
     const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
     async function submit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
-        const form = {
+        const form: any = {
             sunday: user.sunday ?? { start_time: null, end_time: null },
             monday: user.monday ?? { start_time: null, end_time: null },
             tuesday: user.tuesday ?? { start_time: null, end_time: null },
@@ -32,14 +38,17 @@ export default function AvailabilityInfo({ user, edit, setEdit }: any) {
                 const type = (submitted[i] as HTMLFormElement).dataset.type;
 
                 if (submitted[i].value) {
-                    form[day][type] = `${submitted[i].value}:00.000`;
+                    if (type && day) {
+                        form[day][type] = `${submitted[i].value}:00.000`;
+                    }
+                    
                 }
             }
         }
 
         if (form) {
             await axios.put('http://localhost:3000/api/user', form).then((res) => {
-                if (res.status === 200) {}
+                if (res.status === 200) { }
             });
         }
 
