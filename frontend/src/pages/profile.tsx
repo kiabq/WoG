@@ -3,15 +3,23 @@ import Head from 'next/head';
 import { GetServerSideProps } from "next";
 import Cookies from 'cookies';
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 // Components
 import Header from '@/components/header/Header';
 import ProfileInfo from '@/components/profile/ProfileInfo';
 import Footer from '@/components/footer/Footer';
 
+// Context
+import UserCtx, { getContext } from '@/context/usercontext';
+
 // Types
-import { Edit } from '@/utils/types';
+import type { IUser } from '@/utils/types';
+
+interface IProps {
+  user: IUser
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const cookies = new Cookies(req, res);
@@ -25,6 +33,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     if (res.status === 200) {
       return res.data;
     }
+  }).catch(() => {
+    return null;
   })
 
   return {
@@ -32,17 +42,40 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 }
 
-export default function Profile(props: any) {
-  return (
-    <>
-      <Head>
-        <title>World of Gaian - Profile</title>
-      </Head>
-      <Header user={props.user} />
-      <main className='max-w-screen-lg min-h-screen px-6 mx-auto my-16'>
-        <ProfileInfo user={props.user} />
-      </main>
-      <Footer />
-    </>
-  )
+export default function Profile(props: IProps) {
+  const router = useRouter();
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    if (props.user === null) {
+      router.push('/auth/logout');
+    }
+
+    if (props.user.isNew) {
+      router.push('/');
+    }
+
+    setLoaded(true);
+  }, [])
+
+  if (props.user && loaded === true) {
+    return (
+      <>
+        <Head>
+          <title>World of Gaian - Profile</title>
+        </Head>
+        <UserCtx user={props.user}>
+          <Header/>
+          <main className='max-w-screen-lg min-h-screen px-6 mx-auto my-16'>
+            <ProfileInfo/>
+          </main>
+          <Footer />
+        </UserCtx>
+      </>
+    )
+  } else {
+    return <div></div>
+  }
+
+
 }
