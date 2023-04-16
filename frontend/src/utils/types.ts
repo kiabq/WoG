@@ -1,62 +1,3 @@
-// Account Types
-type AccountType = {
-    error: string | undefined,
-    user: string | undefined,
-    email: string | undefined,
-    avatar: string | undefined,
-    availability: any, // Add appropriate type
-    user_info: UserInfo | undefined,
-    optional: OptionalQuestions,
-}
-
-type OptionalQuestions = {
-    id: number,
-    experience: number,
-    combat: number,
-    simulation: number,
-    exploration: number,
-    interactions: number,
-    resources: number,
-    character_development: number
-}
-
-type UserInfo = {
-    name: string,
-    age: number,
-    invoiceEmail: string,
-    pronoun: string
-}
-
-// Form Types
-type IndexType<T> = {
-    [key: string]: T
-}
-
-// Scheduler Types
-type fMappedEl = {
-    sunday: Array<object>,
-    monday: Array<object>,
-    tuesday: Array<object>,
-    wednesday: Array<object>,
-    thursday: Array<object>,
-    friday: Array<object>,
-    saturday: Array<object>,
-}
-
-type mappedEl = {
-    createdAt: Date,
-    updatedAt: Date,
-    publishedAt: Date,
-    start_time: string,
-    end_time: string,
-    day: string,
-}
-
-// Edit Types
-type EditFnProp = {
-    toggleEdit: (val: Edit) => void,
-}
-
 export const enum Edit {
     none = 0,
     editing = 1,
@@ -67,11 +8,50 @@ export const enum RequestCategory {
     optionalQuestions = 2
 }
 
-export type { 
-    AccountType,
-    OptionalQuestions,
-    IndexType,
-    fMappedEl,
-    mappedEl,
-    EditFnProp
-};
+export type OptionalQuestions = {
+    id: number,
+    experience: number,
+    combat: number,
+    simulation: number,
+    exploration: number,
+    interactions: number,
+    resources: number,
+    character_development: number
+}
+
+// Form Types
+export type IndexType<T> = {
+    [key: string]: T
+}
+
+export type AvailableDay = {
+    id: number,
+    start_time: string,
+    end_time: string
+}
+
+export interface IUser {
+    id: number,
+    blocked: boolean,
+    confirmed: boolean,
+    createdAt: string,
+    updatedAt: string,
+    isNew: boolean,
+    username: string,
+    provider: string,
+    providerId: string,
+    email: string,
+    avatar: string,
+    sunday: AvailableDay,
+    monday: AvailableDay,
+    tuesday: AvailableDay,
+    wednesday: AvailableDay,
+    thursday: AvailableDay,
+    friday: AvailableDay,
+    saturday: AvailableDay,
+    user_info: any,
+    optionalQuestions: any
+}
+
+export interface IDungeonMaster {}
+
