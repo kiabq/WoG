@@ -12,11 +12,40 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "mappedBy": "user_availability"
+    "sunday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "monday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "tuesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "wednesday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "thursday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "friday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
+    },
+    "saturday": {
+      "type": "component",
+      "repeatable": false,
+      "component": "day.temp"
     }
   }
 }

@@ -1,8 +1,7 @@
 {
-  "collectionName": "components_times_times",
+  "collectionName": "components_times_user_times",
   "info": {
-    "displayName": "DM-Times",
-    "description": ""
+    "displayName": "User-Times"
   },
   "options": {},
   "attributes": {

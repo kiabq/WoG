@@ -200,14 +200,26 @@ module.exports = {
    */
   async updateMe(ctx) {
     const authUser = ctx.state.user;
-
     const user = await getService('user').fetch(authUser.id);
 
     if (!user) {
       throw new NotFoundError(`User not found`);
     }
 
-    await validateUpdateUserBody(ctx.request.body);
+    // TODO: Determine if keys are in request body. If they are, return 403 error.
+    const immutable = ['username', 'email', 'confirmed', 'avatar', 'password', 'blocked', 'providerId', 'isNew'];
+    const keys = Object.keys(ctx.request.body);
+
+    if (immutable.some(value => keys.includes(value))) {
+      return ctx.unauthorized();
+    }
+
+    // Validate user body
+    // await validateUpdateUserBody(ctx.request.body);
+
+    if (ctx.request.body['user_info']) {
+      ctx.request.body.isNew = false;
+    }
 
     const updateData = {
       ...ctx.request.body,

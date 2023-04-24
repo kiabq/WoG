@@ -25,6 +25,9 @@
       "min": 18,
       "max": 99,
       "required": true
+    },
+    "invoice": {
+      "type": "email"
     }
   }
 }

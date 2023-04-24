@@ -1,7 +1,7 @@
 {
   "collectionName": "components_day_temps",
   "info": {
-    "displayName": "temp",
+    "displayName": "Day",
     "description": ""
   },
   "options": {},
@@ -9,7 +9,7 @@
     "times": {
       "type": "component",
       "repeatable": true,
-      "component": "times.times"
+      "component": "times.user-times"
     }
   }
 }
