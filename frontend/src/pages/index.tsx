@@ -58,7 +58,7 @@ export default function Home(props: IProps) {
               alt='Backpack and campfire'
               className='mx-auto'
             />
-            {!props.user && <a href='' className='bg-[#738adb] text-neutral-100 font-normal p-4 rounded-[10px]'>Join the Discord</a>}
+            {props.user && <a href='' className='bg-[#738adb] text-neutral-100 font-normal p-4 rounded-[10px]'>Join the Discord</a>}
           </div>
           <div className='mx-auto w-11/12 my-16 text-center'>
             <h1 className='text-4xl' id='dungeon-masters'>Dungeon Masters & Game Times</h1>
