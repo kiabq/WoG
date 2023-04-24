@@ -6,11 +6,14 @@ import PersonalInfo from './PersonalInfo';
 import AvailabilityInfo from './AvailabilityInfo';
 import { getContext } from '@/context/usercontext';
 
+// Types
+import type { IUser } from '@/utils/types';
+
 export default function ProfileInfo() {
   const [optionalEdit, setOptionalEdit] = useState<Edit>(Edit.none);
   const [personalEdit, setPersonalEdit] = useState<Edit>(Edit.none);
   const [availabilityEdit, setAvailabilityEdit] = useState<Edit>(Edit.none);
-  const user = getContext();
+  const user: IUser = getContext();
 
   return (
     <>

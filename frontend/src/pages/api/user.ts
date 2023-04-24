@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     const category = Object.keys(body)[0];
     
-    await axios.put('http://localhost:1337/api/users/me/update',
+    await axios.put(`${process.env.REACT_APP_BACKEND}/api/users/me/update`,
         body,
         { headers: config }
     ).then((response) => {

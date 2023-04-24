@@ -52,12 +52,9 @@ body {
 
 .heading-1 {
   font-family: var(--roboto-font),
-
 }
 
-/* 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */
+input:focus {
+  box-shadow: none;
+  border: none;
+}

@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     query: { access_token },
     res
 }) => {
-    const user = await fetch(`http://localhost:1337/api/auth/discord/callback?access_token=${access_token}`)
+    const user = await fetch(`${process.env.REACT_APP_BACKEND}/api/auth/discord/callback?access_token=${access_token}`)
         .then((response) => {
             return response.json();
         })
@@ -38,8 +38,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     }
 }
 
-export default function Logout(props: any) {
+export default function Login(props: any) {
     const { user } = props;
 
-    return <Redirect page={user.isNew ? '/profile' : '/'} />
+    return <Redirect page={user.isNew ? '/' : '/profile'} />
 }

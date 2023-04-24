@@ -46,7 +46,7 @@ export default function Header() {
 
         <Link href='/#about' className='pr-3 hidden md:block'>About</Link>
         <Link href='/#dungeon-masters' className='pr-3 hidden md:block'>Dungeon Masters</Link>
-        {!user.username && <Link href={`http://${process.env.REACT_APP_BACKEND}/api/connect/discord`} className='hidden md:block'>Sign In With Discord</Link>}
+        {!user && <Link href={`${process.env.REACT_APP_BACKEND}/api/connect/discord`} className='hidden md:block'>Sign In With Discord</Link>}
         {user &&
           <div className='border-2 rounded-lg mr-3 hidden md:block hover:border-[#738adb]'>
             <Link href='/profile' className=' flex flex-row items-center'>
@@ -87,7 +87,7 @@ export default function Header() {
       {isOpened &&
         <div className='flex flex-col text-left'>
           <div className='mx-auto flex flex-col'>
-            {!user && <Link href={`http://${process.env.REACT_APP_BACKEND}/api/connect/discord`}>Sign In With Discord</Link>}
+            {!user && <Link href={`${process.env.REACT_APP_BACKEND}/api/connect/discord`}>Sign In With Discord</Link>}
             {user && <Link href='/profile'>Profile</Link>}
             <Link href='/#about' className='pr-3'>About</Link>
             <Link href='/#dungeon-masters' className='pr-3'>Dungeon Masters</Link>

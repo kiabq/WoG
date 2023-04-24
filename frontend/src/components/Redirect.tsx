@@ -14,6 +14,8 @@ export default function Redirect({ page }: IRedirect) {
     }, [router]);
 
     return (
-        <p>If you are not redirected within 5 seconds, click <Link href={page ?? '/'}>here</Link></p>
+        <div className='w-screen h-screen flex'>
+            <p className='w-3/4 text-center h-max m-auto'>If you are not redirected within 5 seconds, click <Link href={page ?? '/'} className='underline'>here</Link></p>
+        </div>
     );
 }

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
 import Cookies from 'cookies';
+import { getUser, getDM } from '@/lib/getData';
 
 // Components
 import Header from '@/components/header/Header';
@@ -27,31 +28,8 @@ interface IProps {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const cookies = new Cookies(req, res);
   const token = cookies.get('token');
-
-  const user = await axios.get(`http://${process.env.REACT_APP_BACKEND}/api/users/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }).then((res) => {
-    if (res.status === 200) {
-      console.log(res.data);
-      return res.data;
-    }
-  }).catch(() => { return '' })
-
-  const dm = await axios.get(`http://${process.env.REACT_APP_BACKEND}/api/dungeon-masters?populate=attributes
-    &populate[1]=sunday.times
-    &populate[2]=monday.times
-    &populate[3]=tuesday.times
-    &populate[4]=wednesday.times
-    &populate[5]=thursday.times
-    &populate[6]=friday.times
-    &populate[7]=saturday.times`)
-    .then(
-      (res) => {
-        return res.data.data;
-      }
-    )
+  const user = await getUser(token);
+  const dm = await getDM();
 
   return {
     props: {
@@ -80,6 +58,7 @@ export default function Home(props: IProps) {
               alt='Backpack and campfire'
               className='mx-auto'
             />
+            {props.user && <a href=''>Join the Discord</a>}
           </div>
           <div className='mx-auto w-11/12 my-16 text-center'>
             <h1 className='text-4xl' id='dungeon-masters'>Dungeon Masters & Game Times</h1>
@@ -89,7 +68,7 @@ export default function Home(props: IProps) {
           <div className='mx-auto w-11/12 my-16 text-center'>
             <h1 className='text-4xl' id='about'>About</h1>
             <section className='flex flex-col pb-16 md:flex-row'>
-              <Image src={'/assets/dryad.png'} width={384} height={384} alt='Dryad and squirrel' className='w-auto h-auto' />
+              <Image src='/assets/dryad.png' width={384} height={384} alt='Dryad and squirrel' className='w-auto h-auto' />
               <div className='my-auto'>
                 <h3 className='text-2xl'>Find your perfect gaming group.</h3>
                 <p>Get ready to embark on an epic adventure! With World of Gaian, you can find the perfect gaming group for you. Tell us a little bit about yourself and we’ll match you with a group or dungeon master that fits your needs. Ready to join the quest? Get started today!</p>

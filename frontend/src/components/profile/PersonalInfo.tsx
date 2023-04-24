@@ -11,8 +11,8 @@ type LoaderArgs = {
 type UserInfo = {
     name: string,
     age: string,
-    invoiceEmail: string,
-    pronoun: string
+    pronoun: string,
+    invoice: string
 }
 
 interface IInfo {
@@ -24,6 +24,7 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
     const [name, setName] = useState<string>((personal && personal.name) ?? '');
     const [age, setAge] = useState<string>((personal && personal.age) ?? '');
     const [pronoun, setPronoun] = useState<string>((personal && personal.pronoun) ?? '');
+    const [invoice, setInvoice] = useState<string>((personal && personal.invoice) ?? '');
     const ref = useRef<HTMLSelectElement | null>(null);
 
     const loader = ({ src }: LoaderArgs) => {
@@ -38,9 +39,10 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
             name: (target['name'].value) as string,
             age: (target['age'].value) as string,
             pronoun: (target['pronoun'].value) as string,
+            invoice: (target['invoice'].value) as string
         }
 
-        await axios.put('http://localhost:3000/api/user', {
+        await axios.put(`${process.env.REACT_APP_FRONTEND}/api/user`, {
             'user_info': user_info
         }).then((res) => {
             setPersonal(res.data)
@@ -99,6 +101,16 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                         <option value='Other'>Other</option>
                         <option value='None'>None</option>
                     </select>
+                </div>
+                <div>
+                    <label htmlFor='invoice'>Invoice Email: </label>
+                    <input type='email'
+                        className='w-full'
+                        id='invoice'
+                        value={invoice}
+                        onChange={(e) => { setInvoice(e.currentTarget.value) }}
+                        disabled={edit === Edit.none}
+                        required />
                 </div>
 
                 {edit === Edit.editing ?

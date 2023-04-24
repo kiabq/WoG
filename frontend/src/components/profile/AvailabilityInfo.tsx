@@ -47,7 +47,7 @@ export default function AvailabilityInfo({ user, edit, setEdit }: IProps) {
         }
 
         if (form) {
-            await axios.put('http://localhost:3000/api/user', form).then((res) => {
+            await axios.put(`${process.env.REACT_APP_FRONTEND}/api/user`, form).then((res) => {
                 if (res.status === 200) { }
             });
         }

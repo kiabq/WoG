@@ -5,14 +5,16 @@ import Cookies from 'cookies';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { getUser } from '@/lib/getData';
 
 // Components
 import Header from '@/components/header/Header';
 import ProfileInfo from '@/components/profile/ProfileInfo';
+import Setup from '@/components/profile/Setup';
 import Footer from '@/components/footer/Footer';
 
 // Context
-import UserCtx, { getContext } from '@/context/usercontext';
+import UserCtx from '@/context/usercontext';
 
 // Types
 import type { IUser } from '@/utils/types';
@@ -24,18 +26,7 @@ interface IProps {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const cookies = new Cookies(req, res);
   const token = cookies.get('token');
-
-  const user = await axios.get(`http://${process.env.REACT_APP_BACKEND}/api/users/me?populate=*`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }).then((res) => {
-    if (res.status === 200) {
-      return res.data;
-    }
-  }).catch(() => {
-    return null;
-  })
+  const user = await getUser(token);
 
   return {
     props: { user }
@@ -45,14 +36,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 export default function Profile(props: IProps) {
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
-
+  
   useEffect(() => {
     if (props.user === null) {
       router.push('/auth/logout');
-    }
-
-    if (props.user.isNew) {
-      router.push('/');
     }
 
     setLoaded(true);
@@ -67,7 +54,8 @@ export default function Profile(props: IProps) {
         <UserCtx user={props.user}>
           <Header/>
           <main className='max-w-screen-lg min-h-screen px-6 mx-auto my-16'>
-            <ProfileInfo/>
+            {props.user.isNew && <Setup />}
+            {!props.user.isNew && <ProfileInfo />}
           </main>
           <Footer />
         </UserCtx>
@@ -76,6 +64,4 @@ export default function Profile(props: IProps) {
   } else {
     return <div></div>
   }
-
-
 }
