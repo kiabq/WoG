@@ -51,7 +51,7 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                     formInput.checked && (options[formInput.name] = parseInt(formInput.value))
                 }
 
-                await axios.put(`${process.env.REACT_APP_FRONTEND}/api/user`, {
+                await axios.put(`/api/user`, {
                     'optionalQuestions': options
                 }).then((res) => {
                     if (res.status === 200) {

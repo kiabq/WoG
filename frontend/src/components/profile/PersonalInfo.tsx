@@ -42,7 +42,7 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
             invoice: (target['invoice'].value) as string
         }
 
-        await axios.put(`${process.env.REACT_APP_FRONTEND}/api/user`, {
+        await axios.put(`/api/user`, {
             'user_info': user_info
         }).then((res) => {
             setPersonal(res.data)
