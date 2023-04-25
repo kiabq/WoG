@@ -44,7 +44,7 @@ export default function Setup() {
         invoice: (target['invoice'].value) as string
     }
 
-    await axios.put('http://localhost:3000/api/user', {
+    await axios.put(`${process.env.REACT_APP_FRONTEND}/api/user`, {
         'user_info': user_info
     }).then(() => {
         router.push('/profile');
