@@ -1,110 +1,162 @@
 // Libraries
-import { FormEvent } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+
+// Components
+import Toggle from '../UI/toggle';
+import Timepicker from '../UI/timepicker';
 
 // Utils
 import { convertTime } from '@/utils/convertTime';
 
 // Types
-import { Edit } from '@/utils/types';
-import type { IUser } from '@/utils/types';
+import type { IUser, Days } from '@/utils/types';
 
-interface IProps {
-    user: IUser,
-    edit: Edit,
-    setEdit: (edit: Edit) => void
+type TDateTimeFormat = {
+    resolvedOptions(): {
+        timeZone: string
+    }
 }
 
-export default function AvailabilityInfo({ user, edit, setEdit }: IProps) {
-    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+declare namespace Intl {
+    type Key = 'calendar' | 'collation' | 'currency' | 'numberingSystem' | 'timeZone' | 'unit';
 
-    async function submit(e: FormEvent<HTMLFormElement>) {
+    function supportedValuesOf(input: Key): string[];
+
+    function DateTimeFormat(): TDateTimeFormat;
+}
+
+const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+
+export default function AvailabilityInfo({ user }: any) {
+    const initialAvailability = {
+        sunday: { start_time: user.sunday?.start_time, end_time: user.sunday?.end_time },
+        monday: { start_time: user.monday?.start_time, end_time: user.monday?.end_time },
+        tuesday: { start_time: user.tuesday?.start_time, end_time: user.tuesday?.end_time },
+        wednesday: { start_time: user.wednesday?.start_time, end_time: user.wednesday?.end_time },
+        thursday: { start_time: user.thursday?.start_time, end_time: user.thursday?.end_time },
+        friday: { start_time: user.friday?.start_time, end_time: user.friday?.end_time },
+        saturday: { start_time: user.saturday?.start_time, end_time: user.saturday?.end_time },
+    };
+
+    const initialSelectedDays: Days = {
+        sunday: user.sunday !== null,
+        monday: user.monday !== null,
+        tuesday: user.tuesday !== null,
+        wednesday: user.wednesday !== null,
+        thursday: user.thursday !== null,
+        friday: user.friday !== null,
+        saturday: user.saturday !== null
+    };
+    
+    const defaultTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timezones = Intl.supportedValuesOf('timeZone');
+    const [selectedDays, setSelectedDays] = useState<Days>(initialSelectedDays);
+    const [availability, setAvailability] = useState(initialAvailability);
+    const [userTimezone, setUserTimezone] = useState(user.timezone || defaultTimezone);
+    const [editing, setEditing] = useState(false);
+
+    function updateDay(day: keyof Days) {
+        setSelectedDays(
+            {
+                ...selectedDays,
+                [day]: !selectedDays[day]
+            }
+        )
+
+        setEditing(true);
+    }
+
+    // TODO:
+    // - Call API to update user availability, 
+    // updating available days, times, and timezone if applicable.
+
+    function onSubmit(e: React.FormEvent) {
         e.preventDefault();
+        const form = (e.currentTarget as HTMLFormElement);
+        const timezone = (form[0] as HTMLSelectElement).value;
+    
+        for (let i = 0; i < form.length; i++) {
+            const formElement = form[i] as HTMLInputElement;
 
-        const form: any = {
-            sunday: user.sunday ?? { start_time: null, end_time: null },
-            monday: user.monday ?? { start_time: null, end_time: null },
-            tuesday: user.tuesday ?? { start_time: null, end_time: null },
-            wednesday: user.wednesday ?? { start_time: null, end_time: null },
-            thursday: user.thursday ?? { start_time: null, end_time: null },
-            friday: user.friday ?? { start_time: null, end_time: null },
-            saturday: user.saturday ?? { start_time: null, end_time: null }
-        };
-        const submitted = e.currentTarget;
-
-        for (let i = 0; i < submitted.length; i++) {
-            if ((submitted[i] as HTMLFormElement).type === 'time') {
-                const day = (submitted[i] as HTMLFormElement).dataset.day;
-                const type = (submitted[i] as HTMLFormElement).dataset.type;
-
-                if (submitted[i].value) {
-                    if (type && day) {
-                        form[day][type] = `${submitted[i].value}:00.000`;
-                    }
-                    
+            if (formElement.type === 'checkbox') {
+                if (formElement.checked) {
+                    console.log(form[i + 1]);
+                    console.log(form[i + 2]);
                 }
             }
         }
 
-        if (form) {
-            await axios.put(`/api/user`, form).then((res) => {
-                if (res.status === 200) { }
-            });
-        }
+        setEditing(false);
+    }
 
-        setEdit(Edit.none);
+    function onCancel() {
+        setAvailability(initialAvailability);
+        setSelectedDays(initialSelectedDays);
+        setUserTimezone(user.timezone || defaultTimezone);
+        setEditing(false);
+    }
+
+    function onSelect(e: React.ChangeEvent<HTMLSelectElement>) {
+        e.preventDefault();
+
+        const selectedTimezone = e.target[e.target.selectedIndex].id;
+        setUserTimezone(selectedTimezone);
+        setEditing(true);
     }
 
     return (
-        <form className='flex flex-col h-[34rem] relative md:h-[8rem]' onSubmit={(e) => submit(e)}>
-            <div className='flex flex-col w-full h-24 text-center md:flex-row'>
-                {days.map((day) => {
+        <form className='sm:w-[22rem] md:w-[32rem] mx-auto' onSubmit={(e) => onSubmit(e)}>
+            <select className='w-full p-3 my-5' onChange={e => onSelect(e)}>
+                {timezones.map((timezone) => {
                     return (
-                        <div className='flex flex-col items-center grow basis-0' key={day}>
-                            <p>{day[0].toUpperCase() + day.slice(1)}</p>
-                            <div className='w-fit'>
-                                <div className='flex text-left'>
-                                    <p className='pr-3 w-2/6'>From:</p>
-                                    <input className='w-4/6'
-                                        type='time'
-                                        data-day={day}
-                                        data-type='start_time'
-                                        defaultValue={user[day] && convertTime(user[day].start_time, true)}
-                                        required>
-                                    </input>
-                                </div>
-                                <div className='flex text-left'>
-                                    <p className='pr-3 w-2/6'>To:</p>
-                                    <input className='w-4/6'
-                                        type='time'
-                                        data-day={day}
-                                        data-type='end_time'
-                                        defaultValue={user[day] && convertTime(user[day].end_time, true)}
-                                        required>
-                                    </input>
-                                </div>
-                            </div>
-                        </div>
+                        <option 
+                            id={timezone} 
+                            selected={timezone === userTimezone}>
+                                {timezone}
+                        </option>
                     )
                 })}
-            </div>
-
-            {
-                edit === Edit.editing ?
-                    <div className='mx-auto absolute bottom-0 md:relative'>
-                        <button type='submit'>
-                            Submit
-                        </button>
-
-                        <button type='button' onClick={() => { setEdit(Edit.none) }}>
-                            Cancel
-                        </button>
+            </select>
+            {days.map((day) => {
+                return (
+                    <div className='flex flex-row items-center'>
+                        <div className='basis-[32%]'>
+                            <p>{day[0].toUpperCase() + day.slice(1, day.length)}</p>
+                            <Toggle
+                                day={day}
+                                checked={selectedDays[day as keyof Days]}
+                                updateFn={updateDay}
+                            />
+                        </div>
+                        <div className='w-full basis-[68%]'>
+                            {selectedDays[day as keyof Days] &&
+                                <div className='w-max mx-auto'>
+                                    <Timepicker
+                                        required={true}
+                                        name={day}
+                                        value={user[day] && convertTime(user[day].start_time, true)}
+                                        classes='h-[40px] w-[90px] sm:h-[50px] sm:w-[105px]'
+                                    />
+                                    <span className='px-2'>-</span>
+                                    <Timepicker
+                                        required={true}
+                                        name={day}
+                                        value={user[day] && convertTime(user[day].end_time, true)}
+                                        classes='h-[40px] w-[90px] sm:h-[50px] sm:w-[105px]'
+                                    />
+                                </div>
+                            }
+                        </div>
                     </div>
-                    :
-                    <button type='button' onClick={() => { setEdit(Edit.editing) }} className='absolute md:relative bottom-0 mx-auto'>
-                        Edit
-                    </button>
+                )
+            })}
+            {editing && <div className='flex justify-center'>
+                    <button type='submit' className='p-3'>Save</button>
+                    <button type='button' className='p-3' onClick={() => onCancel()}>Cancel</button>
+                </div>
             }
-        </form >
+        </form>
     )
 }
