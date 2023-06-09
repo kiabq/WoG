@@ -62,20 +62,20 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                 className='rounded-full mb-4'
             />
             <form className='flex flex-col max-w-4/5' onSubmit={(e) => submit(e)}>
-                <div>
-                    <label htmlFor='name'>Name: </label>
+                <div className='pb-3'>
+                    <label htmlFor='name' className='inline-block pb-1'>Name: </label>
                     <input type='text'
-                        className='w-full'
+                        className='w-full border-2 border-slate-400 p-2 rounded-md'
                         id='name'
                         value={name}
                         onChange={(e) => { setName(e.currentTarget.value) }}
                         disabled={edit === Edit.none}
                         required />
                 </div>
-                <div>
-                    <label htmlFor='age'>Age: </label>
+                <div className='pb-3'>
+                    <label htmlFor='age' className='inline-block pb-1'>Age: </label>
                     <input type='number'
-                        className='w-full'
+                        className='w-full border-2 border-slate-400 p-2 rounded-md'
                         id='age'
                         value={age}
                         min='18'
@@ -84,10 +84,11 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                         disabled={edit === Edit.none}
                         required />
                 </div>
-                <div>
-                    <label htmlFor='pronoun'>Pronouns:</label>
+                <div className='pb-3 whitespace-nowrap'>
+                    <label htmlFor='pronoun' className='inline-block pb-1'>Pronouns:</label>
                     <select name='pronouns'
                         id='pronoun'
+                        className='border-2 border-slate-400 bg-transparent inline-block p-2 ml-2 rounded-md'
                         disabled={edit === Edit.none}
                         value={pronoun}
                         onChange={(e) => { setPronoun(e.currentTarget.value) }}
@@ -102,10 +103,10 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                         <option value='None'>None</option>
                     </select>
                 </div>
-                <div>
-                    <label htmlFor='invoice'>Invoice Email: </label>
+                <div className='pb-3'>
+                    <label htmlFor='invoice' className='inline-block pb-1'>Invoice Email: </label>
                     <input type='email'
-                        className='w-full'
+                        className='w-full border-2 border-slate-400 p-2 rounded-md'
                         id='invoice'
                         value={invoice}
                         onChange={(e) => { setInvoice(e.currentTarget.value) }}
