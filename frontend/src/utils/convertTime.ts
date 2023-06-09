@@ -24,7 +24,7 @@ export function convertTime(timestr: string, miltime: boolean) {
             hours = (hours + 11) % 12 + 1;
         }
 
-        if (fHours > 11 && fHours !== 0) {
+        if ((fHours as number) > 11 && fHours !== 0) {
             meridian = 'PM';
         }
 
