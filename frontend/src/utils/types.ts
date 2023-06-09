@@ -8,6 +8,16 @@ export const enum RequestCategory {
     optionalQuestions = 2
 }
 
+export type Days = {
+    sunday: boolean,
+    monday: boolean,
+    tuesday: boolean,
+    wednesday: boolean,
+    thursday: boolean,
+    friday: boolean,
+    saturday: boolean
+}
+
 export type OptionalQuestions = {
     id: number,
     experience: number,
