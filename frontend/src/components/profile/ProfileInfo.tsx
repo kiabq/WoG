@@ -4,6 +4,7 @@ import OptionalInfo from './OptionalQuestions';
 import { Edit } from '@/utils/types';
 import PersonalInfo from './PersonalInfo';
 import AvailabilityInfo from './AvailabilityInfo';
+import Toggle from '../UI/toggle';
 import { getContext } from '@/context/usercontext';
 
 // Types
@@ -12,16 +13,15 @@ import type { IUser } from '@/utils/types';
 export default function ProfileInfo() {
   const [optionalEdit, setOptionalEdit] = useState<Edit>(Edit.none);
   const [personalEdit, setPersonalEdit] = useState<Edit>(Edit.none);
-  const [availabilityEdit, setAvailabilityEdit] = useState<Edit>(Edit.none);
   const user: IUser = getContext();
-
+  
   return (
     <>
       <div className='flex flex-col mb-16 lg:flex-row'>
         <PersonalInfo user={user} edit={personalEdit} setEdit={(edit: Edit) => setPersonalEdit(edit)}/>
         <OptionalInfo user={user} edit={optionalEdit} setEdit={(edit: Edit) => setOptionalEdit(edit)}/>
       </div>
-      <AvailabilityInfo user={user} edit={availabilityEdit} setEdit={(edit: Edit) => setAvailabilityEdit(edit)}/>
+      <AvailabilityInfo user={user}/>
     </>
   );
 }

@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 export default function Profile(props: IProps) {
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
-  
+
   useEffect(() => {
     if (props.user === null) {
       router.push('/auth/logout');

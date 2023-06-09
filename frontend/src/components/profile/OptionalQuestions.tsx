@@ -72,7 +72,7 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
 
                     if (Array.isArray(element)) {
                         return (
-                            <section className='flex-col py-2' key={`${index}${key}`}>
+                            <section className='flex-col py-2 mx-auto' key={`${index}${key}`}>
                                 <p className='pb-2 text-center text-left'>
                                     How experienced do you feel at playing Dungeons & Dragons?
                                 </p>
