@@ -5,13 +5,15 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const cookies = new Cookies(req, res);
-    const token = cookies.get('token')
+    const token = cookies.get('token');
     const body = req.body;
     const config = {
         Authorization: `Bearer ${token}`
     }
     const category = Object.keys(body)[0];
-    
+
+    console.log(body);
+
     await axios.put(`${process.env.REACT_APP_BACKEND}/api/users/me/update`,
         body,
         { headers: config }
@@ -25,12 +27,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 return res.status(200).json(response.data.optionalQuestions);
             case 'user_info':
                 return res.status(200).json(response.data.user_info);
-            case 'sunday':
-                return res.status(200).json(response.data)
+            case 'availability':
+                return res.status(200).json(response.data);
             default:
                 res.status(400);
         }
     }).catch((e) => {
+        // Do something idk
         res.status(400);
     })
 
