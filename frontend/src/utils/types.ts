@@ -18,7 +18,26 @@ export type Days = {
     saturday: boolean
 }
 
-export type OptionalQuestions = {
+// Form Types
+export type IndexType<T> = {
+    [key: string]: T
+}
+
+export type AvailableDay = {
+    id: number,
+    start_time: string,
+    end_time: string
+}
+
+export interface IUserInfo {
+    id: number,
+    name: string,
+    pronoun: string,
+    age: number,
+    invoice: string
+}
+
+export interface OptionalQuestions {
     id: number,
     experience: number,
     combat: number,
@@ -29,15 +48,15 @@ export type OptionalQuestions = {
     character_development: number
 }
 
-// Form Types
-export type IndexType<T> = {
-    [key: string]: T
-}
-
-export type AvailableDay = {
-    id: number,
-    start_time: string,
-    end_time: string
+export interface IAvailability {
+    timezone: string | null,
+    sunday: AvailableDay,
+    monday: AvailableDay,
+    tuesday: AvailableDay,
+    wednesday: AvailableDay,
+    thursday: AvailableDay,
+    friday: AvailableDay,
+    saturday: AvailableDay,
 }
 
 export interface IUser {
@@ -52,13 +71,7 @@ export interface IUser {
     providerId: string,
     email: string,
     avatar: string,
-    sunday: AvailableDay,
-    monday: AvailableDay,
-    tuesday: AvailableDay,
-    wednesday: AvailableDay,
-    thursday: AvailableDay,
-    friday: AvailableDay,
-    saturday: AvailableDay,
+    availability: IAvailability | null,
     user_info: any,
     optionalQuestions: any
 }
