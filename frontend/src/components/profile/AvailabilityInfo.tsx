@@ -10,7 +10,7 @@ import Timepicker from '../UI/timepicker';
 import { convertTime } from '@/utils/convertTime';
 
 // Types
-import type { IUser, Days } from '@/utils/types';
+import type { IndexType, Days, IUser } from '@/utils/types';
 
 type TDateTimeFormat = {
     resolvedOptions(): {
@@ -28,33 +28,34 @@ declare namespace Intl {
 
 const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
-
-export default function AvailabilityInfo({ user }: any) {
+// fix dis - from: tired kb
+export default function AvailabilityInfo({ user }: IUser) {
+    // God has forsaken us.
     const initialAvailability = {
-        sunday: { start_time: user.sunday?.start_time, end_time: user.sunday?.end_time },
-        monday: { start_time: user.monday?.start_time, end_time: user.monday?.end_time },
-        tuesday: { start_time: user.tuesday?.start_time, end_time: user.tuesday?.end_time },
-        wednesday: { start_time: user.wednesday?.start_time, end_time: user.wednesday?.end_time },
-        thursday: { start_time: user.thursday?.start_time, end_time: user.thursday?.end_time },
-        friday: { start_time: user.friday?.start_time, end_time: user.friday?.end_time },
-        saturday: { start_time: user.saturday?.start_time, end_time: user.saturday?.end_time },
+        sunday: { start_time: user.availability?.sunday?.start_time, end_time: user.availability?.sunday?.end_time },
+        monday: { start_time: user.availability?.monday?.start_time, end_time: user.availability?.monday?.end_time },
+        tuesday: { start_time: user.availability?.tuesday?.start_time, end_time: user.availability?.tuesday?.end_time },
+        wednesday: { start_time: user.availability?.wednesday?.start_time, end_time: user.availability?.wednesday?.end_time },
+        thursday: { start_time: user.availability?.thursday?.start_time, end_time: user.availability?.thursday?.end_time },
+        friday: { start_time: user.availability?.friday?.start_time, end_time: user.availability?.friday?.end_time },
+        saturday: { start_time: user.availability?.saturday?.start_time, end_time: user.availability?.saturday?.end_time },
     };
 
     const initialSelectedDays: Days = {
-        sunday: user.sunday !== null,
-        monday: user.monday !== null,
-        tuesday: user.tuesday !== null,
-        wednesday: user.wednesday !== null,
-        thursday: user.thursday !== null,
-        friday: user.friday !== null,
-        saturday: user.saturday !== null
+        sunday: !!user.availability?.sunday,
+        monday: !!user.availability?.monday,
+        tuesday: !!user.availability?.tuesday,
+        wednesday: !!user.availability?.wednesday,
+        thursday: !!user.availability?.thursday,
+        friday: !!user.availability?.friday,
+        saturday: !!user.availability?.saturday
     };
     
     const defaultTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const timezones = Intl.supportedValuesOf('timeZone');
     const [selectedDays, setSelectedDays] = useState<Days>(initialSelectedDays);
     const [availability, setAvailability] = useState(initialAvailability);
-    const [userTimezone, setUserTimezone] = useState(user.timezone || defaultTimezone);
+    const [userTimezone, setUserTimezone] = useState(user.availability?.timezone || defaultTimezone);
     const [editing, setEditing] = useState(false);
 
     function updateDay(day: keyof Days) {
@@ -72,21 +73,34 @@ export default function AvailabilityInfo({ user }: any) {
     // - Call API to update user availability, 
     // updating available days, times, and timezone if applicable.
 
-    function onSubmit(e: React.FormEvent) {
+    async function onSubmit(e: React.FormEvent) {
         e.preventDefault();
         const form = (e.currentTarget as HTMLFormElement);
         const timezone = (form[0] as HTMLSelectElement).value;
-    
-        for (let i = 0; i < form.length; i++) {
-            const formElement = form[i] as HTMLInputElement;
+        // Change the generic on this type
+        let data: IndexType<{start_time: string, end_time: string} | string> = {
+            timezone: timezone
+        };
 
-            if (formElement.type === 'checkbox') {
-                if (formElement.checked) {
-                    console.log(form[i + 1]);
-                    console.log(form[i + 2]);
-                }
+        for (let i = 0; i < form.length; i++) {
+            const formInput = form[i] as HTMLInputElement;
+            const start = form[i + 1] as HTMLInputElement;
+            const end = form[i + 2] as HTMLInputElement;
+            const day = formInput.id;
+
+            if (formInput.checked) {
+                data[day] = { 
+                    start_time: `${start.value}:00.000`, 
+                    end_time: `${end.value}:00.000` 
+                };
             }
         }
+        
+        await axios.put(`/api/user`, {
+            'availability': data
+        }).then((res) => {
+            console.log(res);
+        });
 
         setEditing(false);
     }
@@ -94,13 +108,12 @@ export default function AvailabilityInfo({ user }: any) {
     function onCancel() {
         setAvailability(initialAvailability);
         setSelectedDays(initialSelectedDays);
-        setUserTimezone(user.timezone || defaultTimezone);
+        setUserTimezone(user.availability?.timezone || defaultTimezone);
         setEditing(false);
     }
 
     function onSelect(e: React.ChangeEvent<HTMLSelectElement>) {
         e.preventDefault();
-
         const selectedTimezone = e.target[e.target.selectedIndex].id;
         setUserTimezone(selectedTimezone);
         setEditing(true);
@@ -113,7 +126,8 @@ export default function AvailabilityInfo({ user }: any) {
                     return (
                         <option 
                             id={timezone} 
-                            selected={timezone === userTimezone}>
+                            selected={timezone === userTimezone}
+                            key={timezone}>
                                 {timezone}
                         </option>
                     )
@@ -121,7 +135,7 @@ export default function AvailabilityInfo({ user }: any) {
             </select>
             {days.map((day) => {
                 return (
-                    <div className='flex flex-row items-center'>
+                    <div className='flex flex-row items-center' key={day}>
                         <div className='basis-[32%]'>
                             <p>{day[0].toUpperCase() + day.slice(1, day.length)}</p>
                             <Toggle
@@ -136,14 +150,14 @@ export default function AvailabilityInfo({ user }: any) {
                                     <Timepicker
                                         required={true}
                                         name={day}
-                                        value={user[day] && convertTime(user[day].start_time, true)}
+                                        value={user.availability?.[day] && convertTime(user.availability?.[day].start_time, true)}
                                         classes='h-[40px] w-[90px] sm:h-[50px] sm:w-[105px]'
                                     />
                                     <span className='px-2'>-</span>
                                     <Timepicker
                                         required={true}
                                         name={day}
-                                        value={user[day] && convertTime(user[day].end_time, true)}
+                                        value={user.availability?.[day] && convertTime(user.availability?.[day].end_time, true)}
                                         classes='h-[40px] w-[90px] sm:h-[50px] sm:w-[105px]'
                                     />
                                 </div>
@@ -152,9 +166,9 @@ export default function AvailabilityInfo({ user }: any) {
                     </div>
                 )
             })}
-            {editing && <div className='flex justify-center'>
-                    <button type='submit' className='p-3'>Save</button>
-                    <button type='button' className='p-3' onClick={() => onCancel()}>Cancel</button>
+            {editing && <div className='flex justify-center pt-5'>
+                    <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
+                    <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
                 </div>
             }
         </form>
