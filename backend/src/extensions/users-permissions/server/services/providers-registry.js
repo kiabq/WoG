@@ -11,6 +11,7 @@ const getInitialProviders = ({ purest }) => ({
       .auth(access_token)
       .request()
       .then(({ body }) => {
+        console.log(body);
         // Combine username and discriminator because discord username is not unique
         let username = `${body.username}#${body.discriminator}`;
         return {

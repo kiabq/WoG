@@ -181,13 +181,17 @@ module.exports = {
       populate: {
         user_info: true,
         optionalQuestions: true,
-        sunday: true,
-        monday: true,
-        tuesday: true,
-        wednesday: true,
-        thursday: true,
-        friday: true,
-        saturday: true
+        availability: {
+          populate: {
+            sunday: true,
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: true
+          }
+        }
       }
     });
 
@@ -227,7 +231,21 @@ module.exports = {
 
     const data = await strapi.entityService.update('plugin::users-permissions.user', authUser.id, {
       data: updateData,
-      populate: ['optionalQuestions', 'user_info', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+      populate: {
+        user_info: true,
+        optionalQuestions: true,
+        availability: {
+          populate: {
+            sunday: true,
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: true
+          }
+        }
+      }
     });
 
     ctx.send(data);

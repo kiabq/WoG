@@ -80,44 +80,14 @@
       "component": "info.optional-questions",
       "required": false
     },
-    "sunday": {
-      "type": "component",
-      "repeatable": false,
-      "component": "times.user-times"
-    },
-    "monday": {
-      "type": "component",
-      "repeatable": false,
-      "component": "times.user-times"
-    },
-    "tuesday": {
-      "type": "component",
-      "repeatable": false,
-      "component": "times.user-times"
-    },
-    "wednesday": {
-      "type": "component",
-      "repeatable": false,
-      "component": "times.user-times"
-    },
-    "thursday": {
-      "type": "component",
-      "repeatable": false,
-      "component": "times.user-times"
-    },
-    "friday": {
-      "type": "component",
-      "repeatable": false,
-      "component": "times.user-times"
-    },
-    "saturday": {
-      "type": "component",
-      "repeatable": false,
-      "component": "times.user-times"
-    },
     "isNew": {
       "type": "boolean",
       "default": true
+    },
+    "availability": {
+      "type": "component",
+      "repeatable": false,
+      "component": "info.availability"
     }
   }
 }
