@@ -12,16 +12,16 @@ import type { IUser } from '@/utils/types';
 
 export default function ProfileInfo() {
   const [optionalEdit, setOptionalEdit] = useState<Edit>(Edit.none);
-  const [personalEdit, setPersonalEdit] = useState<Edit>(Edit.none);
   const user: IUser = getContext();
   
   return (
     <>
       <div className='flex flex-col mb-16 lg:flex-row'>
-        <PersonalInfo user={user} edit={personalEdit} setEdit={(edit: Edit) => setPersonalEdit(edit)}/>
-        <OptionalInfo user={user} edit={optionalEdit} setEdit={(edit: Edit) => setOptionalEdit(edit)}/>
+        <PersonalInfo user={user}/>
+        <AvailabilityInfo user={user}/>
       </div>
-      <AvailabilityInfo user={user}/>
+      <OptionalInfo user={user} edit={optionalEdit} setEdit={(edit: Edit) => setOptionalEdit(edit)}/>
+
     </>
   );
 }

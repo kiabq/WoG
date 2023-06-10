@@ -19,12 +19,19 @@ interface IInfo {
     [field: string]: HTMLFormElement
 }
 
-export default function PersonalInfo({ user, edit, setEdit }: any) {
+export default function PersonalInfo({ user }: any) {
     const [personal, setPersonal] = useState<UserInfo>(user.user_info);
+    const INITIAL_STATE = {
+        name: personal.name || '',
+        age: personal.age || '',
+        pronoun: personal.pronoun || '',
+        invoice: personal.invoice || ''
+    }
     const [name, setName] = useState<string>((personal && personal.name) ?? '');
     const [age, setAge] = useState<string>((personal && personal.age) ?? '');
     const [pronoun, setPronoun] = useState<string>((personal && personal.pronoun) ?? '');
     const [invoice, setInvoice] = useState<string>((personal && personal.invoice) ?? '');
+    const [editing, setEditing] = useState(false);
     const ref = useRef<HTMLSelectElement | null>(null);
 
     const loader = ({ src }: LoaderArgs) => {
@@ -45,14 +52,22 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
         await axios.put(`/api/user`, {
             'user_info': user_info
         }).then((res) => {
-            setPersonal(res.data)
+            setPersonal(res.data);
         });
         
-        setEdit(Edit.none);
+        setEditing(false);
+    }
+
+    function onCancel() {
+        setName(INITIAL_STATE.name);
+        setAge(INITIAL_STATE.age);
+        setPronoun(INITIAL_STATE.pronoun);
+        setInvoice(INITIAL_STATE.invoice);
+        setEditing(false);
     }
 
     return (
-        <div className='flex flex-col items-center mb-16'>
+        <div className='flex flex-col items-center mb-16 lg:mb-0'>
             <Image
                 loader={loader}
                 src={`${user.avatar}.png`}
@@ -61,15 +76,18 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                 height={128}
                 className='rounded-full mb-4'
             />
-            <form className='flex flex-col max-w-4/5' onSubmit={(e) => submit(e)}>
+            {/* note: margin here really sucks, change in future. */}
+            <form className='flex flex-col max-w-4/5 lg:mb-6' onSubmit={(e) => submit(e)}>
                 <div className='pb-3'>
                     <label htmlFor='name' className='inline-block pb-1'>Name: </label>
                     <input type='text'
                         className='w-full border-2 border-slate-400 p-2 rounded-md'
                         id='name'
                         value={name}
-                        onChange={(e) => { setName(e.currentTarget.value) }}
-                        disabled={edit === Edit.none}
+                        onChange={(e) => { 
+                            setName(e.currentTarget.value);
+                            setEditing(true);
+                        }}
                         required />
                 </div>
                 <div className='pb-3'>
@@ -80,8 +98,10 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                         value={age}
                         min='18'
                         max='80'
-                        onChange={(e) => { setAge(e.currentTarget.value) }}
-                        disabled={edit === Edit.none}
+                        onChange={(e) => { 
+                            setAge(e.currentTarget.value);
+                            setEditing(true);
+                        }}
                         required />
                 </div>
                 <div className='pb-3 whitespace-nowrap'>
@@ -89,9 +109,11 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                     <select name='pronouns'
                         id='pronoun'
                         className='border-2 border-slate-400 bg-transparent inline-block p-2 ml-2 rounded-md'
-                        disabled={edit === Edit.none}
                         value={pronoun}
-                        onChange={(e) => { setPronoun(e.currentTarget.value) }}
+                        onChange={(e) => { 
+                            setPronoun(e.currentTarget.value);
+                            setEditing(true);
+                        }}
                         ref={ref}>
                         <option value='' disabled hidden>
                             Select pronouns
@@ -109,32 +131,18 @@ export default function PersonalInfo({ user, edit, setEdit }: any) {
                         className='w-full border-2 border-slate-400 p-2 rounded-md'
                         id='invoice'
                         value={invoice}
-                        onChange={(e) => { setInvoice(e.currentTarget.value) }}
-                        disabled={edit === Edit.none}
+                        onChange={(e) => { 
+                            setInvoice(e.currentTarget.value);
+                            setEditing(true);
+                        }}
                         required />
                 </div>
-
-                {edit === Edit.editing ?
-                    <div>
-                        <button type='submit'>
-                            Submit
-                        </button>
-
-                        <button type='button' onClick={() => {
-                            setEdit(Edit.none)
-                            setName((personal && personal.name) ?? '');
-                            setAge((personal && personal.age) ?? '');
-                            setPronoun((personal && personal.pronoun) ?? '');
-                        }} className='btn btn-padding cancel'>
-                            Cancel
-                        </button>
-                    </div>
-                    :
-                    <button type='button' onClick={() => { setEdit(Edit.editing) }}>
-                        Edit
-                    </button>
-                }
             </form>
+            {editing && <div className='flex justify-center pt-5 mt-auto'>
+                    <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
+                    <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
+                </div>
+            }
         </div>
     )
 }
