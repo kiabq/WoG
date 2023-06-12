@@ -50,7 +50,7 @@ export default function AvailabilityInfo({ user }: IUser) {
         friday: !!user.availability?.friday,
         saturday: !!user.availability?.saturday
     };
-    
+
     const defaultTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const timezones = Intl.supportedValuesOf('timeZone');
     const [selectedDays, setSelectedDays] = useState<Days>(initialSelectedDays);
@@ -69,16 +69,12 @@ export default function AvailabilityInfo({ user }: IUser) {
         setEditing(true);
     }
 
-    // TODO:
-    // - Call API to update user availability, 
-    // updating available days, times, and timezone if applicable.
-
     async function onSubmit(e: React.FormEvent) {
         e.preventDefault();
         const form = (e.currentTarget as HTMLFormElement);
         const timezone = (form[0] as HTMLSelectElement).value;
         // Change the generic on this type
-        let data: IndexType<{start_time: string, end_time: string} | string> = {
+        let data: IndexType<{ start_time: string, end_time: string } | string> = {
             timezone: timezone
         };
 
@@ -89,13 +85,13 @@ export default function AvailabilityInfo({ user }: IUser) {
             const day = formInput.id;
 
             if (formInput.checked) {
-                data[day] = { 
-                    start_time: `${start.value}:00.000`, 
-                    end_time: `${end.value}:00.000` 
+                data[day] = {
+                    start_time: `${start.value}:00.000`,
+                    end_time: `${end.value}:00.000`
                 };
             }
         }
-        
+
         await axios.put(`/api/user`, {
             'availability': data
         }).then((res) => {
@@ -120,57 +116,60 @@ export default function AvailabilityInfo({ user }: IUser) {
     }
 
     return (
-        <form className='sm:w-[22rem] md:w-[32rem] mx-auto' onSubmit={(e) => onSubmit(e)}>
-            <select className='w-full p-3 my-5' onChange={e => onSelect(e)}>
-                {timezones.map((timezone) => {
-                    return (
-                        <option 
-                            id={timezone} 
-                            selected={timezone === userTimezone}
-                            key={timezone}>
+        <div className='mx-auto'>
+            <h2 className='text-xl text-center'>Availability</h2>
+            <form className='sm:w-[22rem] md:w-[32rem]' onSubmit={(e) => onSubmit(e)}>
+                <select className='w-full p-3 my-5' onChange={e => onSelect(e)}>
+                    {timezones.map((timezone) => {
+                        return (
+                            <option
+                                id={timezone}
+                                selected={timezone === userTimezone}
+                                key={timezone}>
                                 {timezone}
-                        </option>
+                            </option>
+                        )
+                    })}
+                </select>
+                {days.map((day) => {
+                    return (
+                        <div className='flex flex-row items-center' key={day}>
+                            <div className='basis-[32%]'>
+                                <p>{day[0].toUpperCase() + day.slice(1, day.length)}</p>
+                                <Toggle
+                                    day={day}
+                                    checked={selectedDays[day as keyof Days]}
+                                    updateFn={updateDay}
+                                />
+                            </div>
+                            <div className='w-full basis-[68%]'>
+                                {selectedDays[day as keyof Days] &&
+                                    <div className='w-max mx-auto'>
+                                        <Timepicker
+                                            required={true}
+                                            name={day}
+                                            value={user.availability?.[day] && convertTime(user.availability?.[day].start_time, true)}
+                                            classes='h-[40px] w-[100px] sm:h-[50px] sm:w-[110px] text-sm md:text-base'
+                                        />
+                                        <span className='px-2'>-</span>
+                                        <Timepicker
+                                            required={true}
+                                            name={day}
+                                            value={user.availability?.[day] && convertTime(user.availability?.[day].end_time, true)}
+                                            classes='h-[40px] w-[100px] sm:h-[50px] sm:w-[110px] text-sm md:text-base '
+                                        />
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     )
                 })}
-            </select>
-            {days.map((day) => {
-                return (
-                    <div className='flex flex-row items-center' key={day}>
-                        <div className='basis-[32%]'>
-                            <p>{day[0].toUpperCase() + day.slice(1, day.length)}</p>
-                            <Toggle
-                                day={day}
-                                checked={selectedDays[day as keyof Days]}
-                                updateFn={updateDay}
-                            />
-                        </div>
-                        <div className='w-full basis-[68%]'>
-                            {selectedDays[day as keyof Days] &&
-                                <div className='w-max mx-auto'>
-                                    <Timepicker
-                                        required={true}
-                                        name={day}
-                                        value={user.availability?.[day] && convertTime(user.availability?.[day].start_time, true)}
-                                        classes='h-[40px] w-[90px] sm:h-[50px] sm:w-[105px]'
-                                    />
-                                    <span className='px-2'>-</span>
-                                    <Timepicker
-                                        required={true}
-                                        name={day}
-                                        value={user.availability?.[day] && convertTime(user.availability?.[day].end_time, true)}
-                                        classes='h-[40px] w-[90px] sm:h-[50px] sm:w-[105px]'
-                                    />
-                                </div>
-                            }
-                        </div>
+                {editing && <div className='flex justify-center pt-5'>
+                        <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
+                        <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
                     </div>
-                )
-            })}
-            {editing && <div className='flex justify-center pt-5'>
-                    <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
-                    <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
-                </div>
-            }
-        </form>
+                }
+            </form>
+        </div>
     )
 }

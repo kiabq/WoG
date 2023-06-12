@@ -68,13 +68,14 @@ export default function PersonalInfo({ user }: any) {
 
     return (
         <div className='flex flex-col items-center mb-16 lg:mb-0'>
+            <h2 className='text-xl pb-3'>Personal</h2>
             <Image
                 loader={loader}
                 src={`${user.avatar}.png`}
                 alt='User&apos;s profile picture'
                 width={128}
                 height={128}
-                className='rounded-full mb-4'
+                className='rounded-full mb-4 border-2 border-black'
             />
             {/* note: margin here really sucks, change in future. */}
             <form className='flex flex-col max-w-4/5 lg:mb-6' onSubmit={(e) => submit(e)}>
