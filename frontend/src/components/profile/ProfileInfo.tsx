@@ -11,7 +11,6 @@ import { getContext } from '@/context/usercontext';
 import type { IUser } from '@/utils/types';
 
 export default function ProfileInfo() {
-  const [optionalEdit, setOptionalEdit] = useState<Edit>(Edit.none);
   const user: IUser = getContext();
   
   return (
@@ -20,7 +19,7 @@ export default function ProfileInfo() {
         <PersonalInfo user={user}/>
         <AvailabilityInfo user={user}/>
       </div>
-      <OptionalInfo user={user} edit={optionalEdit} setEdit={(edit: Edit) => setOptionalEdit(edit)}/>
+      <OptionalInfo user={user}/>
 
     </>
   );
