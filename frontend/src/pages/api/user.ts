@@ -9,10 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const body = req.body;
     const config = {
         Authorization: `Bearer ${token}`
-    }
+    };
     const category = Object.keys(body)[0];
-
-    console.log(body);
 
     await axios.put(`${process.env.REACT_APP_BACKEND}/api/users/me/update`,
         body,

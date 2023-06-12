@@ -20,6 +20,7 @@ const INITIAL_STATE = {
 
 export default function OptionalInfo({ user, edit, setEdit }: any) {
     const [optional, setOptional] = useState<OptionalQuestions>(user.optionalQuestions ?? INITIAL_STATE);
+    const [editing, setEditing] = useState(false);
     const questions = [
         [
             'I\'m very new to D&D and I\'ll likely need help learning the game as I\'m just getting started.',
@@ -35,9 +36,14 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
         'How do you feel about using game time for character development of your own and other player characters?'
     ]
 
+    function onCancel() {
+        setOptional(user.optionalQuestions || INITIAL_STATE);
+        setEditing(false);
+    }
+
     return (
         <div className='flex flex-col'>
-            <h2 className='pb-3 mx-auto'>Questions</h2>
+            <h2 className='text-xl mx-auto pb-3'>Experience</h2>
 
             <form className='flex flex-col' onSubmit={async (e: FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
@@ -59,14 +65,14 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                     }
                 });
 
-                setEdit(Edit.none);
+                setEditing(false);
             }}>
                 {questions.map((element: string | Array<string>, index: number) => {
                     const ref = useRef<HTMLInputElement | null>(null);
                     const key = Object.keys(optional).slice(index + 1, index + 2)[0];
                     const value = Object.values(optional).slice(index + 1, index + 2)[0];
 
-                    if (ref.current) {
+                    if (ref.current && editing === false) {
                         ref.current.checked = true;
                     }
 
@@ -83,8 +89,8 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                                                 name={key}
                                                 value={mapped}
                                                 defaultChecked={mapped === value}
-                                                disabled={edit !== Edit.editing}
                                                 ref={mapped === value ? ref : null}
+                                                onInput={(e) => setEditing(true)}
                                             />
                                             <p>{element[index]}</p>
                                         </div>
@@ -106,9 +112,9 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                                                 name={key}
                                                 value={mapped}
                                                 defaultChecked={mapped === value}
-                                                disabled={edit !== Edit.editing}
                                                 ref={mapped === value ? ref : null}
                                                 key={index}
+                                                onInput={() => setEditing(true)}
                                             />
                                         )
                                     })}
@@ -118,26 +124,10 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                         </section>
                     )
                 })}
-
-                {edit === Edit.editing ?
-                    <div className='mx-auto'>
-                        <button type='submit' onClick={() => {
-                            setOptional(optional);
-                        }}>
-                            Submit
-                        </button>
-
-                        <button type='button' onClick={() => {
-                            setEdit(Edit.none)
-                            setOptional(optional)
-                        }}>
-                            Cancel
-                        </button>
-                    </div>
-                    :
-                    <button type='button' onClick={() => { setEdit(Edit.editing) }} className='mx-auto'>
-                        Edit
-                    </button>
+                {editing && <div className='flex justify-center pt-5'>
+                    <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
+                    <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
+                </div>
                 }
             </form>
         </div>
