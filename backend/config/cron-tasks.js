@@ -14,7 +14,7 @@ async function list(strapi) {
                     'Authorization': `Bot ${process.env.BOT_TOKEN}`
                 }
             }).then((res) => {
-                const discordUser = `${res.data.username}#${res.data.discriminator}`;
+                const discordUser = res.data.username;
                 const discordAvatar = res.data.avatar;
 
                 if (username !== discordUser) {
