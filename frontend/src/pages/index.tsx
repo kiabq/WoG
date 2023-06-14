@@ -85,7 +85,7 @@ export default function Home(props: IProps) {
               <Image src='/assets/treasure.png' width={384} height={384} alt='Treasure chest sitting unopened' className='w-auto h-auto' />
               <div className='my-auto'>
                 <h3 className='text-2xl'>Play as much as you want without breaking the bank.</h3>
-                <p>Never worry about breaking the bank with our pay-as-you-play model. Only pay for each game you&apos;re in and each session, so you can play as much or as little Dungeons & Dragons as you want.</p>
+                <p>Enjoy the freedom of our monthly pay-per-session model for Dungeons & Dragons. Only pay for the games you're in, allowing you to play as much or as little as you want without breaking the bank.</p>
               </div>
             </section>
           </div>

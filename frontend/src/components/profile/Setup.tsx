@@ -52,7 +52,7 @@ export default function Setup() {
         <div className='mb-4'>
           <label htmlFor='name'>Name: </label>
           <input type='text'
-            className='w-full p-1 ring-2 ring-gray-300 focus:ring-gray-600 hover:ring-gray-600' 
+            className='w-full border-2 border-slate-400 p-2 rounded-md' 
             id='name'
             value={name}
             onChange={(e) => { setName(e.currentTarget.value) }}
@@ -61,7 +61,7 @@ export default function Setup() {
         <div className='mb-4'>
           <label htmlFor='age'>Age: </label>
           <input type='number'
-            className='w-full p-1 ring-2 ring-gray-300 focus:ring-gray-600 hover:ring-gray-600'
+            className='w-full border-2 border-slate-400 p-2 rounded-md'
             id='age'
             value={age}
             min='18'
@@ -72,7 +72,7 @@ export default function Setup() {
         <div className='mb-4'>
           <label htmlFor='invoice'>Invoice Email: </label>
           <input type='email'
-            className='w-full p-1 ring-2 ring-gray-300 focus:ring-gray-600 hover:ring-gray-600'
+            className='w-full border-2 border-slate-400 p-2 rounded-md'
             id='invoice'
             value={invoice}
             onChange={(e) => { setInvoice(e.currentTarget.value) }}
@@ -81,6 +81,7 @@ export default function Setup() {
         <div className='mb-4'>
           <label htmlFor='pronoun'>Pronouns:</label>
           <select name='pronouns'
+            className='border-2 border-slate-400 bg-transparent inline-block p-2 ml-2 rounded-md'
             id='pronoun'
             value={pronoun}
             onChange={(e) => { setPronoun(e.currentTarget.value) }}
@@ -96,7 +97,7 @@ export default function Setup() {
           </select>
         </div>
 
-        <button type='submit' className='bg-blue-500 w-1/3 mx-auto p-2 rounded-lg font-medium text-neutral-100 focus:bg-blue-700 hover:bg-blue-700 '>
+        <button type='submit' className='bg-blue-500 w-1/3 mx-auto p-2 rounded-lg font-medium text-neutral-100 focus:bg-blue-700 hover:bg-blue-700'>
           Complete
         </button>
       </form>

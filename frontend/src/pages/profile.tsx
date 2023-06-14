@@ -53,7 +53,7 @@ export default function Profile(props: IProps) {
         </Head>
         <UserCtx user={props.user}>
           <Header/>
-          <main className='max-w-screen-lg min-h-screen px-6 mx-auto my-16'>
+          <main className='max-w-screen-lg px-6 mx-auto my-16'>
             {props.user.isNew && <Setup />}
             {!props.user.isNew && <ProfileInfo />}
           </main>
