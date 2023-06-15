@@ -2,7 +2,7 @@ import { FormEvent, useRef, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 
-import { Edit } from '@/utils/types';
+import { Edit, IUser } from '@/utils/types';
 
 type LoaderArgs = {
     src: string
@@ -15,12 +15,17 @@ type UserInfo = {
     invoice: string
 }
 
+interface IProps {
+    user: IUser
+}
+
 interface IInfo {
     [field: string]: HTMLFormElement
 }
 
-export default function PersonalInfo({ user }: any) {
+export default function PersonalInfo({ user }: IProps) {
     const [personal, setPersonal] = useState<UserInfo>(user.user_info);
+    
     const INITIAL_STATE = {
         name: personal.name || '',
         age: personal.age || '',
@@ -80,7 +85,7 @@ export default function PersonalInfo({ user }: any) {
             {/* note: margin here really sucks, change in future. */}
             <form className='flex flex-col max-w-4/5 lg:mb-6' onSubmit={(e) => submit(e)}>
                 <div className='pb-3'>
-                    <label htmlFor='name' className='inline-block pb-1'>Name: </label>
+                    <label htmlFor='name' className='inline-block pb-1'>Name:</label>
                     <input type='text'
                         className='w-full border-2 border-slate-400 p-2 rounded-md'
                         id='name'
@@ -92,7 +97,7 @@ export default function PersonalInfo({ user }: any) {
                         required />
                 </div>
                 <div className='pb-3'>
-                    <label htmlFor='age' className='inline-block pb-1'>Age: </label>
+                    <label htmlFor='age' className='inline-block pb-1'>Age:</label>
                     <input type='number'
                         className='w-full border-2 border-slate-400 p-2 rounded-md'
                         id='age'
@@ -139,7 +144,7 @@ export default function PersonalInfo({ user }: any) {
                         required />
                 </div>
             </form>
-            {editing && <div className='flex justify-center pt-5 mt-auto'>
+            {editing && <div className='flex justify-center pt-[1.5rem] md:pt-0 mt-auto'>
                     <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
                     <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
                 </div>

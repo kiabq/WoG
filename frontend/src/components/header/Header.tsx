@@ -17,7 +17,7 @@ type LoaderArgs = {
 
 export default function Header() {
   const [isOpened, setIsOpened] = useState(false);
-  const user = getContext();
+  const { user } = getContext();
 
   const loader = ({ src }: LoaderArgs) => {
     return `https://cdn.discordapp.com/avatars/${user.providerId}/${src}`

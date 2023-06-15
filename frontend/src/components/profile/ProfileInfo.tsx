@@ -11,8 +11,8 @@ import { getContext } from '@/context/usercontext';
 import type { IUser } from '@/utils/types';
 
 export default function ProfileInfo() {
-  const user: IUser = getContext();
-  
+  const { user } = getContext();
+
   return (
     <>
       <div className='flex flex-col mb-16 lg:flex-row'>

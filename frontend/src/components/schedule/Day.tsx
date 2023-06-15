@@ -9,7 +9,7 @@ export default function Day({ day, times }: DayProps) {
     return (
         <div className='grow basis-0 p-0.5'>
             <h3>{day}</h3>
-            {times ? times.map((slice: any, ) => {
+            {times?.length > 0 ? times.map((slice: any ) => {
                 return (
                     <div className='text-xs' key={slice.id}>
                         <span>{convertTime(slice.start_time, false)} - </span>

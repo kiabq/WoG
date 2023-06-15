@@ -1,10 +1,16 @@
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, FormEvent, useContext } from 'react';
 import axios from 'axios';
 
-import { Edit, OptionalQuestions, } from '@/utils/types';
+import { getContext } from '@/context/usercontext';
+
+import { Edit, IUser, OptionalQuestions, } from '@/utils/types';
 
 type Options = {
     [index: string]: number
+}
+
+interface IProps {
+    user: IUser
 }
 
 const INITIAL_STATE = {
@@ -18,9 +24,11 @@ const INITIAL_STATE = {
     character_development: 0
 }
 
-export default function OptionalInfo({ user, edit, setEdit }: any) {
+export default function OptionalInfo({ user }: IProps) {
+    const { setAccount } = getContext();
     const [optional, setOptional] = useState<OptionalQuestions>(user.optionalQuestions ?? INITIAL_STATE);
     const [editing, setEditing] = useState(false);
+
     const questions = [
         [
             'I\'m very new to D&D and I\'ll likely need help learning the game as I\'m just getting started.',
@@ -61,7 +69,8 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                     'optionalQuestions': options
                 }).then((res) => {
                     if (res.status === 200) {
-                        setOptional(res.data);
+                        setAccount!(res.data);
+                        setOptional(res.data.optionalQuestions);
                     }
                 });
 
@@ -72,6 +81,7 @@ export default function OptionalInfo({ user, edit, setEdit }: any) {
                     const key = Object.keys(optional).slice(index + 1, index + 2)[0];
                     const value = Object.values(optional).slice(index + 1, index + 2)[0];
 
+                    // 
                     if (ref.current && editing === false) {
                         ref.current.checked = true;
                     }

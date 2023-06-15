@@ -20,16 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(response.status).json('Something went wrong.');
         }
 
-        switch (category) {
-            case 'optionalQuestions':
-                return res.status(200).json(response.data.optionalQuestions);
-            case 'user_info':
-                return res.status(200).json(response.data.user_info);
-            case 'availability':
-                return res.status(200).json(response.data);
-            default:
-                res.status(400);
-        }
+        return res.status(200).json(response.data);
     }).catch((e) => {
         // Do something idk
         res.status(400);
