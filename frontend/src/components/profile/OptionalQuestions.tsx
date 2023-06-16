@@ -94,7 +94,7 @@ export default function OptionalInfo({ user }: IProps) {
                                 </p>
                                 {[1, 2, 3, 4].map((mapped: number, index: number) => {
                                     return (
-                                        <div className='flex' key={index}>
+                                        <div className='flex py-2' key={index}>
                                             <input type='radio'
                                                 name={key}
                                                 value={mapped}
@@ -119,6 +119,7 @@ export default function OptionalInfo({ user }: IProps) {
                                     {[1, 2, 3, 4, 5].map((mapped: number, index: number) => {
                                         return (
                                             <input type='radio'
+                                                className='m-1'
                                                 name={key}
                                                 value={mapped}
                                                 defaultChecked={mapped === value}
