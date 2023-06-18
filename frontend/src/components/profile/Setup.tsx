@@ -4,7 +4,6 @@ import axios from 'axios';
 import { getContext } from '@/context/usercontext';
 
 // Types
-import { Edit } from '@/utils/types';
 import type { IUser } from '@/utils/types';
 
 type UserInfo = {

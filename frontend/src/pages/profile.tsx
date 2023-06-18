@@ -2,7 +2,6 @@
 import Head from 'next/head';
 import { GetServerSideProps } from "next";
 import Cookies from 'cookies';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getUser } from '@/lib/getData';

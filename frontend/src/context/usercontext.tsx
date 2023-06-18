@@ -1,6 +1,6 @@
 // Libraries
 import { IUser } from "@/utils/types";
-import React, { Context, ReactElement, createContext, useContext, useState } from "react";
+import React, { ReactElement, createContext, useContext, useState } from "react";
 
 const UserContext = createContext<IProps>({} as IProps);
 

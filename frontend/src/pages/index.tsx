@@ -1,9 +1,6 @@
 // Libraries
-import { useState, createContext } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
-import axios from 'axios';
 import Cookies from 'cookies';
 import { getUser, getDM } from '@/lib/getData';
 

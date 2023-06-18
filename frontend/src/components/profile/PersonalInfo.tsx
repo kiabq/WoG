@@ -2,7 +2,7 @@ import { FormEvent, useRef, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 
-import { Edit, IUser } from '@/utils/types';
+import { IUser } from '@/utils/types';
 
 type LoaderArgs = {
     src: string

@@ -7,9 +7,6 @@ import AvailabilityInfo from './AvailabilityInfo';
 import Toggle from '../UI/toggle';
 import { getContext } from '@/context/usercontext';
 
-// Types
-import type { IUser } from '@/utils/types';
-
 export default function ProfileInfo() {
   const { user } = getContext();
 

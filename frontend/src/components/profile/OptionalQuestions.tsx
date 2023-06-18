@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { getContext } from '@/context/usercontext';
 
-import { Edit, IUser, OptionalQuestions, } from '@/utils/types';
+import { IUser, OptionalQuestions, } from '@/utils/types';
 
 type Options = {
     [index: string]: number
