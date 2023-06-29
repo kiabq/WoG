@@ -1,4 +1,4 @@
-import { useState, useRef, FormEvent, useContext } from 'react';
+import { useState, FormEvent } from 'react';
 import axios from 'axios';
 
 import { getContext } from '@/context/usercontext';
@@ -28,6 +28,8 @@ export default function OptionalInfo({ user }: IProps) {
     const { setAccount } = getContext();
     const [optional, setOptional] = useState<OptionalQuestions>(user.optionalQuestions ?? INITIAL_STATE);
     const [editing, setEditing] = useState(false);
+
+    console.log("A: ", user.optionalQuestions, "B: ", optional);
 
     const questions = [
         [
@@ -61,7 +63,6 @@ export default function OptionalInfo({ user }: IProps) {
 
                 for (let i = 0; i < form.length; i++) {
                     const formInput = form[i] as HTMLInputElement;
-
                     formInput.checked && (options[formInput.name] = parseInt(formInput.value))
                 }
 
@@ -77,14 +78,7 @@ export default function OptionalInfo({ user }: IProps) {
                 setEditing(false);
             }}>
                 {questions.map((element: string | Array<string>, index: number) => {
-                    const ref = useRef<HTMLInputElement | null>(null);
                     const key = Object.keys(optional).slice(index + 1, index + 2)[0];
-                    const value = Object.values(optional).slice(index + 1, index + 2)[0];
-
-                    // 
-                    if (ref.current && editing === false) {
-                        ref.current.checked = true;
-                    }
 
                     if (Array.isArray(element)) {
                         return (
@@ -98,9 +92,11 @@ export default function OptionalInfo({ user }: IProps) {
                                             <input type='radio'
                                                 name={key}
                                                 value={mapped}
-                                                defaultChecked={mapped === value}
-                                                ref={mapped === value ? ref : null}
-                                                onInput={(e) => setEditing(true)}
+                                                checked={optional[key as keyof OptionalQuestions] === mapped}
+                                                onInput={(e) => {
+                                                    setEditing(true);
+                                                    setOptional({ ...optional, [key]: parseInt(e.currentTarget.value) })
+                                                }}
                                             />
                                             <p>{element[index]}</p>
                                         </div>
@@ -122,10 +118,11 @@ export default function OptionalInfo({ user }: IProps) {
                                                 className='m-1'
                                                 name={key}
                                                 value={mapped}
-                                                defaultChecked={mapped === value}
-                                                ref={mapped === value ? ref : null}
-                                                key={index}
-                                                onInput={() => setEditing(true)}
+                                                checked={optional[key as keyof OptionalQuestions] === mapped}
+                                                onInput={(e) => {
+                                                    setEditing(true);
+                                                    setOptional({ ...optional, [key]: parseInt(e.currentTarget.value) })
+                                                }}
                                             />
                                         )
                                     })}
@@ -135,10 +132,11 @@ export default function OptionalInfo({ user }: IProps) {
                         </section>
                     )
                 })}
+                
                 {editing && <div className='flex justify-center pt-5'>
-                    <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
-                    <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
-                </div>
+                        <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
+                        <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
+                    </div>
                 }
             </form>
         </div>
