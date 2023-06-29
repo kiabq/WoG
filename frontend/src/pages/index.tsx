@@ -55,7 +55,7 @@ export default function Home(props: IProps) {
               alt='Backpack and campfire'
               className='mx-auto'
             />
-            {props.user && <a href='' className='bg-[#738adb] font-medium  text-neutral-100 font-normal p-4 rounded-[10px] hover:bg-[#5566a6]'>Join the Discord</a>}
+            {props.user && <a href='https://discord.gg/zjuKUpAGDv' target='_blank' className='bg-[#738adb] font-medium  text-neutral-100 font-normal p-4 rounded-[10px] hover:bg-[#5566a6]'>Join the Discord</a>}
           </div>
           <div className='mx-auto w-11/12 my-16 text-center'>
             <h1 className='text-4xl' id='dungeon-masters'>Dungeon Masters & Game Times</h1>
@@ -81,8 +81,11 @@ export default function Home(props: IProps) {
             <section className='flex flex-col md:flex-row'>
               <Image src='/assets/treasure.png' width={384} height={384} alt='Treasure chest sitting unopened' className='w-auto h-auto' />
               <div className='my-auto'>
-                <h3 className='text-2xl'>Play as much as you want without breaking the bank.</h3>
-                <p>Enjoy the freedom of our monthly pay-per-session model for Dungeons & Dragons. Only pay for the games you're in, allowing you to play as much or as little as you want without breaking the bank.</p>
+                <h3 className='text-2xl'>
+                  <p>REPHRASE</p>
+                  <p>- Monthly Payment</p>
+                  Play as much as you want without breaking the bank.</h3>
+                <p>Enjoy the freedom of our monthly model for Dungeons & Dragons. Only pay for the games you're in, allowing you to play as much or as little as you want without breaking the bank.</p>
               </div>
             </section>
           </div>

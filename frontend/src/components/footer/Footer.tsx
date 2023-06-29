@@ -7,9 +7,8 @@ export default function Footer() {
             <div className='flex pb-6'>
                 <section className='flex flex-col w-36 px-6'>
                     <h2 className='pb-2 text-black'>Socials</h2>
-                    <a href='' className='hover:text-black'>Discord</a>
-                    <a href='' className='hover:text-black'>Twitter</a>
-                    <a href='https://www.twitch.com' className='hover:text-black'>Twitch</a>
+                    <a href='https://www.youtube.com/channel/UCweMqNxb5iCbiM8s_YNPjUg' target='_blank' className='hover:text-black'>Youtube</a>
+                    <a href='https://www.twitch.tv/dm_ravenx' target='_blank' className='hover:text-black'>Twitch</a>
                 </section>
                 <section className='px-6'>
                     <h2 className='pb-2 text-black'>Other</h2>
