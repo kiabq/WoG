@@ -19,8 +19,8 @@ interface IInfo {
 
 export default function Setup() {
   const router = useRouter();
-  const user: IUser = getContext();
-  const [personal] = useState<UserInfo>(user.user_info);
+  const user = getContext();
+  const [personal] = useState<UserInfo>(user.user.user_info);
   const [name, setName] = useState<string>((personal && personal.name) ?? '');
   const [age, setAge] = useState<string>((personal && personal.age) ?? '');
   const [pronoun, setPronoun] = useState<string>((personal && personal.pronoun) ?? '');

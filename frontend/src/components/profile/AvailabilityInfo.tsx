@@ -123,11 +123,9 @@ export default function AvailabilityInfo({ user }: IProps) {
         setUserTimezone(selectedTimezone);
         setEditing(true);
     }
-
-    console.log("Availability: ", availability);
-
+    
     return (
-        <div className='mx-auto'>
+        <div className='md:mx-auto'>
             <h2 className='text-xl text-center'>Availability</h2>
             <form className='sm:w-[22rem] md:w-[32rem]' onSubmit={(e) => onSubmit(e)}>
                 <select className='w-full p-3 my-5' onChange={e => onSelect(e)}>
@@ -160,14 +158,14 @@ export default function AvailabilityInfo({ user }: IProps) {
                                             required={true}
                                             name={day}
                                             value={availability?.[day] && convertTime(availability?.[day].start_time, true)}
-                                            classes='h-[40px] w-[100px] sm:h-[50px] sm:w-[110px] text-sm md:text-base'
+                                            classes='h-[50px] w-[115px] text-sm md:h-[50px] md:w-[125px]  md:text-base'
                                         />
                                         <span className='px-2'>-</span>
                                         <Timepicker
                                             required={true}
                                             name={day}
                                             value={availability?.[day] && convertTime(availability?.[day].end_time, true)}
-                                            classes='h-[40px] w-[100px] sm:h-[50px] sm:w-[110px] text-sm md:text-base '
+                                            classes='h-[50px] w-[115px] text-sm md:h-[50px] md:w-[115px] md:text-base '
                                         />
                                     </div>
                                 }

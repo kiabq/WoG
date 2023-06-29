@@ -25,13 +25,15 @@ interface IInfo {
 
 export default function PersonalInfo({ user }: IProps) {
     const [personal, setPersonal] = useState<UserInfo>(user.user_info);
-    
+
+    // fix: initial state not being set correctly after setup
     const INITIAL_STATE = {
-        name: personal.name || '',
-        age: personal.age || '',
-        pronoun: personal.pronoun || '',
-        invoice: personal.invoice || ''
+        name: personal !== null ? personal.name : '',
+        age: personal !== null ? personal.age : '',
+        pronoun: personal !== null ? personal.pronoun : '',
+        invoice: personal !== null ? personal.invoice : ''
     }
+
     const [name, setName] = useState<string>((personal && personal.name) ?? '');
     const [age, setAge] = useState<string>((personal && personal.age) ?? '');
     const [pronoun, setPronoun] = useState<string>((personal && personal.pronoun) ?? '');
@@ -57,7 +59,7 @@ export default function PersonalInfo({ user }: IProps) {
         await axios.put(`/api/user`, {
             'user_info': user_info
         }).then((res) => {
-            setPersonal(res.data);
+            setPersonal(res.data.user_info);
         });
         
         setEditing(false);
@@ -143,12 +145,13 @@ export default function PersonalInfo({ user }: IProps) {
                         }}
                         required />
                 </div>
+                {editing && <div className='flex justify-center pt-[1.5rem] md:pt-0 mt-auto'>
+                        <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
+                        <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
+                    </div>
+                }
             </form>
-            {editing && <div className='flex justify-center pt-[1.5rem] md:pt-0 mt-auto'>
-                    <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
-                    <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
-                </div>
-            }
+
         </div>
     )
 }
