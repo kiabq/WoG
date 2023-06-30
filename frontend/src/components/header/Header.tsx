@@ -37,6 +37,8 @@ export default function Header() {
     );
   }, [])
 
+  console.log(location.href)
+
   return (
     <header className={`${rubik.className} max-w-screen-lg mx-auto text-lg pb-3 border-b-2`}>
       <nav className='flex items-center pt-4'>
@@ -46,7 +48,7 @@ export default function Header() {
 
         <Link href='/#about' className='pr-3 hidden md:block'>About</Link>
         <Link href='/#dungeon-masters' className='pr-3 hidden md:block'>Dungeon Masters</Link>
-        {!user && <Link href={`${process.env.REACT_APP_BACKEND}/api/connect/discord`} className='hidden md:block'>Sign In With Discord</Link>}
+        {!user && !location.href.includes('privacy') && <Link href={`${process.env.REACT_APP_BACKEND}/api/connect/discord`} className='hidden md:block'>Sign In With Discord</Link>}
         {user &&
           <div className='border-2 rounded-lg mr-3 hidden md:block hover:border-[#738adb]'>
             <Link href='/profile' className=' flex flex-row items-center'>

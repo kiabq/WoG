@@ -12,7 +12,7 @@ export default function Footer() {
                 </section>
                 <section className='px-6'>
                     <h2 className='pb-2 text-black'>Other</h2>
-                    <Link href='/privacy-policy' className='hover:text-black'>
+                    <Link href='/privacy' className='hover:text-black'>
                         Privacy Policy
                     </Link>
                 </section>
