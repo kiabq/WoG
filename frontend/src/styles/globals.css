@@ -58,3 +58,15 @@ input:focus {
   box-shadow: none;
   border: none;
 }
+
+.privacy a {
+  color: blue !important;
+}
+
+.privacy a:visited {
+  color: purple !important;
+}
+
+.privacy p {
+  margin-bottom: 0.75rem;
+}
