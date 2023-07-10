@@ -41,5 +41,11 @@ export const getServerSideProps: GetServerSideProps = async ({
 export default function Login(props: any) {
     const { user } = props;
 
-    return <Redirect page={user.isNew ? '/' : '/profile'} />
+    if (user.isNew === false) {
+        return <Redirect page={'/setup'} />
+    } else if (user.isNew === true) {
+        return <Redirect page={'/profile'} />
+    } else {
+        return <Redirect page={'/'} />
+    }
 }

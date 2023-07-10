@@ -27,6 +27,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const token = cookies.get('token');
   const user = await getUser(token);
 
+  console.log("Gotten");
+
   return {
     props: { user }
   }
@@ -37,6 +39,10 @@ export default function Profile(props: IProps) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    if (props.user.isNew) {
+      router.push('/setup');
+    }
+
     if (props.user === null) {
       router.push('/auth/logout');
     }
@@ -53,8 +59,7 @@ export default function Profile(props: IProps) {
         <UserCtx user={props.user}>
           <Header/>
           <main className='max-w-screen-lg px-6 mx-auto my-16'>
-            {props.user.isNew && <Setup />}
-            {!props.user.isNew && <ProfileInfo />}
+            <ProfileInfo />
           </main>
           <Footer />
         </UserCtx>

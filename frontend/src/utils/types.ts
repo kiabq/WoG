@@ -73,7 +73,7 @@ export interface IUser {
     avatar: string,
     availability: IAvailability | null,
     user_info: any,
-    optionalQuestions: any
+    optionalQuestions: any,
 }
 
 export interface IDungeonMaster {}
