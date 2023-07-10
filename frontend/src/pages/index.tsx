@@ -15,7 +15,7 @@ import UserCtx from '@/context/usercontext';
 
 // Types
 import type { GetServerSideProps } from 'next';
-import type { IUser, IDungeonMaster } from '@/utils/types';
+import type { IUser } from '@/utils/types';
 
 interface IProps {
   user: IUser,
@@ -25,15 +25,25 @@ interface IProps {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const cookies = new Cookies(req, res);
   const token = cookies.get('token');
-  const user = await getUser(token);
-  const dm = await getDM();
 
-  return {
-    props: {
+  let user, dm, props;
+
+  try {
+    user = await getUser(token);
+    dm = await getDM();
+
+    props = {
       user,
       dm
     }
+  } catch(err) {
+    props = {
+      user: null,
+      dm: null
+    }
   }
+
+  return { props };
 }
 
 export default function Home(props: IProps) {
