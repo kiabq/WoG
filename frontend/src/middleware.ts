@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // Routes
-import { authRoutes, protectedRoutes, publicRoutes, logoutRoutes } from './routing/routes';
+import { authRoutes, protectedRoutes, logoutRoutes } from './routing/routes';
 
 export function middleware(request: NextRequest, response: NextResponse) {
     const token = request.cookies.get('token');

@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { getContext } from '@/context/usercontext'
 
 export default function Remind() {
-    const user = getContext();
+    const { user } = getContext();
 
     if (user && user.isNew) {
         return (
             <div className='bg-red-600 text-slate-100 text-center'>
-                <p>Your profile is incomplete. Click <Link href='/profile' className='underline'>here</Link> to complete your profile.</p>
+                <p>Your profile is incomplete. Click <Link href='/setup' className='underline'>here</Link> to complete your profile.</p>
             </div>
         )
     } else {

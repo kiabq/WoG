@@ -21,8 +21,6 @@ export default function Header() {
   const { user } = getContext();
   const router = useRouter();
 
-  console.log(router.pathname);
-
   const loader = ({ src }: LoaderArgs) => {
     return `https://cdn.discordapp.com/avatars/${user.providerId}/${src}`
   }
@@ -97,7 +95,6 @@ export default function Header() {
             <Link href='/#dungeon-masters' className='pr-3'>Dungeon Masters</Link>
             {user && <Link href='/auth/logout' className='pr-3'>Sign Out</Link>}
           </div>
-
         </div>
       }
     </header>
