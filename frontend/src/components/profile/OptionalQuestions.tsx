@@ -29,8 +29,6 @@ export default function OptionalInfo({ user }: IProps) {
     const [optional, setOptional] = useState<OptionalQuestions>(user.optionalQuestions ?? INITIAL_STATE);
     const [editing, setEditing] = useState(false);
 
-    console.log("A: ", user.optionalQuestions, "B: ", optional);
-
     const questions = [
         [
             'I\'m very new to D&D and I\'ll likely need help learning the game as I\'m just getting started.',

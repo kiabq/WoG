@@ -14,7 +14,7 @@ export default function Schedule({ dm }: ScheduleProps) {
         setSelectedDM(dm.filter(value => value.attributes.name === val.target.value));
       }}>
         <option value='' selected disabled hidden>Select a DM</option>
-        {dm.map((val) => {
+        {dm?.map((val) => {
           return <option value={val.attributes.name} key={val.attributes.name}>{val.attributes.name}</option>
         })}
       </select>
