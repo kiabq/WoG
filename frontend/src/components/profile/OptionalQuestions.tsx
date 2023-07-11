@@ -95,7 +95,7 @@ export default function OptionalInfo({ user }: IProps) {
                                             <input type='radio'
                                                 name={key}
                                                 value={mapped}
-                                                defaultChecked={optional[key as keyof OptionalQuestions] === mapped}
+                                                checked={optional[key as keyof OptionalQuestions] === mapped}
                                                 onClick={(e) => {
                                                     setEditing(true);
                                                     setOptional({ ...optional, [key]: parseInt(e.currentTarget.value) })
