@@ -1,9 +1,9 @@
 // Start Prod DB Settings
-const parse = require('pg-connection-string').parse;
+// const parse = require('pg-connection-string').parse;
 
-const { host, port, database, user, password } = parse(
-  process.env.DATABASE_URL
-)
+// const { host, port, database, user, password } = parse(
+//   process.env.DATABASE_URL
+// )
 // End Prod DB Settings
 
 module.exports = ({ env }) => ({
@@ -15,6 +15,7 @@ module.exports = ({ env }) => ({
         database: env('DATABASE_NAME', 'strapi'),
         user: env('DATABASE_USERNAME', 'strapi'),
         password: env('DATABASE_PASSWORD', 'strapi'),
+        schema: env('DATABASE_SCHEMA', 'public'),
         ssl: {
           ca: env('DATABASE_CA')
         },
