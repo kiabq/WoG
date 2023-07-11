@@ -1,0 +1,16 @@
+This file is used to describe how imports shoud look on each file
+
+// Libraries
+- Libraries will be imported here. This includes standard React imports.
+
+// Components
+- React components will go in this section.
+
+// Context
+- Any contexts that need imported will be done here.
+
+// Utils
+- Utility and custom library functions will go here.
+
+// Types
+- Types always go at the bottom of the imports.
