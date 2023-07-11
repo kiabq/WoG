@@ -43,9 +43,7 @@ export default function Login(props: any) {
 
     if (user.isNew) {
         return <Redirect page={'/setup'} />
-    } else if (user.isNew === false) {
-        return <Redirect page={'/profile'} />
     } else {
-        return <Redirect page={'/'} />
+        return <Redirect page={'/profile'} />
     }
 }

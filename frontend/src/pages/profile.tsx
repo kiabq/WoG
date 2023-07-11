@@ -26,8 +26,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const token = cookies.get('token');
   const user = await getUser(token);
 
-  console.log("Gotten");
-
   return {
     props: { user }
   }

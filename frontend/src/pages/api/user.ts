@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         Authorization: `Bearer ${token}`
     };
 
-    await axios.put(`${process.env.REACT_APP_BACKEND}/api/users/me/update`,
+    await axios.post(`${process.env.REACT_APP_BACKEND}/api/users/me/update`,
         body,
         { headers: config }
     ).then((response) => {
@@ -22,8 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         return res.status(200).json(response.data);
-    }).catch((e) => {
-        // Do something idk
+    }).catch(() => {
         res.status(400);
     })
 

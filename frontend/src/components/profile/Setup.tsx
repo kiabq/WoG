@@ -1,13 +1,10 @@
 // Libraries
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
 // Context
 import { getContext } from '@/context/usercontext';
-
-// Types
-import type { IUser } from '@/utils/types';
 
 type UserInfo = {
   name: string,
@@ -28,6 +25,7 @@ export default function Setup() {
   const [age, setAge] = useState<string>((personal && personal.age) ?? '');
   const [pronoun, setPronoun] = useState<string>((personal && personal.pronoun) ?? '');
   const [invoice, setInvoice] = useState<string>((personal && personal.invoice) ?? '');
+  const [submitted, setSubmitted] = useState(false);
   const ref = useRef<HTMLSelectElement | null>(null);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
@@ -41,12 +39,18 @@ export default function Setup() {
         invoice: (target['invoice'].value) as string
     }
 
-    await axios.put(`/api/user`, {
+    await axios.post(`/api/user`, {
         'user_info': user_info
     }).then(() => {
-        router.push('/profile');
-    });
+      setSubmitted(true);
+    }).catch(() => {});
   }
+
+  useEffect(() => {
+    if (submitted === true) {
+      router.reload();
+    }
+  }, [submitted])
 
   return (
     <>

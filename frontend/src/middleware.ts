@@ -23,18 +23,18 @@ export default async function middleware(request: NextRequest, response: NextRes
                 return res.isNew;
             })
 
-            if (newUser) {
+            if (newUser === true) {
                 return NextResponse.redirect(new URL('/setup', request.url));
             }
         } catch(err) {
-            console.log(err);
+            return NextResponse.redirect(new URL('/', request.url));
         }
     }
 
     if (authRoutes.includes(request.nextUrl.pathname) && token) {
         return NextResponse.redirect(new URL('/', request.url));
     }
-
+    
     if (protectedRoutes.includes(request.nextUrl.pathname) && !token) {
         return NextResponse.redirect(new URL('/', request.url));
     }
