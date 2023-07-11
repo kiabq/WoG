@@ -2,7 +2,7 @@
 module.exports = (plugin) => {
   plugin.routes['content-api'].routes.push(
     {
-      method: 'PUT',
+      method: 'POST',
       path: '/users/me/update',
       handler: 'user.updateMe',
       config: {
