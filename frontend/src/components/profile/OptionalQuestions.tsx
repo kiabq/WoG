@@ -1,8 +1,11 @@
+// Libraries
 import { useState, FormEvent } from 'react';
 import axios from 'axios';
 
+// Context
 import { getContext } from '@/context/usercontext';
 
+// Types
 import { IUser, OptionalQuestions, } from '@/utils/types';
 
 type Options = {

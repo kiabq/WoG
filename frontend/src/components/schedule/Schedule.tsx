@@ -1,4 +1,7 @@
+// Libraries
 import { useState } from 'react'
+
+// Components
 import Day from './Day';
 
 type ScheduleProps = {

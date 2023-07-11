@@ -1,10 +1,12 @@
+// Libraries
 import { useState } from 'react';
-import OptionalInfo from './OptionalQuestions';
 
-import { Edit } from '@/utils/types';
+// Components
 import PersonalInfo from './PersonalInfo';
 import AvailabilityInfo from './AvailabilityInfo';
-import Toggle from '../UI/toggle';
+import OptionalInfo from './OptionalQuestions';
+
+// Context
 import { getContext } from '@/context/usercontext';
 
 export default function ProfileInfo() {

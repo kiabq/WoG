@@ -9,7 +9,6 @@ import { getUser } from '@/lib/getData';
 // Components
 import Header from '@/components/header/Header';
 import ProfileInfo from '@/components/profile/ProfileInfo';
-import Setup from '@/components/profile/Setup';
 import Footer from '@/components/footer/Footer';
 
 // Context

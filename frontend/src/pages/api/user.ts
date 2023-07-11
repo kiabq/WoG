@@ -1,6 +1,8 @@
+// Libraries
 import axios from 'axios';
 import Cookies from 'cookies';
 
+// Types
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -18,8 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (response.status !== 200) {
             return res.status(response.status).json('Something went wrong.');
         }
-
-        console.log(response);
 
         return res.status(200).json(response.data);
     }).catch((e) => {

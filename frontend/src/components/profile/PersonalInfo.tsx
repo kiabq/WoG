@@ -1,7 +1,9 @@
+// Libraries
 import { FormEvent, useRef, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 
+// Types
 import { IUser } from '@/utils/types';
 
 type LoaderArgs = {

@@ -1,3 +1,4 @@
+// Libraries
 import axios from 'axios';
 
 export async function getUser(token: string | undefined) {

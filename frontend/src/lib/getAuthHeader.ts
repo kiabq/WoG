@@ -1,4 +1,7 @@
+// Libraries
 import Cookies from 'cookies'
+
+// Types
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export async function getAuthHeader(req: NextApiRequest, res: NextApiResponse) {
