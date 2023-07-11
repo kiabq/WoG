@@ -52,6 +52,8 @@ export default function OptionalInfo({ user }: IProps) {
         setEditing(false);
     }
 
+    console.log(optional);
+
     return (
         <div className='flex flex-col'>
             <h2 className='text-xl mx-auto pb-3'>Experience</h2>
@@ -93,8 +95,8 @@ export default function OptionalInfo({ user }: IProps) {
                                             <input type='radio'
                                                 name={key}
                                                 value={mapped}
-                                                checked={optional[key as keyof OptionalQuestions] === mapped}
-                                                onInput={(e) => {
+                                                defaultChecked={optional[key as keyof OptionalQuestions] === mapped}
+                                                onClick={(e) => {
                                                     setEditing(true);
                                                     setOptional({ ...optional, [key]: parseInt(e.currentTarget.value) })
                                                 }}
@@ -120,11 +122,11 @@ export default function OptionalInfo({ user }: IProps) {
                                                 className='m-1'
                                                 name={key}
                                                 value={mapped}
-                                                checked={optional[key as keyof OptionalQuestions] === mapped}
-                                                onInput={(e) => {
+                                                onClick={(e) => {
                                                     setEditing(true);
                                                     setOptional({ ...optional, [key]: parseInt(e.currentTarget.value) })
                                                 }}
+                                                checked={optional[key as keyof OptionalQuestions] === mapped}
                                             />
                                         )
                                     })}
