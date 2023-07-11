@@ -4,8 +4,32 @@ import { NextRequest, NextResponse } from 'next/server';
 // Routes
 import { authRoutes, protectedRoutes, logoutRoutes } from './routing/routes';
 
-export function middleware(request: NextRequest, response: NextResponse) {
+export default async function middleware(request: NextRequest, response: NextResponse) {
     const token = request.cookies.get('token');
+    
+    if (request.nextUrl.pathname.includes('/profile') && token) {
+        try {
+            // Might need to reformat getData function to use fetch instead of axios
+            const newUser = await fetch(`${process.env.REACT_APP_BACKEND}/api/users/me`, {
+                headers: {
+                    Authorization: `Bearer ${token.value}`,
+                    'Content-Type': 'application/json',
+                }
+            }).then((res) => {
+                if (res.status === 200) {
+                    return res.json()
+                };
+            }).then((res) => {
+                return res.isNew;
+            })
+
+            if (newUser) {
+                return NextResponse.redirect(new URL('/setup', request.url));
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     if (authRoutes.includes(request.nextUrl.pathname) && token) {
         return NextResponse.redirect(new URL('/', request.url));
