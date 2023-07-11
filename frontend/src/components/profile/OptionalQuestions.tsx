@@ -98,6 +98,7 @@ export default function OptionalInfo({ user }: IProps) {
                                                     setEditing(true);
                                                     setOptional({ ...optional, [key]: parseInt(e.currentTarget.value) })
                                                 }}
+                                                className='m-1'
                                             />
                                             <p>{element[index]}</p>
                                         </div>
