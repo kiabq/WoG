@@ -22,9 +22,9 @@ export default async function middleware(request: NextRequest, response: NextRes
             return res.isNew;
         })
 
-        // if (newUser === true) {
-        //     return NextResponse.redirect(new URL('/setup', request.url));
-        // }
+        if (newUser === true) {
+            return NextResponse.redirect(new URL('/setup', request.url));
+        }
     }
 
     if (authRoutes.includes(request.nextUrl.pathname) && token) {

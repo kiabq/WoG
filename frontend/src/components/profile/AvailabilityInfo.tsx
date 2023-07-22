@@ -165,7 +165,7 @@ export default function AvailabilityInfo({ user }: IProps) {
                                             required={true}
                                             name={day}
                                             value={availability?.[day] && convertTime(availability?.[day].end_time, true)}
-                                            classes='h-[50px] w-[115px] text-sm md:h-[50px] md:w-[115px] md:text-base '
+                                            classes='h-[50px] w-[115px] text-sm md:h-[50px] md:w-[125px] md:text-base '
                                         />
                                     </div>
                                 }
