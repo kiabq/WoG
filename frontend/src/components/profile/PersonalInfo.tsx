@@ -3,8 +3,12 @@ import { FormEvent, useRef, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 
+// Components
+import Submitter from '../UI/submitter';
+
 // Types
 import { IUser } from '@/utils/types';
+import { ClipLoader, ClockLoader, DotLoader, HashLoader } from 'react-spinners';
 
 type LoaderArgs = {
     src: string
@@ -28,7 +32,6 @@ interface IInfo {
 export default function PersonalInfo({ user }: IProps) {
     const [personal, setPersonal] = useState<UserInfo>(user.user_info);
 
-    // fix: initial state not being set correctly after setup
     const INITIAL_STATE = {
         name: personal !== null ? personal.name : '',
         age: personal !== null ? personal.age : '',
@@ -41,6 +44,7 @@ export default function PersonalInfo({ user }: IProps) {
     const [pronoun, setPronoun] = useState<string>((personal && personal.pronoun) ?? '');
     const [invoice, setInvoice] = useState<string>((personal && personal.invoice) ?? '');
     const [editing, setEditing] = useState(false);
+    const [loading, setLoading] = useState(false);
     const ref = useRef<HTMLSelectElement | null>(null);
 
     const loader = ({ src }: LoaderArgs) => {
@@ -49,6 +53,7 @@ export default function PersonalInfo({ user }: IProps) {
 
     async function submit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setLoading(true);
 
         const target: IInfo = e.currentTarget;
         const user_info = {
@@ -65,6 +70,7 @@ export default function PersonalInfo({ user }: IProps) {
         });
         
         setEditing(false);
+        setLoading(false);
     }
 
     function onCancel() {
@@ -147,11 +153,7 @@ export default function PersonalInfo({ user }: IProps) {
                         }}
                         required />
                 </div>
-                {editing && <div className='flex justify-center pt-[1.5rem] md:pt-0 mt-auto'>
-                        <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
-                        <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
-                    </div>
-                }
+                <Submitter editing={editing} loading={loading} onCancel={onCancel} />
             </form>
 
         </div>

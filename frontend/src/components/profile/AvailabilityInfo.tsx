@@ -5,6 +5,7 @@ import axios from 'axios';
 // Components
 import Toggle from '../UI/toggle';
 import Timepicker from '../UI/timepicker';
+import Submitter from '../UI/submitter';
 
 // Utils
 import { convertTime } from '@/utils/convertTime';
@@ -63,6 +64,7 @@ export default function AvailabilityInfo({ user }: IProps) {
     const [availability, setAvailability] = useState(user.availability || initialAvailability);
     const [userTimezone, setUserTimezone] = useState(user.availability?.timezone || defaultTimezone);
     const [editing, setEditing] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     function updateDay(day: keyof Days) {
         setSelectedDays(
@@ -77,6 +79,8 @@ export default function AvailabilityInfo({ user }: IProps) {
 
     async function onSubmit(e: React.FormEvent) {
         e.preventDefault();
+        setLoading(true);
+
         const form = (e.currentTarget as HTMLFormElement);
         const timezone = (form[0] as HTMLSelectElement).value;
         // Change the generic on this type
@@ -108,6 +112,7 @@ export default function AvailabilityInfo({ user }: IProps) {
         });
 
         setEditing(false);
+        setLoading(false);
     }
 
     function onCancel() {
@@ -173,11 +178,7 @@ export default function AvailabilityInfo({ user }: IProps) {
                         </div>
                     )
                 })}
-                {editing && <div className='flex justify-center pt-6'>
-                    <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
-                    <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
-                </div>
-                }
+                <Submitter editing={editing} loading={loading} onCancel={onCancel} />
             </form>
         </div>
     )

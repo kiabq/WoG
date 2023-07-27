@@ -2,6 +2,9 @@
 import { useState, FormEvent } from 'react';
 import axios from 'axios';
 
+// COmponents
+import Submitter from '../UI/submitter';
+
 // Context
 import { getContext } from '@/context/usercontext';
 
@@ -31,6 +34,7 @@ export default function OptionalInfo({ user }: IProps) {
     const { setAccount } = getContext();
     const [optional, setOptional] = useState<OptionalQuestions>(user.optionalQuestions ?? INITIAL_STATE);
     const [editing, setEditing] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const questions = [
         [
@@ -52,14 +56,13 @@ export default function OptionalInfo({ user }: IProps) {
         setEditing(false);
     }
 
-    console.log(optional);
-
     return (
         <div className='flex flex-col'>
             <h2 className='text-xl mx-auto pb-3'>Experience</h2>
 
             <form className='flex flex-col' onSubmit={async (e: FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
+                setLoading(true);
 
                 const form = e.currentTarget as HTMLFormElement;
                 let options: Options = {};
@@ -79,6 +82,7 @@ export default function OptionalInfo({ user }: IProps) {
                 });
 
                 setEditing(false);
+                setLoading(false);
             }}>
                 {questions.map((element: string | Array<string>, index: number) => {
                     const key = Object.keys(optional).slice(index + 1, index + 2)[0];
@@ -136,12 +140,7 @@ export default function OptionalInfo({ user }: IProps) {
                         </section>
                     )
                 })}
-                
-                {editing && <div className='flex justify-center pt-5'>
-                        <button type='submit' className='w-20 py-1 mr-1 text-slate-50 bg-blue-500 rounded-lg'>Save</button>
-                        <button type='button' className='w-20 py-1 ml-1 text-blue-500 border-blue-500 border-2 rounded-lg' onClick={() => onCancel()}>Cancel</button>
-                    </div>
-                }
+                <Submitter editing={editing} loading={loading} onCancel={onCancel} />
             </form>
         </div>
     )

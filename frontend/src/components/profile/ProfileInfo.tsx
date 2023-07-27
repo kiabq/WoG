@@ -19,7 +19,6 @@ export default function ProfileInfo() {
         <AvailabilityInfo user={user}/>
       </div>
       <OptionalInfo user={user}/>
-
     </>
   );
 }
