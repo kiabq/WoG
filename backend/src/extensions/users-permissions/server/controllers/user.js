@@ -87,7 +87,7 @@ module.exports = {
       .get();
 
     const { id } = ctx.params;
-    const { email, username, providerId } = ctx.request.body;
+    const { email } = ctx.request.body;
 
     const user = await getService('user').fetch(id);
 
@@ -179,6 +179,7 @@ module.exports = {
 
     const user = await strapi.entityService.findOne('plugin::users-permissions.user', authUser.id, {
       populate: {
+        role: true,
         user_info: true,
         optionalQuestions: true,
         availability: {
@@ -191,7 +192,8 @@ module.exports = {
             friday: true,
             saturday: true
           }
-        }
+        },
+        
       }
     });
 
@@ -249,6 +251,6 @@ module.exports = {
     });
 
     ctx.send(data);
-  }
+  },
 };
 
