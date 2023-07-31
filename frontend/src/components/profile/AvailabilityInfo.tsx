@@ -7,12 +7,14 @@ import Toggle from '../UI/toggle';
 import Timepicker from '../UI/timepicker';
 import Submitter from '../UI/submitter';
 
+// Context
+import { getContext } from '@/context/usercontext';
+
 // Utils
 import { convertTime } from '@/utils/convertTime';
 
 // Types
-import { IndexType, Days, IUser, IAvailability } from '@/utils/types';
-import { getContext } from '@/context/usercontext';
+import { IndexType, Days, IUser } from '@/utils/types';
 
 interface IProps {
     user: IUser;
@@ -106,7 +108,7 @@ export default function AvailabilityInfo({ user }: IProps) {
             'availability': data
         }).then((res) => {
             if (res.status === 200) {
-                setAccount!(res.data);
+                setAccount!({ ...res.data, role: user.role });
                 setAvailability(res.data);
             }
         });

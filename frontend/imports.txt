@@ -12,5 +12,7 @@ This file is used to describe how imports shoud look on each file
 // Utils
 - Utility and custom library functions will go here.
 
+// Routes
+
 // Types
 - Types always go at the bottom of the imports.

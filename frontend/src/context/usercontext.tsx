@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function UserCtx({ user: account, children }: IProps) {
-  const [user, setAccount] = useState(account);
+    const [user, setAccount] = useState(account);
 
     return (
         <UserContext.Provider value={{ user, setAccount }}>

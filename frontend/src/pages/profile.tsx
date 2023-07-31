@@ -1,10 +1,9 @@
 // Libraries
 import Head from 'next/head';
-import { GetServerSideProps } from "next";
 import Cookies from 'cookies';
+import { GetServerSideProps } from "next";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getUser } from '@/lib/getData';
 
 // Components
 import Header from '@/components/header/Header';
@@ -13,6 +12,9 @@ import Footer from '@/components/footer/Footer';
 
 // Context
 import UserCtx from '@/context/usercontext';
+
+// Utils
+import { getUser } from '@/lib/getData';
 
 // Types
 import type { IUser } from '@/utils/types';

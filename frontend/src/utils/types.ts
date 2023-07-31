@@ -74,6 +74,10 @@ export interface IUser {
     availability: IAvailability | null,
     user_info: any,
     optionalQuestions: any,
+    role?: { 
+        type: string,
+        name?: string
+    }
 }
 
 export interface IDungeonMaster {}

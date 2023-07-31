@@ -2,7 +2,7 @@
 import Link from 'next/link';
 
 // Context
-import { getContext } from '@/context/usercontext'
+import { getContext } from '@/context/usercontext';
 
 export default function Remind() {
     const { user } = getContext();

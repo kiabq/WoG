@@ -8,7 +8,6 @@ import Submitter from '../UI/submitter';
 
 // Types
 import { IUser } from '@/utils/types';
-import { ClipLoader, ClockLoader, DotLoader, HashLoader } from 'react-spinners';
 
 type LoaderArgs = {
     src: string
@@ -155,7 +154,6 @@ export default function PersonalInfo({ user }: IProps) {
                 </div>
                 <Submitter editing={editing} loading={loading} onCancel={onCancel} />
             </form>
-
         </div>
     )
 }
