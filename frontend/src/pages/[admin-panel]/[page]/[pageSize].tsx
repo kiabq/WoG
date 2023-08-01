@@ -1,6 +1,6 @@
 // Libraries
 import Cookies from 'cookies';
-import Link from 'next/link'
+import Link from 'next/link';
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -25,11 +25,14 @@ interface IProps {
 }
 
 // TODO: Implement pagination with styled chips for filtering and styled page selectors
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
+  const page = query.page ? parseInt(query['page'] as string) : 1;
+  const pageSize = query.pageSize ? parseInt(query['pageSize'] as string) : 5; 
+
   const cookies = new Cookies(req, res);
   const token = cookies.get('token');
   const user = await getUser(token);
-  const users = await getAllUsers(token, 1, 100);
+  const users = await getAllUsers(token, page, pageSize);
   const pagination = users.meta.pagination;
 
   return {
@@ -50,11 +53,17 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
   const [pageCount, setPageCount] = useState(pagination.pageCount);
   const [pageSize] = useState(pagination.pageSize);
 
+  console.log(router);
+
   useEffect(() => {
     if (user === null) {
       router.push('/auth/logout');
     }
-  }, [page])
+  }, [])
+
+  useEffect(() => {
+    setUsers(allUsers.data);
+  }, [allUsers])
 
   function handleOpen(index: number) {
     if (opened !== index) {
@@ -63,6 +72,8 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
       setOpened(null);
     }
   }
+
+  console.log(page, pageSize, pageCount);
 
   return (
     <PageWrapper user={user} title="World of Gaian - Admin Panel">
@@ -79,9 +90,9 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
               }
             }}
           />
-          {/* <button>New User</button>
+          <button>New User</button>
           <button>Admin</button>
-          <button>Authenticated User</button> */}
+          <button>Authenticated User</button>
         </div>
         <div>
           {users
@@ -113,25 +124,33 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
               )
             })}
         </div>
-        {/* <div className='flex justify-center'>
+        <div className='flex justify-center'>
+          <p className='w-9'>
           {page > 1 &&
-            <span
-              className='hover:cursor-pointer'
+            <Link 
+              href={`/admin-panel/${page - 1}/${pageSize}`} 
+              className='mx-1' 
               onClick={() => { setPage(page - 1) }}>
-              Prev
-            </span>}
+                Prev
+            </Link>
+          }
+          </p>
           <div>
             {Array.from({ length: pageCount }, (_, index) => (
-              <Link href={``} className='mx-1' onClick={() => { setPage(index + 1) }}>{index + 1}</Link>
+              <Link href={`/admin-panel/${index + 1}/${pageSize}`} className='mx-1' onClick={() => { setPage(index + 1) }}>{index + 1}</Link>
             ))}
           </div>
+          <p className='w-9'>
           {page < pageCount &&
-            <span
-              className='hover:cursor-pointer'
+            <Link 
+              href={`/admin-panel/${page + 1}/${pageSize}`} 
+              className='mx-1' 
               onClick={() => { setPage(page + 1) }}>
-              Next
-            </span>}
-        </div> */}
+                Next
+            </Link>
+          }
+          </p>
+        </div>
       </div>
     </PageWrapper>
   )

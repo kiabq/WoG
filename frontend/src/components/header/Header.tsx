@@ -47,7 +47,7 @@ export default function Header() {
           <Link href='/#about' className='pr-3 hidden md:block'>About</Link>
           <Link href='/#dungeon-masters' className='pr-3 hidden md:block'>Dungeon Masters</Link>
           {!user && !router.pathname.includes('/privacy') && <Link href={`${process.env.REACT_APP_BACKEND}/api/connect/discord`} className='hidden md:block'>Sign In With Discord</Link>}
-          {user && user.role?.type === 'admin' && <Link href='/admin-panel' className='hidden md:block pr-3'>Admin Panel</Link>}
+          {user && user.role?.type === 'admin' && <Link href='/admin-panel/1/5' className='hidden md:block pr-3'>Admin Panel</Link>}
           {user &&
             <div className='border-2 rounded-lg mr-3 hidden md:block hover:border-[#738adb]'>
               <Link href='/profile' className=' flex flex-row items-center'>
@@ -92,7 +92,7 @@ export default function Header() {
               <Link href='/#about' className='pr-3'>About</Link>
               <Link href='/#dungeon-masters' className='pr-3'>Dungeon Masters</Link>
               {user && <Link href='/auth/logout' className='pr-3'>Sign Out</Link>}
-              {user && user.role?.type === 'admin' && <Link href='/user-panel' className='pr-3'>User Panel</Link>}
+              {user && user.role?.type === 'admin' && <Link href='/admin-panel/1/5' className='pr-3'>Admin Panel</Link>}
             </div>
           </div>
         }
