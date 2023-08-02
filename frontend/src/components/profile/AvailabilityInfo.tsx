@@ -135,7 +135,8 @@ export default function AvailabilityInfo({ user }: IProps) {
         <div className='md:mx-auto'>
             <h2 className='text-xl text-center'>Availability</h2>
             <form className='sm:w-[22rem] md:w-[32rem]' onSubmit={(e) => onSubmit(e)}>
-                <select className='w-full p-3 my-5' onChange={e => onSelect(e)}>
+                <label htmlFor="timezone">Select Timezone:</label>
+                <select name="timezone" className='w-full p-3 mb-5' onChange={e => onSelect(e)}>
                     {timezones.map((timezone) => {
                         return (
                             <option
