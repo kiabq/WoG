@@ -48,12 +48,10 @@ export async function getAllUsers(token: string | undefined, page?: number, page
     }).then((res) => {
         if (res.status === 200) {
             return res.data;
+        } else {
+            throw new Error(`${res.status}: Something Went Wrong :(}`)
         }
-
-        if (res.status !== 200) {
-            throw new Error("");
-        }
-    }).catch(() => {
-        return null;
+    }).catch((error) => {
+        return error;
     })
 }
