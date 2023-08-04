@@ -3,13 +3,12 @@ import Cookies from 'cookies';
 import Link from 'next/link';
 import axios from 'axios';
 import { GetServerSideProps } from "next";
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 // Components
 import UserQuestions from '@/components/UI/UserQuestions';
 import DiscordAvatar from '@/components/UI/DiscordAvatar';
-import ChipFilter from '@/components/UI/ChipFilter';
 import { PageWrapper } from '@/components/UI/PageWrapper';
 
 // Utils
@@ -48,7 +47,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
   }
 }
 
-
 export default function UserPanel({ user, users: allUsers, pagination }: IProps) {
   const router = useRouter();
   const [users, setUsers] = useState(allUsers.data);
@@ -75,13 +73,13 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
   }, [search])
 
   // TODO: When user clicks chip, filter all users by selected chips.
-  function chipReducer(state: any, action: any) {
-    switch (action.type) {
+  // function chipReducer(state: any, action: any) {
+  //   switch (action.type) {
       // ? Case Filter
       // ? Case Remove
       // ? Case Add New Filter - Maybe in the future.
-    }
-  }
+  //   }
+  // }
 
   async function handleSearch() {
     const response = await axios.get(`${process.env.REACT_APP_FRONTEND}/api/users`)
@@ -91,6 +89,10 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
       .catch((err) => {
         return err;
       })
+
+    if (opened !== null) {
+      setOpened(null);
+    }
 
     if (search === "") {
       const left = (page * pageSize) - pageSize;
