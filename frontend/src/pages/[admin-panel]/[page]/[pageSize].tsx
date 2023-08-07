@@ -75,9 +75,9 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
   // TODO: When user clicks chip, filter all users by selected chips.
   // function chipReducer(state: any, action: any) {
   //   switch (action.type) {
-      // ? Case Filter
-      // ? Case Remove
-      // ? Case Add New Filter - Maybe in the future.
+  //   ? Case Filter
+  //   ? Case Remove
+  //   ? Case Add New Filter - Maybe in the future.
   //   }
   // }
 
@@ -100,7 +100,11 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
       setUsers(response.slice(left, right));
     } else {
       const filteredUsers = response.filter(
-        (user: IUser) => user.username.toLowerCase().includes(search)
+        (user: IUser) => {
+          const result = search.toLowerCase();
+          const currentUser = user.username.toLowerCase(); 
+          return currentUser.includes(result);
+        }
       );
       setUsers(filteredUsers);
     }
@@ -129,11 +133,6 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
               }
             }}
           />
-          {/* <div className='mt-2 mb-5'>
-            <ChipFilter value={'New User'} />
-            <ChipFilter value={'Admin'} />
-            <ChipFilter value={'Authenticated'} />
-          </div> */}
         </div>
         <div className='h-120 overflow-y-auto overflow-x-hidden'>
           {users.length > 0 ?
@@ -182,7 +181,12 @@ export default function UserPanel({ user, users: allUsers, pagination }: IProps)
             </p>
             <div>
               {Array.from({ length: pageCount }, (_, index) => (
-                <Link href={`/admin-panel/${index + 1}/${pageSize}`} className={`${page === index + 1 && 'border-b-2'} border-slate-400 hover:border-black mx-1`} onClick={() => { setPage(index + 1) }}>{index + 1}</Link>
+                <Link 
+                  href={`/admin-panel/${index + 1}/${pageSize}`} 
+                  className={`${page === index + 1 && 'border-b-2'} border-slate-400 hover:border-black mx-1`} 
+                  onClick={() => { setPage(index + 1) }}>
+                    {index + 1}
+                </Link>
               ))}
             </div>
             <p className='w-9'>
